@@ -1,0 +1,107 @@
+.app__Loader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: lightgrey;
+}
+.box {
+  position: absolute;
+  width: 10rem;
+  height: 10rem;
+  top: 31%;
+  left: 43%;
+  background: #76C893;
+}
+.ProjectLogoSVGimage {
+  position: absolute;
+  top: 25%;
+  left: 40%;
+  width: 15rem;
+}
+@media screen and (min-width: 2000px) {
+  .box {
+    position: absolute;
+    width: 10rem;
+    height: 10rem;
+    top: 31%;
+    left: 43%;
+    background: #76C893;
+  }
+  .ProjectLogoSVGimage {
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    width: 15rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .box {
+    position: absolute;
+    width: 8rem;
+    height: 8rem;
+    top: 31%;
+    left: 43%;
+    background: #76C893;
+  }
+  .ProjectLogoSVGimage {
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    width: 10rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .box {
+    position: absolute;
+    width: 8rem;
+    height: 8rem;
+    top: 31%;
+    left: 43%;
+    background: #76C893;
+  }
+  .ProjectLogoSVGimage {
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    width: 10rem;
+  }
+}
+
+/* .app__Loader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: lightgrey;
+}
+
+svg {
+  position: absolute;
+  top: 25%;
+  left: 35%;
+}
+@media screen and (min-width: 2000px) {
+  svg {
+    top: 25%;
+    left: 35%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  svg {
+    width: 50%;
+    height: 50%;
+    top: 40%;
+    left: 20%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  svg {
+    width: 50%;
+    height: 50%;
+    top: 40%;
+    left: 20%;
+  }
+} */
