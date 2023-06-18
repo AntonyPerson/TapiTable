@@ -14,6 +14,6 @@ Coded by www.creative-tim.com
 */
 
 export default {
-  labels: ["M", "T", "W", "T", "F", "S", "S"],
-  datasets: { label: "Sales", data: [50, 20, 10, 22, 50, 10, 40] },
+  labels: ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"],
+  datasets: { label: "מרחק יומי", data: [8.5, 7.3, 6, 7.5, 6.9, 5.9, 8] },
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -25,17 +26,16 @@ import PropTypes from "prop-types";
 import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React context
-import { useMaterialUIController, setLayout } from "context";
+import { setLayout, useMaterialUIController } from "context";
 
 function DashboardLayout({ children }) {
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav } = controller;
   const { pathname } = useLocation();
 
   useEffect(() => {
     setLayout(dispatch, "dashboard");
   }, [pathname]);
-
+  // ! fix for the center possition withou a sidenav, check original value to make back to defualt
   return (
     <MDBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
@@ -43,7 +43,8 @@ function DashboardLayout({ children }) {
         position: "relative",
 
         [breakpoints.up("xl")]: {
-          marginLeft: miniSidenav ? pxToRem(120) : pxToRem(274),
+          marginLeft: pxToRem(100),
+          marginRight: pxToRem(100),
           transition: transitions.create(["margin-left", "margin-right"], {
             easing: transitions.easing.easeInOut,
             duration: transitions.duration.standard,

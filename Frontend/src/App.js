@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-default */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable react/jsx-curly-brace-presence */
@@ -20,22 +21,22 @@ Coded by www.creative-tim.com
 */
 import "react-toastify/dist/ReactToastify.css";
 
-import { useState, useEffect, useMemo } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect, useMemo, useState } from "react";
 // react-router components
-import { Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
 
 // @mui material components
-import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
+import { ThemeProvider } from "@mui/material/styles";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
-import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
+import Sidenav from "examples/Sidenav";
 
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
@@ -46,33 +47,34 @@ import themeDark from "assets/theme-dark";
 import themeDarkRTL from "assets/theme-dark/theme-rtl";
 
 // RTL plugins
-import rtlPlugin from "stylis-plugin-rtl";
-import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
+import rtlPlugin from "stylis-plugin-rtl";
 
 // Material Dashboard 2 React routes
-import routes from "routes/userRoutes";
 import AdminRoutes from "routes/AdminRoutes";
-import UserRoutes from "routes/userRoutes";
+import { default as UserRoutes, default as routes } from "routes/userRoutes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
+import { setMiniSidenav, setOpenConfigurator, useMaterialUIController } from "context";
 
 // ! ---------------Project Brand Images and info---------------------------
-import brandWhite from "assets/images/projectLogoImages/NGProjectTemplateLogoSVG.svg";
-import brandDark from "assets/images/projectLogoImages/NGProjectTemplateLogoSVG.svg";
+import {
+  default as brandDark,
+  default as brandWhite,
+} from "assets/images/projectLogoImages/NGProjectTemplateLogoSVG.svg";
 // ! ------------------------------------------
 
 import WebsiteLoader from "components/WebsiteLoader/WebsiteLoader";
-import Error404 from "views/Error404";
 import FieldReuestFormDB from "layouts/Forms/FieldReuestFormDB";
+import Error404 from "views/Error404";
 // import SignIn from "layouts/authentication/sign-in";
 // import SignInURL from "layouts/authentication/sign-in/sign-in-URLs/urlLayout";
 
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
-import { signin, authenticate, isAuthenticated, updateRefreshCount } from "auth/index";
+import { authenticate, isAuthenticated, signin, updateRefreshCount } from "auth/index";
 
 import sidenav from "assets/theme/components/sidenav";
 import AboutPage from "views/aboutpage/AboutPage";
@@ -115,20 +117,20 @@ export default function App() {
   }, []);
 
   // Open sidenav when mouse enter on mini sidenav
-  const handleOnMouseEnter = () => {
-    if (miniSidenav && !onMouseEnter) {
-      setMiniSidenav(dispatch, false);
-      setOnMouseEnter(true);
-    }
-  };
+  // const handleOnMouseEnter = () => {
+  //   if (miniSidenav && !onMouseEnter) {
+  //     setMiniSidenav(dispatch, false);
+  //     setOnMouseEnter(true);
+  //   }
+  // };
 
   // Close sidenav when mouse leave mini sidenav
-  const handleOnMouseLeave = () => {
-    if (onMouseEnter) {
-      setMiniSidenav(dispatch, true);
-      setOnMouseEnter(false);
-    }
-  };
+  // const handleOnMouseLeave = () => {
+  //   if (onMouseEnter) {
+  //     setMiniSidenav(dispatch, true);
+  //     setOnMouseEnter(false);
+  //   }
+  // };
 
   // Change the openConfigurator state
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
@@ -224,15 +226,8 @@ export default function App() {
         <CacheProvider value={rtlCache}>
           <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
             <CssBaseline />
-            {layout === "dashboard" && user.user !== undefined ? (
+            {/* {layout === "dashboard" && user.user !== undefined ? (
               <>
-                {/* {console.groupCollapsed("Before the sidenav routing init - function")} */}
-                {/* {console.log(user.user)} */}
-                {/* {console.log(user.user.admin)} */}
-                {/* {console.log(user.user.admin !== "0")} */}
-                {/* {console.log(user.user.admin !== "0" ? AdminRoutes : routes)} */}
-                {/* {console.groupEnd()} */}
-                {/* {console.log("inside the sidenav")} */}
                 <Sidenav
                   color={sidenavColor}
                   brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
@@ -248,7 +243,8 @@ export default function App() {
                 <Configurator />
                 {configsButton}
               </>
-            ) : null}
+            ) : null} */}
+
             {/* {layout === "vr" && <Configurator />} */}
             {user.user !== undefined ? (
               user.user.admin === "1" ? (
@@ -281,57 +277,13 @@ export default function App() {
                 </Routes>
               )
             ) : (
-              // : (
-              //   <Routes>
-              //     {getRoutes(userToraHeilit)}
-              //     <Route path="/authentication/sign-in">
-              //       <Route
-              //         path=":idUR"
-              //         render={() => getRoutes(userToraHeilit)}
-              //         element={<SignInURL />}
-              //       />
-              //     </Route>
-              //     <Route path="/" element={<Navigate to="/userRequestsTable" />} />
-              //     {/* <Route path="/" element={<Navigate to="/authentication/sign-in" />} /> */}
-              //     <Route path="/Error404" element={<Error404 />} />
-              //     {/* <Route path="/RequestForm">
-              //       <Route path=":formID" element={<FieldReuestFormDB />} />
-              //     </Route> */}
-              //     <Route path="/toraHeilitrequestForm">
-              //       <Route path=":formID" element={<ToraHeilitFieldReuestFormDB />} />
-              //     </Route>
-              //     {/* <Route path="/adminFeild">
-              //       <Route path=":formID" element={<AdminFeildPrintInfoFormDB />} />
-              //     </Route> */}
-              //     <Route path="*" element={<Error404 />} />
-              //   </Routes>
-              // )
-              // <Routes>
-              //   {getRoutes(routes)}
-              //   <Route path="/authentication/sign-in">
-              //     <Route path=":idUR" render={() => getRoutes(routes)} element={<SignInURL />} />
-              //   </Route>
-              //   <Route path="/" element={<Navigate to="/userRequestsTable" />} />
-              //   {/* <Route path="/" element={<Navigate to="/authentication/sign-in" />} /> */}
-              //   <Route path="/Error404" element={<Error404 />} />
-              //   <Route path="/RequestForm">
-              //     <Route path=":formID" element={<FieldReuestFormDB />} />
-              //   </Route>
-              //   <Route path="/toraHeilitrequestForm">
-              //     <Route path=":formID" element={<ToraHeilitFieldReuestFormDB />} />
-              //   </Route>
-              //   {/* <Route path="/adminFeild">
-              //     <Route path=":formID" element={<AdminFeildPrintInfoFormDB />} />
-              //   </Route> */}
-              //   <Route path="*" element={<Error404 />} />
-              // </Routes>
               <Routes>
-                <Route path="/authentication/sign-in" element={<SignIn />} />
-                <Route path="/authentication/sign-up" element={<SignUp />} />
+                {getRoutes(UserRoutes)}
+                {/* <Route path="/authentication/sign-in" element={<SignIn />} /> */}
+                {/* <Route path="/authentication/sign-up" element={<SignUp />} /> */}
                 <Route path="/Error404" element={<Error404 />} />
-                <Route path="/about-us" element={<AboutPage />} />
-                <Route path="/" element={<Navigate to="/authentication/sign-in" />} />
-                <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+                <Route path="/" element={<Navigate to="/dashboard" />} />
+                <Route path="*" element={<Navigate to="/dashboard" />} />
                 {/* <Route path="/" element={<Navigate to="/about-us" />} /> */}
                 {/* <Route path="*" element={<Navigate to="/Error404" />} /> */}
               </Routes>
