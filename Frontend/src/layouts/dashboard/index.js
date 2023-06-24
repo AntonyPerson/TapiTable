@@ -56,6 +56,7 @@ import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
 // import { mainExample } from "merageJasonExcelFiels";
 import AppThumnailCard from "examples/Cards/AppThumnailCard";
+import AppThumnailCardBack from "examples/Cards/AppThumnailCardBack";
 import TimelineItem from "examples/Timeline/TimelineItem";
 import TimelineList from "examples/Timeline/TimelineList";
 import { useEffect, useMemo, useState } from "react";
@@ -81,6 +82,7 @@ import DashboardHeader from "./components/DashboardHeader";
 // ? images for the thumnails
 import PDFdownloadImage from "assets/images/PDFdownloadImage.png";
 import NGProjectTemplateLogoPNG from "assets/images/projectLogoImages/NGProjectTemplateLogoPNG.png";
+import fileexamplePDF1MB from "../../fileexamplePDF1MB.pdf";
 import pdfA14 from "../../Light.pdf";
 
 function Dashboard() {
@@ -102,7 +104,7 @@ function Dashboard() {
   const tableApps = [
     {
       name: "ע' 14",
-      link: pdfA14,
+      link: [pdfA14, fileexamplePDF1MB],
       linkType: "external",
       image: PDFdownloadImage,
     },
@@ -114,7 +116,7 @@ function Dashboard() {
     },
     {
       name: "יומן רישומים",
-      link: "https://www.google.com/",
+      link: "/Table",
       linkType: "external",
       image: NGProjectTemplateLogoPNG,
     },

@@ -24,6 +24,7 @@ import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import MDAvatar from "components/MDAvatar";
 import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
 // import MDAvatar from "components/MDAvatar";
@@ -35,6 +36,10 @@ import { Link } from "react-router-dom";
 
 // user and auth import
 import { signin, authenticate, isAuthenticated } from "auth/index";
+// Images
+import team2 from "assets/images/team-2.jpg";
+import team3 from "assets/images/team-3.jpg";
+import team4 from "assets/images/team-4.jpg";
 
 const { user } = isAuthenticated();
 // Images
@@ -81,26 +86,9 @@ export default function data() {
   // const pageTypes = { A4: "A4", A3: "A3", A4b: "A4 בריסטול", A3b: "A3 בריסטול" };
   const MINUTE_MS = 100000;
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:5000/hozlaRequests/personalnumber`, {
-  //       params: {
-  //         personalnumber: user.personalnumber,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setRequestDB(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       setIsError(true);
-  //     });
-  // }, []);
   useEffect(() => {
-    console.log(user.personalnumber);
     axios
-      .get(`http://localhost:5000/hozlaRequests/requestByPersonalnumber/${user.personalnumber}`)
+      .get(`http://localhost:5000/PostingJournalForm/`)
       .then((response) => {
         console.log(response.data);
         setRequestDB(response.data);
@@ -110,6 +98,40 @@ export default function data() {
         setIsError(true);
       });
   }, []);
+  // useEffect(() => {
+  //   console.log(user.personalnumber);
+  //   axios
+  //     .get(`http://localhost:5000/TapiRequests/requestByPersonalnumber/${user.personalnumber}`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setRequestDB(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       setIsError(true);
+  //     });
+  // }, []);
+  const Author = ({ image, name, email }) => (
+    <MDBox display="flex" alignItems="center" lineHeight={1}>
+      <MDAvatar src={image} name={name} size="sm" />
+      <MDBox ml={2} lineHeight={1}>
+        <MDTypography display="block" variant="button" fontWeight="medium">
+          {name}
+        </MDTypography>
+        <MDTypography variant="caption">{email}</MDTypography>
+      </MDBox>
+    </MDBox>
+  );
+
+  const Job = ({ title, description }) => (
+    <MDBox lineHeight={1} textAlign="left">
+      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
+        {title}
+      </MDTypography>
+      <MDTypography variant="caption">{description}</MDTypography>
+    </MDBox>
+  );
+
   const Progress = ({ color, value }) => (
     <MDBox display="flex" alignItems="center">
       <MDTypography variant="caption" color="text" fontWeight="medium">
@@ -155,7 +177,7 @@ export default function data() {
       typeName = "תורה חילית";
       color = "info";
       urlRequest = "toraHeilitrequestForm";
-    } else if (type === "HozlaRequest") {
+    } else if (type === "TapiRequest") {
       typeName = "הוצל''א";
       color = "success";
       urlRequest = "RequestForm";
@@ -163,89 +185,110 @@ export default function data() {
     return [typeName, color, urlRequest];
   };
 
-  const dbRows = requestDB.map((hozla, index) => ({
+  const dbRows = requestDB.map((Tapi, index) => ({
     // project: <Project image={LogoAsana} name="Asana" />,
-    fileID: parseInt(hozla._id.slice(-4), 36),
-    project: hozla.workName,
-    clearance:
-      // <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-      clearanceOptions[parseInt(hozla.workClearance, 10)],
-    // </MDTypography>
-    typeRequest: (
-      <>
-        <MDBadge
-          badgeContent={setTypeRequest(hozla.typeRequest)[0]}
-          color={setTypeRequest(hozla.typeRequest)[1]}
-          size="sm"
-          container
-        />
-      </>
+    author: <Author name={Tapi.fullName} email={Tapi.email} />,
+    function: <Job title="Manager" description={Tapi.workName} />,
+    // status: (
+    //   <MDBox ml={-1}>
+    //     <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+    //   </MDBox>
+    // ),
+    employed: (
+      <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+        {Tapi.createdAt.split("T")[0]}
+      </MDTypography>
     ),
+    action: (
+      <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+        Edit
+      </MDTypography>
+    ),
+    personalNumber: (
+      <MDBadge
+        badgeContent={<MDTypography variant="caption">{Tapi.personalnumber}</MDTypography>}
+        variant="contained"
+        size="xs"
+        container
+      />
+    ),
+    // fileID: parseInt(Tapi._id.slice(-4), 36),
+    // project: Tapi.workName,
+    // clearance:
+    //   // <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
+    //   clearanceOptions[parseInt(Tapi.workClearance, 10)],
+    // // </MDTypography>
+    // typeRequest: (
+    //   <>
+    //     <MDBadge
+    //       badgeContent={setTypeRequest(Tapi.typeRequest)[0]}
+    //       color={setTypeRequest(Tapi.typeRequest)[1]}
+    //       size="sm"
+    //       container
+    //     />
+    //   </>
+    // ),
     status: (
       <>
         <MDTypography component="p" variant="caption" color="text" fontWeight="medium">
-          {getWorkStuts(hozla.status)[0]}
+          {getWorkStuts(Tapi.status)[0]}
         </MDTypography>
         <Progress
           variant="gradient"
-          color={getWorkStuts(hozla.status)[1]}
-          value={hozla.status >= 125 ? 100 : hozla.status}
+          color={getWorkStuts(Tapi.status)[1]}
+          value={Tapi.status >= 125 ? 100 : Tapi.status}
         />
       </>
     ),
-    NameRequester: hozla.fullNameAsker,
-    diliveryDate: hozla.workRecivedDate.split("T")[0],
-    startDate: hozla.workGivenDate.split("T")[0],
-    additionalInfo: (
-      <Link to={`/${setTypeRequest(hozla.typeRequest)[2]}/${hozla._id}`} key={hozla._id}>
-        <MDButton
-          variant="gradient"
-          color="mekatnar"
-          // onClick={() => {
-          //   // setIsInfoPressed(true);
-          //   // setpressedID(hozla._id);
+    // NameRequester: Tapi.fullNameAsker,
+    // diliveryDate: Tapi.workRecivedDate.split("T")[0],
+    // startDate: Tapi.workGivenDate.split("T")[0],
+    // additionalInfo: (
+    //   <Link to={`/${setTypeRequest(Tapi.typeRequest)[2]}/${Tapi._id}`} key={Tapi._id}>
+    //     <MDButton
+    //       variant="gradient"
+    //       color="mekatnar"
+    //       // onClick={() => {
+    //       //   // setIsInfoPressed(true);
+    //       //   // setpressedID(Tapi._id);
 
-          // }}
-          circular="true"
-          iconOnly="true"
-          size="medium"
-        >
-          <Icon>info</Icon>
-        </MDButton>
-      </Link>
-    ),
-    hozlaInfo: (
-      <Link to={`/adminFeild/${hozla._id}`} key={hozla._id}>
-        <MDButton
-          variant="gradient"
-          color="mekatnar"
-          // onClick={() => {
-          //   // setIsInfoPressed(true);
-          //   // setpressedID(hozla._id);
-          // }}
-          circular="true"
-          iconOnly="true"
-          size="medium"
-        >
-          <Icon>edit</Icon>
-        </MDButton>
-      </Link>
-    ),
+    //       // }}
+    //       circular="true"
+    //       iconOnly="true"
+    //       size="medium"
+    //     >
+    //       <Icon>info</Icon>
+    //     </MDButton>
+    //   </Link>
+    // ),
+    // TapiInfo: (
+    //   <Link to={`/adminFeild/${Tapi._id}`} key={Tapi._id}>
+    //     <MDButton
+    //       variant="gradient"
+    //       color="mekatnar"
+    //       // onClick={() => {
+    //       //   // setIsInfoPressed(true);
+    //       //   // setpressedID(Tapi._id);
+    //       // }}
+    //       circular="true"
+    //       iconOnly="true"
+    //       size="medium"
+    //     >
+    //       <Icon>edit</Icon>
+    //     </MDButton>
+    //   </Link>
+    // ),
   }));
   console.log(`isError ${isError}`);
   return {
     //* the tables headers
     columns: [
-      { Header: "אסמכתא", accessor: "fileID", align: "center" },
-      // { Header: "סוג הבקשה", accessor: "typeRequest", align: "center" },
-      { Header: "שם המזמין", accessor: "NameRequester", align: "center" },
-      { Header: "שם העבודה", accessor: "project", align: "center" },
-      // { Header: "סיווג העבודה", accessor: "clearance", align: "center" },
-      { Header: "סטטוס", accessor: "status", align: "center" },
-      { Header: "תאריך הזמנת העבודה", accessor: "startDate", align: "center" },
-      { Header: "תאריך דרישת העבודה", accessor: "diliveryDate", align: "center" },
-      { Header: "פרטים נוספים", accessor: "additionalInfo", align: "center" },
-      // { Header: "פרטי הוצלא", accessor: "hozlaInfo", align: "center" },
+      { Header: "שם ואימייל", accessor: "author", width: "40%", align: "left" },
+      { Header: "מספר אישי", accessor: "personalNumber", align: "left" },
+      { Header: "function", accessor: "function", align: "left" },
+      { Header: "status", accessor: "status", align: "center" },
+      { Header: "employed", accessor: "employed", align: "center" },
+      { Header: "action", accessor: "action", align: "center" },
     ],
 
     rows: dbRows,

@@ -36,6 +36,8 @@ import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
 import Configurator from "examples/Configurator";
+import Alerts from "examples/Alerts";
+import Messages from "examples/Messages";
 import Sidenav from "examples/Sidenav";
 
 // Material Dashboard 2 React themes
@@ -134,6 +136,9 @@ export default function App() {
 
   // Change the openConfigurator state
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpenNotifications = () =>
+    setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpenMessage = () => setOpenConfigurator(dispatch, !openConfigurator);
 
   // Setting the dir attribute for the body element
   useEffect(() => {
@@ -177,10 +182,11 @@ export default function App() {
       height="3.25rem"
       bgColor="white"
       shadow="sm"
-      borderRadius="50%"
+      borderRadius="20%"
       position="fixed"
+      top="20px"
       right="2rem"
-      bottom="2rem"
+      // bottom="2rem"
       zIndex={99}
       color="dark"
       sx={{ cursor: "pointer" }}
@@ -188,6 +194,54 @@ export default function App() {
     >
       <Icon fontSize="small" color="inherit">
         settings
+      </Icon>
+    </MDBox>
+  );
+  const AlertsButton = (
+    <MDBox
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width="3.25rem"
+      height="3.25rem"
+      bgColor="white"
+      shadow="sm"
+      borderRadius="20%"
+      top="80px"
+      position="fixed"
+      right="2rem"
+      // bottom="2rem"
+      zIndex={99}
+      color="dark"
+      sx={{ cursor: "pointer" }}
+      onClick={handleConfiguratorOpenNotifications}
+    >
+      <Icon fontSize="small" color="inherit">
+        notifications_none
+      </Icon>
+    </MDBox>
+  );
+  const MassagesButton = (
+    <MDBox
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width="3.25rem"
+      height="3.25rem"
+      bgColor="white"
+      shadow="sm"
+      borderRadius="20%"
+      top="140px"
+      position="fixed"
+      right="2rem"
+      // bottom="2rem"
+      zIndex={99}
+      color="dark"
+      sx={{ cursor: "pointer" }}
+      onClick={handleConfiguratorOpenMessage}
+    >
+      <Icon fontSize="small" color="inherit">
+        message
       </Icon>
     </MDBox>
   );
@@ -240,17 +294,22 @@ export default function App() {
                   onMouseEnter={handleOnMouseEnter}
                   onMouseLeave={handleOnMouseLeave}
                 />
-                <Configurator />
-                {configsButton}
+                
               </>
             ) : null} */}
+            <Configurator />
+            {configsButton}
+            <Alerts />
+            {AlertsButton}
+            <Messages />
+            {MassagesButton}
 
             {/* {layout === "vr" && <Configurator />} */}
             {user.user !== undefined ? (
               user.user.admin === "1" ? (
                 <Routes>
                   {getRoutes(AdminRoutes)}
-                  <Route path="/" element={<Navigate to="/AdminHome" />} />
+                  <Route path="/" element={<Navigate to="/Dashboard" />} />
                   {/* <Route path="/" element={<Navigate to="/authentication/sign-in" />} /> */}
                   <Route path="/Error404" element={<Error404 />} />
                   {/* <Route path="/adminForm" element={<HozlaAdminPrintInfoForm />} /> */}
@@ -263,7 +322,7 @@ export default function App() {
               ) : (
                 <Routes>
                   {getRoutes(UserRoutes)}
-                  <Route path="/" element={<Navigate to="/userRequestsTable" />} />
+                  <Route path="/" element={<Navigate to="/Dashboard" />} />
                   {/* <Route path="/" element={<Navigate to="/authentication/sign-in" />} /> */}
                   <Route path="/Error404" element={<Error404 />} />
                   {/* <Route path="/RequestForm">

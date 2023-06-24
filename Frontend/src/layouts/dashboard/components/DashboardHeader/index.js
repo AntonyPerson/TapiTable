@@ -121,7 +121,7 @@ function DashboardHeader(props, { children }) {
         display="flex"
         alignItems="center"
         position="relative"
-        minHeight="18.75rem"
+        minHeight="16rem"
         borderRadius="xl"
         sx={{
           backgroundImage: ({ functions: { rgba, linearGradient }, palette: { gradients } }) =>
