@@ -34,12 +34,12 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
-import UploadPostingJournal from "layouts/Forms/uploadPostingJournal";
+// import UploadPostingJournal from "layouts/Forms/uploadPostingJourna";
 import CalendarView from "layouts/calendar";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+// import authorsTableData from "layouts/tables/data/authorsTableData";
+// import projectsTableData from "layouts/tables/data/projectsTableData";
 import regulsrUserRequestsTableData from "layouts/tables/data/regulsrUserRequestsTableData";
 import { Dialog, DialogContent } from "@mui/material";
 import { useState } from "react";
@@ -103,9 +103,7 @@ const regulsrUserRequestsTable = () => {
       aria-describedby="alert-dialog-description"
     >
       <MDBox variant="gradient" bgColor="mekatnar" coloredShadow="mekatnar" borderRadius="l">
-        <DialogContent>
-          <UploadPostingJournal task="create" />
-        </DialogContent>
+        <DialogContent>{/* <UploadPostingJournal task="create" /> */}</DialogContent>
       </MDBox>
     </Dialog>
   );

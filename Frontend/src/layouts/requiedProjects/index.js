@@ -101,7 +101,7 @@ function Dashboard() {
     setSelectedVaules({ ...selectedVaules, [evt.target.name]: value });
   }
 
-  const tableApps = [
+  const requiredProjects = [
     {
       name: "ע' 14",
       link: [pdfA14, fileexamplePDF1MB],
@@ -140,46 +140,46 @@ function Dashboard() {
     },
   ];
 
-  const massagesClient = [
-    {
-      title: "$2400 Design changes",
-      dateTime: "21/01/2022",
-      icon: "notifications",
-      color: "success",
-      description:
-        "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-    },
-    {
-      title: "$2400 Design changes",
-      dateTime: "21/02/2022",
-      icon: "notifications",
-      color: "error",
-      description:
-        "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-    },
-    {
-      title: "$2400 Design changes",
-      dateTime: "21/03/2022",
-      icon: "notifications",
-      color: "mekatnar",
-      description:
-        "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-    },
-    {
-      title: "$2400 Design changes",
-      dateTime: "21/04/2022",
-      icon: "notifications",
-      color: "success",
-      description:
-        "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-    },
-  ];
+  // const massagesClient = [
+  //   {
+  //     title: "$2400 Design changes",
+  //     dateTime: "21/01/2022",
+  //     icon: "notifications",
+  //     color: "success",
+  //     description:
+  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
+  //   },
+  //   {
+  //     title: "$2400 Design changes",
+  //     dateTime: "21/02/2022",
+  //     icon: "notifications",
+  //     color: "error",
+  //     description:
+  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
+  //   },
+  //   {
+  //     title: "$2400 Design changes",
+  //     dateTime: "21/03/2022",
+  //     icon: "notifications",
+  //     color: "mekatnar",
+  //     description:
+  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
+  //   },
+  //   {
+  //     title: "$2400 Design changes",
+  //     dateTime: "21/04/2022",
+  //     icon: "notifications",
+  //     color: "success",
+  //     description:
+  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
+  //   },
+  // ];
 
   const clientView = () => (
     <>
       <MDBox py={3}>
         <Grid container spacing={3}>
-          {tableApps.map((app, index) => (
+          {requiredProjects.map((app, index) => (
             <Grid item xs={12} md={6} lg={3} key={index}>
               <AppThumnailCard
                 color="mekatnar"
@@ -194,7 +194,7 @@ function Dashboard() {
           ))}
         </Grid>
       </MDBox>
-      <MDBox
+      {/* <MDBox
         sx={{
           width: "50%",
           justifyItems: "center",
@@ -225,7 +225,7 @@ function Dashboard() {
             )
           )}
         </TimelineList>
-      </MDBox>
+      </MDBox> */}
     </>
   );
 
