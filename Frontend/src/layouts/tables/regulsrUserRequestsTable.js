@@ -176,8 +176,8 @@ const regulsrUserRequestsTable = () => {
       <DashboardNavbar />
       {showError()}
       {addFile()}
-      {table()}
       <CalendarView />
+      {table()}
       <Outlet />
       <Footer />
     </DashboardLayout>

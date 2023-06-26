@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-constant-condition */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable consistent-return */

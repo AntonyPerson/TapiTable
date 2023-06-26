@@ -41,7 +41,7 @@ import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 
-const { user } = isAuthenticated();
+// const { user } = isAuthenticated();
 // Images
 // import LogoAsana from "assets/images/small-logos/logo-asana.svg";
 // import logoGithub from "assets/images/small-logos/github.svg";

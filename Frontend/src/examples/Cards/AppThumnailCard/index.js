@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /**
 =========================================================
@@ -71,37 +72,38 @@ function AppThumnailCard({ image, title, action }) {
     </MuiLink>
   ) : (
     <Link to={action.route}>
-      <Card>
-        <MDBox position="relative" borderRadius="lg" mt={-3} mx={2}>
+      <Card
+        sx={{
+          Width: "15rem",
+          height: "15rem",
+          marginTop: 3,
+          alignContent: "center",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+        }}
+      >
+        <MDBox position="relative" borderRadius="lg" mt={2}>
           <MDBox
             component="img"
             src={image}
             alt={title}
             borderRadius="lg"
             shadow="md"
-            width="50%"
-            height="50%"
+            width="10rem"
             position="relative"
             zIndex={1}
           />
-          <MDBox
-            borderRadius="lg"
-            shadow="md"
-            width="50%"
-            height="50%"
-            position="absolute"
-            left={0}
-            top="3%"
-            sx={{
-              backgroundImage: `url(${image})`,
-              transform: "scale(0.94)",
-              filter: "blur(12px)",
-              backgroundSize: "cover",
-            }}
-          />
         </MDBox>
         <MDBox p={3}>
-          <MDTypography display="inline" variant="h3" textTransform="capitalize" fontWeight="bold">
+          <MDTypography
+            variant="h3"
+            textTransform="capitalize"
+            fontWeight="bold"
+            color="mekatnar"
+            verticalAlign="middle"
+            textGradient="true"
+          >
             {title}
           </MDTypography>
         </MDBox>

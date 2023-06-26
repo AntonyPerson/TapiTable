@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable spaced-comment */
 /* eslint-disable no-unused-vars */
 /**

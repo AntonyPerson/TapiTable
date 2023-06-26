@@ -55,7 +55,7 @@ import rtlPlugin from "stylis-plugin-rtl";
 
 // Material Dashboard 2 React routes
 import AdminRoutes from "routes/AdminRoutes";
-import { default as UserRoutes, default as routes } from "routes/userRoutes";
+import { default as UserRoutes } from "routes/userRoutes";
 
 // Material Dashboard 2 React contexts
 import { setMiniSidenav, setOpenConfigurator, useMaterialUIController } from "context";
@@ -319,22 +319,7 @@ export default function App() {
                   </Route>
                   <Route path="*" element={<Error404 />} />
                 </Routes>
-              ) : (
-                <Routes>
-                  {getRoutes(UserRoutes)}
-                  <Route path="/" element={<Navigate to="/Dashboard" />} />
-                  {/* <Route path="/" element={<Navigate to="/authentication/sign-in" />} /> */}
-                  <Route path="/Error404" element={<Error404 />} />
-                  {/* <Route path="/RequestForm">
-                    <Route path=":formID" element={<FieldReuestFormDB />} />
-                  </Route> */}
-
-                  {/* <Route path="/adminFeild">
-                    <Route path=":formID" element={<AdminFeildPrintInfoFormDB />} />
-                  </Route> */}
-                  <Route path="*" element={<Error404 />} />
-                </Routes>
-              )
+              ) : null
             ) : (
               <Routes>
                 {getRoutes(UserRoutes)}

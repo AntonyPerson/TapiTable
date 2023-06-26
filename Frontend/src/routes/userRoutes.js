@@ -40,7 +40,7 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables/regulsrUserRequestsTable";
+import Tables from "layouts/Forms/CalenderTasks/CalenderTasksForm";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 

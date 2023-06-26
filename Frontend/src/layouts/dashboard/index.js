@@ -117,7 +117,7 @@ function Dashboard() {
     {
       name: "יומן רישומים",
       link: "/Table",
-      linkType: "external",
+      linkType: "internal",
       image: NGProjectTemplateLogoPNG,
     },
     {
