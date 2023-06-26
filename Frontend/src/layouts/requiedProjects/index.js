@@ -84,6 +84,7 @@ import PDFdownloadImage from "assets/images/PDFdownloadImage.png";
 import NGProjectTemplateLogoPNG from "assets/images/projectLogoImages/NGProjectTemplateLogoPNG.png";
 import fileexamplePDF1MB from "../../fileexamplePDF1MB.pdf";
 import pdfA14 from "../../Light.pdf";
+import add from "../../assets/images/add.png";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -101,44 +102,7 @@ function Dashboard() {
     setSelectedVaules({ ...selectedVaules, [evt.target.name]: value });
   }
 
-  const requiredProjects = [
-    {
-      name: "ע' 14",
-      link: [pdfA14, fileexamplePDF1MB],
-      linkType: "external",
-      image: PDFdownloadImage,
-    },
-    {
-      name: 'תפ"י ממוחשב',
-      link: "https://www.google.com/",
-      linkType: "external",
-      image: NGProjectTemplateLogoPNG,
-    },
-    {
-      name: "יומן רישומים",
-      link: "/Table",
-      linkType: "internal",
-      image: NGProjectTemplateLogoPNG,
-    },
-    {
-      name: "פרויקטים נדרשים",
-      link: "/requiredProjects",
-      linkType: "internal",
-      image: NGProjectTemplateLogoPNG,
-    },
-    {
-      name: "בזק",
-      link: "https://www.google.com/",
-      linkType: "external",
-      image: NGProjectTemplateLogoPNG,
-    },
-    {
-      name: "מערכת Y",
-      link: "https://www.google.com/",
-      linkType: "external",
-      image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-    },
-  ];
+  const requiredProjects = [];
 
   // const massagesClient = [
   //   {
@@ -192,6 +156,19 @@ function Dashboard() {
               />
             </Grid>
           ))}
+          <Grid item xs={12} md={6} lg={3}>
+            <AppThumnailCard
+              color="mekatnar"
+              title="הוסף פרויקט"
+              image={add}
+              action={
+                {
+                  // type: app.linkType,
+                  // route: app.link,
+                }
+              }
+            />
+          </Grid>
         </Grid>
       </MDBox>
       {/* <MDBox

@@ -81,6 +81,8 @@ import { authenticate, isAuthenticated, signin, updateRefreshCount } from "auth/
 import sidenav from "assets/theme/components/sidenav";
 import AboutPage from "views/aboutpage/AboutPage";
 
+import RequiredProjects from "layouts/requiedProjects";
+
 export default function App() {
   const brandName = 'תפ"י';
 
@@ -310,6 +312,7 @@ export default function App() {
                 <Routes>
                   {getRoutes(AdminRoutes)}
                   <Route path="/" element={<Navigate to="/Dashboard" />} />
+
                   {/* <Route path="/" element={<Navigate to="/authentication/sign-in" />} /> */}
                   <Route path="/Error404" element={<Error404 />} />
                   {/* <Route path="/adminForm" element={<HozlaAdminPrintInfoForm />} /> */}
@@ -328,6 +331,7 @@ export default function App() {
                 <Route path="/Error404" element={<Error404 />} />
                 <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="*" element={<Navigate to="/dashboard" />} />
+                <Route path="/requiredProjects" element={<RequiredProjects />} />
                 {/* <Route path="/" element={<Navigate to="/about-us" />} /> */}
                 {/* <Route path="*" element={<Navigate to="/Error404" />} /> */}
               </Routes>
