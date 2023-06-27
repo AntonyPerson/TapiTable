@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /**
 =========================================================
@@ -30,13 +29,10 @@ import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
-import "./style.css";
-
 function AppThumnailCard({ image, title, action }) {
   return action.type === "external" ? (
     <MuiLink href={action.route} target="_blank" rel="noreferrer">
       <Card
-        className="jello-vertical"
         sx={{
           Width: "15rem",
           height: "15rem",
@@ -75,39 +71,37 @@ function AppThumnailCard({ image, title, action }) {
     </MuiLink>
   ) : (
     <Link to={action.route}>
-      <Card
-        className="shadow-inset-center"
-        sx={{
-          Width: "15rem",
-          height: "15rem",
-          marginTop: 3,
-          alignContent: "center",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}
-      >
-        <MDBox position="relative" borderRadius="lg" mt={2}>
+      <Card>
+        <MDBox position="relative" borderRadius="lg" mt={-3} mx={2}>
           <MDBox
             component="img"
             src={image}
             alt={title}
             borderRadius="lg"
             shadow="md"
-            width="10rem"
+            width="50%"
+            height="50%"
             position="relative"
             zIndex={1}
           />
+          <MDBox
+            borderRadius="lg"
+            shadow="md"
+            width="50%"
+            height="50%"
+            position="absolute"
+            left={0}
+            top="3%"
+            sx={{
+              backgroundImage: `url(${image})`,
+              transform: "scale(0.94)",
+              filter: "blur(12px)",
+              backgroundSize: "cover",
+            }}
+          />
         </MDBox>
         <MDBox p={3}>
-          <MDTypography
-            variant="h3"
-            textTransform="capitalize"
-            fontWeight="bold"
-            color="mekatnar"
-            verticalAlign="middle"
-            textGradient="true"
-          >
+          <MDTypography display="inline" variant="h3" textTransform="capitalize" fontWeight="bold">
             {title}
           </MDTypography>
         </MDBox>

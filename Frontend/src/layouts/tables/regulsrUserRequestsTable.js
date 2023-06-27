@@ -20,34 +20,37 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
+import Icon from "@mui/material/Icon";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
+import CalenderTasksForm from "layouts/Forms/CalenderTasks/CalenderTasksForm";
+import CalendarView from "layouts/calendar";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
 import regulsrUserRequestsTableData from "layouts/tables/data/regulsrUserRequestsTableData";
 import { Dialog, DialogContent } from "@mui/material";
 import { useState } from "react";
 
 import { CardBody, Col, Container, Form, FormGroup, FormText, Input, Label, Row } from "reactstrap";
 import axios from "axios";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 
 const regulsrUserRequestsTable = () => {
-  const tableTittle = "הבקשות שלי";
+  const tableTittle = "יומן רישומים";
 
   const [dbError, setDbError] = useState(false);
+  const [toAddFile, setToAddFile] = useState(false);
   //   const { columns, rows } = authorsTableData();
   const {
     columns: pColumns,
@@ -89,6 +92,21 @@ const regulsrUserRequestsTable = () => {
       </MDBox>
     </Dialog>
   );
+  const addFile = () => (
+    <Dialog
+      px={5}
+      open={toAddFile}
+      onClose={() => setToAddFile(false)}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <MDBox variant="gradient" bgColor="mekatnar" coloredShadow="mekatnar" borderRadius="l">
+        <DialogContent>
+          <CalenderTasksForm task="create" />
+        </DialogContent>
+      </MDBox>
+    </Dialog>
+  );
 
   const table = () => (
     <MDBox pt={6} pb={3}>
@@ -108,6 +126,23 @@ const regulsrUserRequestsTable = () => {
               <MDTypography variant="h3" color="white">
                 {tableTittle}
               </MDTypography>
+              <Grid container justifyContent="flex-end">
+                {/* <Link to="/UploadEcxelFile"> */}
+                <MDButton
+                  variant="gradient"
+                  onClick={() => setToAddFile(true)}
+                  // onClick={() => {
+                  //   // setIsInfoPressed(true);
+                  //   // setpressedID(hozla._id);
+                  // }}
+                  circular="true"
+                  iconOnly="true"
+                  size="medium"
+                >
+                  <Icon>add</Icon>
+                </MDButton>
+                {/* </Link> */}
+              </Grid>
             </MDBox>
             <MDBox pt={3}>
               {pRows.length !== 0 ? (
@@ -125,7 +160,7 @@ const regulsrUserRequestsTable = () => {
                 </MDTypography>
               ) : (
                 <MDTypography mx={30} variant="h3" color="mekatnar" textGradient={true}>
-                  לא קיימות בקשות בחשבונך
+                  לא קיימים רישומים
                 </MDTypography>
               )}
             </MDBox>
@@ -138,7 +173,9 @@ const regulsrUserRequestsTable = () => {
     <DashboardLayout>
       <DashboardNavbar />
       {showError()}
+      {addFile()}
       {table()}
+      <CalendarView />
       <Outlet />
       <Footer />
     </DashboardLayout>

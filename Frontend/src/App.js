@@ -36,6 +36,8 @@ import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
 import Configurator from "examples/Configurator";
+import Alerts from "examples/Alerts";
+import Messages from "examples/Messages";
 import Sidenav from "examples/Sidenav";
 
 // Material Dashboard 2 React themes
@@ -53,7 +55,7 @@ import rtlPlugin from "stylis-plugin-rtl";
 
 // Material Dashboard 2 React routes
 import AdminRoutes from "routes/AdminRoutes";
-import { default as UserRoutes, default as routes } from "routes/userRoutes";
+import { default as UserRoutes } from "routes/userRoutes";
 
 // Material Dashboard 2 React contexts
 import { setMiniSidenav, setOpenConfigurator, useMaterialUIController } from "context";
@@ -66,7 +68,7 @@ import {
 // ! ------------------------------------------
 
 import WebsiteLoader from "components/WebsiteLoader/WebsiteLoader";
-import FieldReuestFormDB from "layouts/Forms/FieldReuestFormDB";
+// import FieldReuestFormDB from "layouts/Forms/FieldReuestFormDB";
 import Error404 from "views/Error404";
 // import SignIn from "layouts/authentication/sign-in";
 // import SignInURL from "layouts/authentication/sign-in/sign-in-URLs/urlLayout";
@@ -78,6 +80,8 @@ import { authenticate, isAuthenticated, signin, updateRefreshCount } from "auth/
 
 import sidenav from "assets/theme/components/sidenav";
 import AboutPage from "views/aboutpage/AboutPage";
+import Tables from "layouts/tables/regulsrUserRequestsTable";
+import RequiredProjects from "layouts/requiedProjects";
 
 export default function App() {
   const brandName = 'תפ"י';
@@ -134,6 +138,9 @@ export default function App() {
 
   // Change the openConfigurator state
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpenNotifications = () =>
+    setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpenMessage = () => setOpenConfigurator(dispatch, !openConfigurator);
 
   // Setting the dir attribute for the body element
   useEffect(() => {
@@ -177,10 +184,11 @@ export default function App() {
       height="3.25rem"
       bgColor="white"
       shadow="sm"
-      borderRadius="50%"
+      borderRadius="20%"
       position="fixed"
+      top="20px"
       right="2rem"
-      bottom="2rem"
+      // bottom="2rem"
       zIndex={99}
       color="dark"
       sx={{ cursor: "pointer" }}
@@ -188,6 +196,54 @@ export default function App() {
     >
       <Icon fontSize="small" color="inherit">
         settings
+      </Icon>
+    </MDBox>
+  );
+  const AlertsButton = (
+    <MDBox
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width="3.25rem"
+      height="3.25rem"
+      bgColor="white"
+      shadow="sm"
+      borderRadius="20%"
+      top="80px"
+      position="fixed"
+      right="2rem"
+      // bottom="2rem"
+      zIndex={99}
+      color="dark"
+      sx={{ cursor: "pointer" }}
+      onClick={handleConfiguratorOpenNotifications}
+    >
+      <Icon fontSize="small" color="inherit">
+        notifications_none
+      </Icon>
+    </MDBox>
+  );
+  const MassagesButton = (
+    <MDBox
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width="3.25rem"
+      height="3.25rem"
+      bgColor="white"
+      shadow="sm"
+      borderRadius="20%"
+      top="140px"
+      position="fixed"
+      right="2rem"
+      // bottom="2rem"
+      zIndex={99}
+      color="dark"
+      sx={{ cursor: "pointer" }}
+      onClick={handleConfiguratorOpenMessage}
+    >
+      <Icon fontSize="small" color="inherit">
+        message
       </Icon>
     </MDBox>
   );
@@ -240,42 +296,33 @@ export default function App() {
                   onMouseEnter={handleOnMouseEnter}
                   onMouseLeave={handleOnMouseLeave}
                 />
-                <Configurator />
-                {configsButton}
+                
               </>
             ) : null} */}
+            <Configurator />
+            {configsButton}
+            <Alerts />
+            {AlertsButton}
+            <Messages />
+            {MassagesButton}
 
             {/* {layout === "vr" && <Configurator />} */}
             {user.user !== undefined ? (
               user.user.admin === "1" ? (
                 <Routes>
                   {getRoutes(AdminRoutes)}
-                  <Route path="/" element={<Navigate to="/AdminHome" />} />
+                  <Route path="/" element={<Navigate to="/Dashboard" />} />
+
                   {/* <Route path="/" element={<Navigate to="/authentication/sign-in" />} /> */}
                   <Route path="/Error404" element={<Error404 />} />
                   {/* <Route path="/adminForm" element={<HozlaAdminPrintInfoForm />} /> */}
                   {/* <Route path="/adminFieldReuestFormDB" element={<AdminFieldReuestFormDB />} /> */}
-                  <Route path="/RequestForm">
-                    <Route path=":formID" element={<FieldReuestFormDB />} />
-                  </Route>
-                  <Route path="*" element={<Error404 />} />
-                </Routes>
-              ) : (
-                <Routes>
-                  {getRoutes(UserRoutes)}
-                  <Route path="/" element={<Navigate to="/userRequestsTable" />} />
-                  {/* <Route path="/" element={<Navigate to="/authentication/sign-in" />} /> */}
-                  <Route path="/Error404" element={<Error404 />} />
                   {/* <Route path="/RequestForm">
                     <Route path=":formID" element={<FieldReuestFormDB />} />
                   </Route> */}
-
-                  {/* <Route path="/adminFeild">
-                    <Route path=":formID" element={<AdminFeildPrintInfoFormDB />} />
-                  </Route> */}
                   <Route path="*" element={<Error404 />} />
                 </Routes>
-              )
+              ) : null
             ) : (
               <Routes>
                 {getRoutes(UserRoutes)}
@@ -284,6 +331,9 @@ export default function App() {
                 <Route path="/Error404" element={<Error404 />} />
                 <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="*" element={<Navigate to="/dashboard" />} />
+
+                <Route path="/Table" element={<Tables />} />
+                <Route path="/requiredProjects" element={<RequiredProjects />} />
                 {/* <Route path="/" element={<Navigate to="/about-us" />} /> */}
                 {/* <Route path="*" element={<Navigate to="/Error404" />} /> */}
               </Routes>

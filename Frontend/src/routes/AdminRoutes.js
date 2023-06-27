@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable spaced-comment */
 /* eslint-disable no-unused-vars */
 /**
@@ -47,11 +48,11 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
-import ManagementHoztla from "layouts/tables/adminManagementTable";
-import AdminArchiveTable from "layouts/tables/adminArchiveTable";
-import HozlaPrintRequestForm from "layouts/Forms/HozlaPrintRequestForm";
-import ToraHeilitPrintRequestForm from "layouts/Forms/ToraHeilitPrintRequestForm";
-import ToraHeilitVolumeAdmin from "layouts/Forms/ToraHeilitVolumeAdmin";
+// import ManagementHoztla from "layouts/tables/adminManagementTable";
+// import AdminArchiveTable from "layouts/tables/adminArchiveTable";
+// import HozlaPrintRequestForm from "layouts/Forms/HozlaPrintRequestForm";
+// import ToraHeilitPrintRequestForm from "layouts/Forms/ToraHeilitPrintRequestForm";
+// import ToraHeilitVolumeAdmin from "layouts/Forms/ToraHeilitVolumeAdmin";
 
 // import HozlaAdminPrintInfoForm from "layouts/Forms/HozlaAdminPrintInfoForm";
 // import AdminFieldReuestFormDB from "layouts/Forms/adminFieldReuestFormDB";
@@ -59,7 +60,7 @@ import ToraHeilitVolumeAdmin from "layouts/Forms/ToraHeilitVolumeAdmin";
 // @mui icons
 import Icon from "@mui/material/Icon";
 //my components
-import AdminHome from "layouts/Forms/AdminHome";
+// import AdminHome from "layouts/Forms/AdminHome";
 import AboutPage from "views/aboutpage/AboutPage";
 // import Error404 from "views/Error404";
 
@@ -72,22 +73,22 @@ const AdminRoutes = [
   //   route: "/dashboard",
   //   component: <Dashboard />,
   // },
-  {
-    type: "collapse",
-    name: "ניהול הבקשות",
-    key: "managementHoztla",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/managementHoztla",
-    component: <ManagementHoztla />,
-  },
-  {
-    type: "collapse",
-    name: "נתוני הוצל''א",
-    key: "AdminHome",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/AdminHome",
-    component: <AdminHome />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "ניהול הבקשות",
+  //   key: "managementHoztla",
+  //   icon: <Icon fontSize="small">table_view</Icon>,
+  //   route: "/managementHoztla",
+  //   component: <ManagementHoztla />,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "נתוני הוצל''א",
+  //   key: "AdminHome",
+  //   icon: <Icon fontSize="small">dashboard</Icon>,
+  //   route: "/AdminHome",
+  //   component: <AdminHome />,
+  // },
 
   // {
   //   type: "collapse",
@@ -105,22 +106,22 @@ const AdminRoutes = [
   //   route: "/adminFieldReuestFormDB",
   //   component: <AdminFieldReuestFormDB />,
   // },
-  {
-    type: "collapse",
-    name: "ארכיון",
-    key: "adminArchiveTable",
-    icon: <Icon fontSize="small">archive</Icon>,
-    route: "/adminArchiveTable",
-    component: <AdminArchiveTable />,
-  },
-  {
-    type: "collapse",
-    name: "עדכון סטטוס תורה",
-    key: "toraHeilit",
-    icon: <Icon fontSize="small">library_books</Icon>,
-    route: "/toraHeilit",
-    component: <ToraHeilitVolumeAdmin />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "ארכיון",
+  //   key: "adminArchiveTable",
+  //   icon: <Icon fontSize="small">archive</Icon>,
+  //   route: "/adminArchiveTable",
+  //   component: <AdminArchiveTable />,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "עדכון סטטוס תורה",
+  //   key: "toraHeilit",
+  //   icon: <Icon fontSize="small">library_books</Icon>,
+  //   route: "/toraHeilit",
+  //   component: <ToraHeilitVolumeAdmin />,
+  // },
   {
     type: "divider",
   },
@@ -129,22 +130,22 @@ const AdminRoutes = [
     title: "האזור האישי",
   },
 
-  {
-    type: "collapse",
-    name: "בקשת הוצל''א",
-    key: "requestForm",
-    icon: <Icon fontSize="small">description</Icon>,
-    route: "/requestForm",
-    component: <HozlaPrintRequestForm />,
-  },
-  {
-    type: "collapse",
-    name: "בקשת תורה חילית",
-    key: "toraHeilitrequestForm",
-    icon: <Icon fontSize="small">description</Icon>,
-    route: "/toraHeilitrequestForm",
-    component: <ToraHeilitPrintRequestForm />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "בקשת הוצל''א",
+  //   key: "requestForm",
+  //   icon: <Icon fontSize="small">description</Icon>,
+  //   route: "/requestForm",
+  //   component: <HozlaPrintRequestForm />,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "בקשת תורה חילית",
+  //   key: "toraHeilitrequestForm",
+  //   icon: <Icon fontSize="small">description</Icon>,
+  //   route: "/toraHeilitrequestForm",
+  //   component: <ToraHeilitPrintRequestForm />,
+  // },
   {
     type: "collapse",
     name: "הבקשות שלי",

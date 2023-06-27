@@ -290,8 +290,8 @@ function signInURL(props) {
         personalnumber_demo = "1234567";
         setSignUpData({
           ...signUpData,
-          firstName: "אנטוני",
-          lastLame: "פרסון",
+          firstName: "דביר",
+          lastLame: "וסקר",
           personalnumber: personalnumber_demo,
           admin: admin_value,
           unit: "מקטנאר",

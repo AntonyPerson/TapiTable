@@ -40,7 +40,8 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
+import Tables from "layouts/tables/regulsrUserRequestsTable";
+import CalendarView from "layouts/calendar";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
@@ -66,6 +67,14 @@ const routes = [
     icon: <Icon fontSize="small">table</Icon>,
     route: "/Table",
     component: <Tables />,
+  },
+  {
+    type: "collapse",
+    name: "CalendarView",
+    key: "CalendarView",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/CalendarView",
+    component: <CalendarView />,
   },
   {
     type: "collapse",

@@ -46,17 +46,18 @@ const userRoutes = require("./routes/authentication/users");
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 
-
 //Template Example Requests routes for Client
 const TemplateExampleRouter = require("./routes/TemplateExample");
 app.use("/TemplateExample", TemplateExampleRouter);
 
+//Posting Journal Form Requests routes for Client
+const PostingJournalForm = require("./routes/PostingJournalForm");
+app.use("/PostingJournalForm", PostingJournalForm);
 
 //* file uploader Routes
 // upload files
 const fileuploaderRoutes = require("./routes/fileuploader/fileuploader");
 app.use("/api", fileuploaderRoutes);
-
 
 if (process.env.NODE_ENV === "production") {
   //set static folder
