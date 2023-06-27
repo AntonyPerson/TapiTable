@@ -144,7 +144,7 @@ export default function HozlaPrintRequestForm() {
     fullNameReciver: "",
     workRecivedDate: minDateString,
 
-    personalnumber: user.personalnumber,
+    personalnumber: "",
     id_files: "",
     // role: "",
 

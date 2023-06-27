@@ -80,7 +80,7 @@ import { authenticate, isAuthenticated, signin, updateRefreshCount } from "auth/
 
 import sidenav from "assets/theme/components/sidenav";
 import AboutPage from "views/aboutpage/AboutPage";
-
+import Tables from "layouts/tables/regulsrUserRequestsTable";
 import RequiredProjects from "layouts/requiedProjects";
 
 export default function App() {
@@ -331,6 +331,8 @@ export default function App() {
                 <Route path="/Error404" element={<Error404 />} />
                 <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="*" element={<Navigate to="/dashboard" />} />
+
+                <Route path="/Table" element={<Tables />} />
                 <Route path="/requiredProjects" element={<RequiredProjects />} />
                 {/* <Route path="/" element={<Navigate to="/about-us" />} /> */}
                 {/* <Route path="*" element={<Navigate to="/Error404" />} /> */}

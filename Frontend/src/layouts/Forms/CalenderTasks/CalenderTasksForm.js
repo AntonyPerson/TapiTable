@@ -414,7 +414,7 @@ export default function CalenderTasksForm() {
   const calenderTasksForm = () => (
     <Container className="" dir="rtl">
       <Row className="justify-content-center">
-        <Col lg="6" md="7">
+        <Col lg="12" md="12">
           <Card className="shadow border-0">
             <CardBody className="px-lg-8 py-lg-10">
               <MDBox
@@ -422,10 +422,10 @@ export default function CalenderTasksForm() {
                 bgColor="mekatnar"
                 borderRadius="lg"
                 coloredShadow="mekatnar"
-                mx={2}
+                mx={7}
                 mt={-3}
                 p={3}
-                mb={1}
+                mb={4}
                 textAlign="center"
               >
                 <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
@@ -563,30 +563,13 @@ export default function CalenderTasksForm() {
   );
 
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <MDBox pt={6} pb={3}>
-        {/* //! fot the pop up warning windoes */}
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
-        {showError()}
-        {showSuccess()}
-        {showLoading()}
-        {NavigateUser()}
+    <>
+      {showError()}
+      {showSuccess()}
+      {showLoading()}
+      {NavigateUser()}
 
-        {calenderTasksForm()}
-      </MDBox>
-      <Footer />
-    </DashboardLayout>
+      {calenderTasksForm()}
+    </>
   );
 }
