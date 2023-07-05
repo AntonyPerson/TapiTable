@@ -531,10 +531,12 @@ export default function HozlaPrintRequestForm() {
                 height="75vh"
                 timeZone="local"
                 headerToolbar={{
-                  left: "prev,next today",
+                  left: "prev,today,next",
                   center: "title",
                   right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
                 }}
+                footerToolbar="true"
+                dayMaxEventRows={3}
                 initialView="dayGridMonth"
                 editable="true"
                 selectable="true"
@@ -552,28 +554,50 @@ export default function HozlaPrintRequestForm() {
                   {
                     id: "15",
                     title: "אירוע 2",
-                    date: "2023-07-08",
+                    start: "2023-07-08",
+                    end: "2023-07-11",
                     color: "yellow",
                     textColor: "black",
                   },
                   { id: "17", title: "אירוע 3", start: "2023-07-12", end: "2023-07-17" },
                   {
-                    id: "199",
+                    id: "19119",
                     title: "אירוע 22",
-                    start: "2023-07-19",
-                    end: "2023-07-17",
-                    extendedProps: {
-                      department: "BioChemistry",
-                    },
-                    description: "תיאור",
+                    start: "2023-07-18",
+                    end: "2023-07-20",
                   },
                   { id: "18", title: "אירוע 4", date: "2023-07-22", duration: "10:30" },
                   {
+                    id: "1993",
+                    title: "אירוע 43",
                     start: "2023-07-10T10:00:00",
                     end: "2023-07-10T16:00:00",
-                    display: "background",
+                    // display: "background",
                   },
                   {
+                    id: "19934",
+                    title: "אירוע 444",
+                    start: "2023-07-10T08:00:00",
+                    end: "2023-07-10T09:00:00",
+                    // display: "background",
+                  },
+                  {
+                    id: "19924",
+                    title: "אירוע 449",
+                    start: "2023-07-10T18:00:00",
+                    end: "2023-07-10T19:30:00",
+                    // display: "background",
+                  },
+                  {
+                    id: "19393",
+                    title: "אירוע 46",
+                    start: "2023-07-10T11:00:00",
+                    end: "2023-07-10T18:00:00",
+                    // display: "background",
+                  },
+                  {
+                    id: "1992",
+                    title: "אירוע 244",
                     start: "2023-07-12T10:00:00",
                     end: "2023-07-14T16:00:00",
                     display: "background",
