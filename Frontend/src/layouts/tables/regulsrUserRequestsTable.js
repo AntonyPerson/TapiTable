@@ -36,6 +36,7 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import CalenderTasksForm from "layouts/Forms/CalenderTasks/CalenderTasksForm";
 import CalendarView from "layouts/calendar";
+import Breadcrumbs from "examples/Breadcrumbs";
 
 // Data
 import regulsrUserRequestsTableData from "layouts/tables/data/regulsrUserRequestsTableData";
@@ -171,7 +172,8 @@ const regulsrUserRequestsTable = () => {
   );
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      {/* <DashboardNavbar /> */}
+      <Breadcrumbs icon="home" title="Table" route={["dashboard", "Table"]} />
       {showError()}
       {addFile()}
       {table()}

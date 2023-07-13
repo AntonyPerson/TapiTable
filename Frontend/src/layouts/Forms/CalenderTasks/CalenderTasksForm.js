@@ -435,7 +435,7 @@ export default function CalenderTasksForm() {
                 textAlign="center"
               >
                 <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                  טופס קביעת פגישה
+                  טופס קביעת ביקורת
                 </MDTypography>
               </MDBox>
               <Form style={{ textAlign: "right" }} role="form" onSubmit={onSubmit}>
