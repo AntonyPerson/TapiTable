@@ -139,7 +139,7 @@ export default function App() {
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   const handleConfiguratorOpenNotifications = () =>
     setOpenConfigurator(dispatch, !openConfigurator);
-  const handleConfiguratorOpenMessage = () => setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpenMessage = () => {};
 
   // Setting the dir attribute for the body element
   useEffect(() => {
@@ -222,29 +222,33 @@ export default function App() {
       </Icon>
     </MDBox>
   );
-  const MassagesButton = (
-    <MDBox
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      width="3.25rem"
-      height="3.25rem"
-      bgColor="white"
-      shadow="sm"
-      borderRadius="20%"
-      top="140px"
-      position="fixed"
-      right="2rem"
-      // bottom="2rem"
-      zIndex={99}
-      color="dark"
-      sx={{ cursor: "pointer" }}
-      onClick={handleConfiguratorOpenMessage}
-    >
-      <Icon fontSize="small" color="inherit">
-        message
-      </Icon>
-    </MDBox>
+  const messageSubject = 'יצירת קשר עם שולחן התפ"י שלי';
+  const messageBody = "שלום, אנא מלא את פרטייך (שם מלא ומספר אישי) ואת פנייתך ונחזור אליך בהקדם.";
+  const ContactUsButton = (
+    <a href={`mailto:tony.personn@gmail.com?subject=${messageSubject}&body=${messageBody}`}>
+      <MDBox
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        width="3.25rem"
+        height="3.25rem"
+        bgColor="white"
+        shadow="sm"
+        borderRadius="20%"
+        top="140px"
+        position="fixed"
+        right="2rem"
+        // bottom="2rem"
+        zIndex={99}
+        color="dark"
+        sx={{ cursor: "pointer" }}
+        // onClick={handleConfiguratorOpenMessage}
+      >
+        <Icon fontSize="small" color="inherit">
+          support_agent
+        </Icon>
+      </MDBox>
+    </a>
   );
   // for the user
   useEffect(() => {
@@ -302,8 +306,7 @@ export default function App() {
             {configsButton}
             <Alerts />
             {AlertsButton}
-            <Messages />
-            {MassagesButton}
+            {ContactUsButton}
 
             {/* {layout === "vr" && <Configurator />} */}
             {user.user !== undefined ? (
