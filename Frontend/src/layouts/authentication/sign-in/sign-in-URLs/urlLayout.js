@@ -13,14 +13,10 @@
 =========================================================
 * Material Dashboard 2 React - v2.1.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
 * Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
 Coded by www.creative-tim.com
-
  =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 //! The url Style that benny has request for the loggin.
@@ -123,11 +119,11 @@ function signInURL(props) {
       // console.log(user);
       if (params.idUR === "69173dcb3ee95de869edfq10") {
         //regular user
-        return <Navigate to="/" />;
+        return <Navigate to="/userRequestsTable" />;
       }
       if (params.idUR === "6368f702a925c8f735fa6a59" || params.idUR === "17351e923ex28e869e06c83") {
         //mangment
-        return <Navigate to="/" />;
+        return <Navigate to="/AdminHome" />;
       }
     }
   };
@@ -220,7 +216,7 @@ function signInURL(props) {
   const signInAxios = async (personalnumber) => {
     let r_massage = "_";
     await axios
-      .post(`http://localhost:5000/NGmedDB/api/signin`, { personalnumber })
+      .post(`http://localhost:5000/TapiTableApi/signin`, { personalnumber })
       .then((res) => {
         // console.log(res.data.user);
         if (res.data.user === "DoNotExist" || res.data.user === undefined) {
@@ -255,7 +251,7 @@ function signInURL(props) {
       holzlaRequest: signUpData.holzlaRequest,
     };
     await axios
-      .post(`http://localhost:5000/NGmedDB/api/signup`, newUser)
+      .post(`http://localhost:5000/TapiTableApi/signup`, newUser)
       .then(
         (res) =>
           // console.log(`gotten new user from sign up`);
@@ -272,21 +268,21 @@ function signInURL(props) {
     // window.location.reload();
   };
 
-  // !hoger - need server code to make it work or fix bugs
+  // hoger - need server code to make it work or fix bugs
   const passport = async (event) => {
     // console.log(response.data);
     console.log(params.idUR);
     let admin_value = "0";
-    // let personalnumber_demo = "1234567";
-    let personalnumber_demo = "7654321";
-    // let personalnumber_demo = "3072002";
+    let personalnumber_demo = "1234567";
+    // let personalnumber_demo = "7654321";
+    // let personalnumber_demo = "1111111";
     const signInAxiosResult = await signInAxios(personalnumber_demo);
     console.log(signInAxiosResult);
     if (signInAxiosResult === "DoNotExist") {
-      if (params.idUR === "6368f702a925c8f735fa6a59") {
-        // http://localhost:3000/authentication/sign-in/6368f702a925c8f735fa6a59
+      if (params.idUR === "63a46456f543db2b20b65150") {
+        // http://localhost:3000/authentication/sign-in/63a46456f543db2b20b65150
         //? for the admin 2 - admin of admins
-        admin_value = "0";
+        admin_value = "2";
         personalnumber_demo = "1234567";
         setSignUpData({
           ...signUpData,
@@ -297,13 +293,13 @@ function signInURL(props) {
           unit: "מקטנאר",
           anaf: "תון",
           mador: "NG",
-          phoneNumber: "123456789",
-          email: "sS@gmail.com",
+          phoneNumber: "987654321",
+          email: "qQ@gmail.com",
         });
       } else if (params.idUR === "17351e923ex28e869e06c83") {
         // http://localhost:3000/authentication/sign-in/17351e923ex28e869e06c83
         //? for the admin 1 - regular admin
-        admin_value = "0";
+        admin_value = "1";
         personalnumber_demo = "1234567";
         setSignUpData({
           ...signUpData,
@@ -317,28 +313,41 @@ function signInURL(props) {
           phoneNumber: "123456789",
           email: "sS@gmail.com",
         });
-      } else if (params.idUR === "69173dcb3ee95de869edfq10") {
+      } else if (params.idUR === "63a4661a4654d9024fd1304c") {
         //? for the admin 0 - regular user
-        // http://localhost:3000/authentication/sign-in/69173dcb3ee95de869edfq10
+        // http://localhost:3000/authentication/sign-in/63a4661a4654d9024fd1304c
         admin_value = "0";
         personalnumber_demo = "7654321";
-        // personalnumber_demo = "3072002";
         setSignUpData({
           ...signUpData,
           firstName: "אנטוני",
-          // firstName: "רותם",
           lastLame: "פרסון",
-          // lastLame: "ורולקר",
           personalnumber: personalnumber_demo,
           admin: admin_value,
           unit: "מקטנאר",
           anaf: "תון",
           mador: "NG",
-          phoneNumber: "987654321",
-          // email: "aP@gmail.com",
-          email: "rV@gmail.com",
+          phoneNumber: "123456789",
+          email: "sS@gmail.com",
         });
       }
+    } else if (params.idUR === "63b2f6db4fb6f63360b6b601") {
+      //? for the admin 0 - regular user
+      // http://localhost:3000/authentication/sign-in/63b2f6db4fb6f63360b6b601
+      admin_value = "3";
+      personalnumber_demo = "7654321";
+      setSignUpData({
+        ...signUpData,
+        firstName: "קורן",
+        lastLame: "בר יוסף",
+        personalnumber: personalnumber_demo,
+        admin: admin_value,
+        unit: "מקטנאר",
+        anaf: "תון",
+        mador: "NG",
+        phoneNumber: "0123456789",
+        email: "kK@gmail.com",
+      });
     } else if (signInAxiosResult === "sucsses") {
       // console.log("==========RefreshCount is 0===============");
       // console.log(localStorage.getItem("RefreshCount"));
@@ -364,7 +373,7 @@ function signInURL(props) {
     // }
 
     // axios
-    //   .get(`http://localhost:5000/auth/passportauth`)
+    //   .get(`http://localhost:5000/TapiTableApi/TapiTableApi/TapiTableApi/TapiTableApi/TapiTableApi/auth/passportauth`)
     //   .then((response) => {
     //     console.log(response.data);
     //     console.log(params.idUR);

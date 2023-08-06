@@ -39,15 +39,15 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React layouts
-import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
-import RegulsrUserRequestsTable from "layouts/tables/regulsrUserRequestsTable";
+import SignIn from "layouts/authentication/sign-in";
+import SignUp from "layouts/authentication/sign-up/signUpAdmin";
 import Billing from "layouts/billing";
-import RTL from "layouts/rtl";
+import Dashboard from "layouts/dashboard";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
-import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
+import RTL from "layouts/rtl";
+import Tables from "layouts/tables";
+import RegulsrUserRequestsTable from "layouts/tables/regulsrUserRequestsTable";
 // import ManagementHoztla from "layouts/tables/adminManagementTable";
 // import AdminArchiveTable from "layouts/tables/adminArchiveTable";
 // import HozlaPrintRequestForm from "layouts/Forms/HozlaPrintRequestForm";

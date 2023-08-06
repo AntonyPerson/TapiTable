@@ -35,8 +35,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
-import Configurator from "examples/Configurator";
 import Alerts from "examples/Alerts";
+import Configurator from "examples/Configurator";
 import Messages from "examples/Messages";
 import Sidenav from "examples/Sidenav";
 
@@ -70,18 +70,17 @@ import {
 import WebsiteLoader from "components/WebsiteLoader/WebsiteLoader";
 // import FieldReuestFormDB from "layouts/Forms/FieldReuestFormDB";
 import Error404 from "views/Error404";
-// import SignIn from "layouts/authentication/sign-in";
-// import SignInURL from "layouts/authentication/sign-in/sign-in-URLs/urlLayout";
 
-import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
+import SignIn from "layouts/authentication/sign-in/index";
+import SignUpAdmin from "layouts/authentication/sign-up/signUpAdmin";
+import SignUpUser from "layouts/authentication/sign-up/signUpUser";
 
 import { authenticate, isAuthenticated, signin, updateRefreshCount } from "auth/index";
 
 import sidenav from "assets/theme/components/sidenav";
-import AboutPage from "views/aboutpage/AboutPage";
-import Tables from "layouts/tables/regulsrUserRequestsTable";
 import RequiredProjects from "layouts/requiedProjects";
+import Tables from "layouts/tables/regulsrUserRequestsTable";
+import AboutPage from "views/aboutpage/AboutPage";
 
 export default function App() {
   const brandName = 'תפ"י';
@@ -89,7 +88,7 @@ export default function App() {
   const params = useParams();
 
   const [user, setUser] = useState(isAuthenticated());
-  const [isAdmin, setIsAdmin] = useState(!(user.admin === "0"));
+  const [isAdmin, setIsAdmin] = useState(!(user.admin === "0" || user.admin === undefined));
   // console.log("User in App");
   // console.log(user);
 
@@ -326,14 +325,14 @@ export default function App() {
             ) : (
               <Routes>
                 {getRoutes(UserRoutes)}
-                {/* <Route path="/authentication/sign-in" element={<SignIn />} /> */}
-                {/* <Route path="/authentication/sign-up" element={<SignUp />} /> */}
+                {/* <Route path="/authentication/admin/sign-in" element={<SignIn />} /> */}
+                {/* <Route path="/authentication/admin/sign-up" element={<SignUpAdmin />} /> */}
                 <Route path="/Error404" element={<Error404 />} />
                 <Route path="/" element={<Navigate to="/dashboard" />} />
-                <Route path="*" element={<Navigate to="/dashboard" />} />
+                <Route path="*" element={<Navigate to="/Error404" />} />
 
-                <Route path="/Table" element={<Tables />} />
-                <Route path="/requiredProjects" element={<RequiredProjects />} />
+                {/* <Route path="/Table" element={<Tables />} /> */}
+                {/* <Route path="/requiredProjects" element={<RequiredProjects />} /> */}
                 {/* <Route path="/" element={<Navigate to="/about-us" />} /> */}
                 {/* <Route path="*" element={<Navigate to="/Error404" />} /> */}
               </Routes>
