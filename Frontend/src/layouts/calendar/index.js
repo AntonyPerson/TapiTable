@@ -65,6 +65,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import listPlugin from "@fullcalendar/list";
 
 // user and auth import
 import { signin, authenticate, isAuthenticated } from "auth/index";
@@ -180,6 +181,7 @@ export default function HozlaPrintRequestForm() {
   const [open, setOpen] = React.useState(false);
   const { getRootProps, getInputProps } = useDropzone({});
   const inputRef = React.useRef(null);
+  const [currentEvents, setCurrentEvents] = useState([]);
 
   const textPlaceHolderInputs = [
     "יחידה",
@@ -199,10 +201,6 @@ export default function HozlaPrintRequestForm() {
     "תאריך נדרש לקבלת העבודה",
     "שם אוסף העבודה",
   ];
-  useEffect(() => {
-    // Update the document title using the browser API
-    console.log(`You upload ${files.length} files`);
-  });
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -492,38 +490,122 @@ export default function HozlaPrintRequestForm() {
     </Dialog>
   );
 
+  const handleDateClick = (selected) => {
+    const title = prompt("title");
+    const calendarApi = selected.view.calendar;
+    calendarApi.unselected();
+    if (title) {
+      calendarApi.addEvent({
+        id: `${selected.dateStr}-${title}`,
+        title,
+        start: selected.startStr,
+        end: selected.endStr,
+        allDay: selected.allDay,
+      });
+    }
+  };
+
+  const handleEventClick = (selected) => {
+    console.log(selected);
+    if (window.confirm("sure?")) {
+      selected.event.remove();
+    }
+  };
+
   const hozlaPrintRequestForm = () => (
     <MDBox pt={6} pb={3}>
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Card>
-            <MDBox
-              mx={2}
-              mt={-3}
-              py={3}
-              px={2}
-              variant="gradient"
-              bgColor="mekatnar"
-              borderRadius="lg"
-              coloredShadow="mekatnar"
-            >
-              <MDTypography variant="h3" color="white">
+            <MDBox px={8} py={5}>
+              <MDTypography variant="h3" color="mekatnar">
                 לוח רישומים
               </MDTypography>
             </MDBox>
 
-            <MDBox pt={3} px={30} py={5}>
+            <MDBox pt={3} px={15} py={5}>
               <FullCalendar
-                plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
+                plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin]}
                 locale="he"
                 themeSystem="bootstrap5"
+                height="75vh"
                 timeZone="local"
+                headerToolbar={{
+                  left: "prev,today,next",
+                  center: "title",
+                  right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+                }}
+                footerToolbar="true"
+                dayMaxEventRows={3}
                 initialView="dayGridMonth"
-                events={[
-                  { title: "event 1", date: "2023-04-01" },
-                  { title: "event 2", date: "2023-04-02" },
-                ]}
+                editable="true"
                 selectable="true"
+                selectMirror="true"
+                dayMaxEvents="true"
+                initialEvents={[
+                  { id: "12", title: "event 1", date: "2023-07-01" },
+                  {
+                    id: "13",
+                    title: "event 2",
+                    date: "2023-07-04",
+                    url: "https://www.google.com/",
+                  },
+                  { id: "11", title: "חשוב!", date: "2023-07-05" },
+                  {
+                    id: "15",
+                    title: "אירוע 2",
+                    start: "2023-07-08",
+                    end: "2023-07-11",
+                    color: "yellow",
+                    textColor: "black",
+                  },
+                  { id: "17", title: "אירוע 3", start: "2023-07-12", end: "2023-07-17" },
+                  {
+                    id: "19119",
+                    title: "אירוע 22",
+                    start: "2023-07-18",
+                    end: "2023-07-20",
+                  },
+                  { id: "18", title: "אירוע 4", date: "2023-07-22", duration: "10:30" },
+                  {
+                    id: "1993",
+                    title: "אירוע 43",
+                    start: "2023-07-10T10:00:00",
+                    end: "2023-07-10T16:00:00",
+                    // display: "background",
+                  },
+                  {
+                    id: "19934",
+                    title: "אירוע 444",
+                    start: "2023-07-10T08:00:00",
+                    end: "2023-07-10T09:00:00",
+                    // display: "background",
+                  },
+                  {
+                    id: "19924",
+                    title: "אירוע 449",
+                    start: "2023-07-10T18:00:00",
+                    end: "2023-07-10T19:30:00",
+                    // display: "background",
+                  },
+                  {
+                    id: "19393",
+                    title: "אירוע 46",
+                    start: "2023-07-10T11:00:00",
+                    end: "2023-07-10T18:00:00",
+                    // display: "background",
+                  },
+                  {
+                    id: "1992",
+                    title: "אירוע 244",
+                    start: "2023-07-12T10:00:00",
+                    end: "2023-07-14T16:00:00",
+                    display: "background",
+                  },
+                ]}
+                select={handleDateClick}
+                eventClick={handleEventClick}
+                eventsSet={(events) => setCurrentEvents(events)}
               />
             </MDBox>
           </Card>

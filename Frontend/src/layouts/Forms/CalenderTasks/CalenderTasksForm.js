@@ -154,6 +154,9 @@ export default function CalenderTasksForm() {
     mador: "",
 
     dateOfmetteng: "",
+    dateEndOfmetteng: "",
+    eventName: "",
+    eventType: "",
 
     addionalInfo: "",
 
@@ -182,7 +185,10 @@ export default function CalenderTasksForm() {
     "ענף",
     "מדור",
     "תאריך הפגישה",
+    "תאריך סיום",
     "הערות",
+    "שם האירוע",
+    "סוג האירוע",
   ];
 
   function handleChange(evt) {
@@ -429,109 +435,186 @@ export default function CalenderTasksForm() {
                 textAlign="center"
               >
                 <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                  טופס קביעת פגישה
+                  טופס קביעת ביקורת
                 </MDTypography>
               </MDBox>
               <Form style={{ textAlign: "right" }} role="form" onSubmit={onSubmit}>
                 <FormGroup row className="">
-                  <FormGroup>
-                    <Label for="personalNumber">{textPlaceHolderInputs[0]}</Label>
-                    <Input
-                      // placeholder={textPlaceHolderInputs[4]}
-                      name="personalNumber"
-                      type="text"
-                      value={data.personalnumber}
-                      onChange={handleChange}
-                      required
-                    />
-                  </FormGroup>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <Label for="personalNumber">{textPlaceHolderInputs[0]}</Label>
+                        <Input
+                          // placeholder={textPlaceHolderInputs[4]}
+                          name="personalNumber"
+                          type="text"
+                          value={data.personalnumber}
+                          onChange={handleChange}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <Label for="fullName">{textPlaceHolderInputs[1]}</Label>
+                        <Input
+                          // placeholder={textPlaceHolderInputs[4]}
+                          name="fullName"
+                          type="text"
+                          value={data.fullName}
+                          onChange={handleChange}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
 
-                  <FormGroup>
-                    <Label for="fullName">{textPlaceHolderInputs[1]}</Label>
-                    <Input
-                      // placeholder={textPlaceHolderInputs[4]}
-                      name="fullName"
-                      type="text"
-                      value={data.fullName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </FormGroup>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <Label for="mail">{textPlaceHolderInputs[2]}</Label>
+                        <Input
+                          // placeholder={textPlaceHolderInputs[4]}
+                          name="mail"
+                          type="email"
+                          value={data.mail}
+                          onChange={handleChange}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <Label for="phoneNumber">{textPlaceHolderInputs[3]}</Label>
+                        <Input
+                          // placeholder={textPlaceHolderInputs[3]}
+                          name="phoneNumber"
+                          type="text"
+                          value={data.phoneNumber}
+                          onChange={handleChange}
+                          maxLength={10}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <Label for="unit">{textPlaceHolderInputs[4]}</Label>
+                        <Input
+                          // placeholder={textPlaceHolderInputs[0]}
+                          id="unit"
+                          name="unit"
+                          type="text"
+                          value={data.unit}
+                          onChange={handleChange}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <Label for="anaf">{textPlaceHolderInputs[5]}</Label>
+                        <Input
+                          // placeholder={textPlaceHolderInputs[1]}
+                          name="anaf"
+                          type="text"
+                          value={data.anaf}
+                          onChange={handleChange}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <Label for="mador">{textPlaceHolderInputs[6]}</Label>
+                        <Input
+                          // placeholder={textPlaceHolderInputs[2]}
+                          name="mador"
+                          type="text"
+                          value={data.mador}
+                          onChange={handleChange}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <Label for="eventName">{textPlaceHolderInputs[10]}</Label>
+                        <Input
+                          // placeholder={textPlaceHolderInputs[0]}
+                          id="eventName"
+                          name="eventName"
+                          type="text"
+                          value={data.eventName}
+                          onChange={handleChange}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <Label for="eventType">{textPlaceHolderInputs[11]}</Label>
+                        <Input
+                          // placeholder={textPlaceHolderInputs[0]}
+                          id="eventType"
+                          name="eventType"
+                          type="select"
+                          value={data.eventType}
+                          onChange={handleChange}
+                          required
+                        >
+                          <option value="1">אירוע 1</option>
+                          <option value="yellow">אירוע 2</option>
+                          <option value="red">אירוע 3</option>
+                          <option value="green">אירוע 4</option>
+                          <option value="pink">אירוע 5</option>
+                          <option value="purple">אירוע 6</option>
+                        </Input>
+                      </FormGroup>
+                    </Col>
+                  </Row>
 
+                  {/* <Row> */}
+                  {/* <Col> */}
                   <FormGroup>
-                    <Label for="mail">{textPlaceHolderInputs[2]}</Label>
-                    <Input
-                      // placeholder={textPlaceHolderInputs[4]}
-                      name="mail"
-                      type="email"
-                      value={data.mail}
-                      onChange={handleChange}
-                      required
-                    />
-                  </FormGroup>
-
-                  <FormGroup>
-                    <Label for="phoneNumber">{textPlaceHolderInputs[3]}</Label>
-                    <Input
-                      // placeholder={textPlaceHolderInputs[3]}
-                      name="phoneNumber"
-                      type="text"
-                      value={data.phoneNumber}
-                      onChange={handleChange}
-                      maxLength={10}
-                      required
-                    />
-                  </FormGroup>
-
-                  <FormGroup>
-                    <Label for="unit">{textPlaceHolderInputs[4]}</Label>
-                    <Input
-                      // placeholder={textPlaceHolderInputs[0]}
-                      id="unit"
-                      name="unit"
-                      type="text"
-                      value={data.unit}
-                      onChange={handleChange}
-                      required
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="anaf">{textPlaceHolderInputs[5]}</Label>
-                    <Input
-                      // placeholder={textPlaceHolderInputs[1]}
-                      name="anaf"
-                      type="text"
-                      value={data.anaf}
-                      onChange={handleChange}
-                      required
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="mador">{textPlaceHolderInputs[6]}</Label>
-                    <Input
-                      // placeholder={textPlaceHolderInputs[2]}
-                      name="mador"
-                      type="text"
-                      value={data.mador}
-                      onChange={handleChange}
-                      required
-                    />
-                  </FormGroup>
-
-                  <FormGroup>
-                    <Label for="meetingDate">{textPlaceHolderInputs[7]}</Label>
+                    <Label for="dateOfmetteng">{textPlaceHolderInputs[7]}</Label>
                     <Input
                       // placeholder={textPlaceHolderInputs[10]}
-                      name="meetingDate"
-                      type="date"
+                      name="dateOfmetteng"
+                      type="datetime-local"
+                      step="2"
                       value={data.dateOfmetteng}
                       onChange={handleChange}
                       required
                     />
                   </FormGroup>
+                  {/* </Col>
+                  <Col> */}
+                  <FormGroup>
+                    <Label for="dateEndOfmetteng">{textPlaceHolderInputs[8]}</Label>
+                    <Input
+                      // placeholder={textPlaceHolderInputs[10]}
+                      name="dateEndOfmetteng"
+                      type="datetime-local"
+                      step="2"
+                      value={
+                        data.dateEndOfmetteng < data.dateOfmetteng
+                          ? data.dateOfmetteng
+                          : data.dateEndOfmetteng
+                      }
+                      onChange={handleChange}
+                      // required
+                    />
+                  </FormGroup>
+                  {/* </Col> */}
+                  {/* </Row> */}
 
                   <FormGroup>
-                    <Label for="addionalInfo">{textPlaceHolderInputs[8]}</Label>
+                    <Label for="addionalInfo">{textPlaceHolderInputs[9]}</Label>
                     <Input
                       // placeholder={textPlaceHolderInputs[10]}
                       name="addionalInfo"
