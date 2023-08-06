@@ -18,6 +18,7 @@
 // TODO check mult-files
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
@@ -86,7 +87,7 @@ import { DropzoneAreaBase } from "material-ui-dropzone";
 
 // for file upload from Data
 import { singleFileUpload } from "Data/api";
-
+import listOfVisit from "constValue/listOfVisit";
 // user and auth import
 import { signin, authenticate, isAuthenticated } from "auth/index";
 const { user } = isAuthenticated();
@@ -148,15 +149,13 @@ export default function CalenderTasksForm() {
     fullName: "",
     mail: "",
     phoneNumber: "",
+    inspectionByType: "",
+    inspectedName: "",
+    visitedName: "",
+    visited: "",
 
-    unit: "",
-    anaf: "",
-    mador: "",
-
-    dateOfmetteng: "",
+    dateOfInspection: "",
     dateEndOfmetteng: "",
-    eventName: "",
-    eventType: "",
 
     addionalInfo: "",
 
@@ -178,14 +177,12 @@ export default function CalenderTasksForm() {
 
   const textPlaceHolderInputs = [
     "מספר אישי",
-    "שם מלא",
-    "מייל",
-    "נייד",
-    "יחידה",
-    "ענף",
-    "מדור",
-    "תאריך הפגישה",
+    "תאריך הפגישה (מתוכנן)",
     "תאריך סיום",
+    "מבצע הביקורת",
+    "שם מסגרת המבקר",
+    "המבוקר",
+    "שם מסגרת המבוקר",
     "הערות",
     "שם האירוע",
     "סוג האירוע",
@@ -208,40 +205,39 @@ export default function CalenderTasksForm() {
     let flag = true;
     const ErrorReason = [];
 
-    if (data.unit === "") {
+    if (data.personalnumber === "") {
       flag = false;
-      ErrorReason.push("יחידה לא צויין");
+      ErrorReason.push("מספר אישי לא צויין");
       // toast.error(ErrorReason);
     }
-    if (data.anaf === "") {
+    // if (data.dateOfInspection === "") {
+    //   flag = false;
+    //   ErrorReason.push("תאריך הפגישה לא צויין ");
+    //   // toast.error(ErrorReason);
+    // }
+    // if (data.dateEndOfmetteng === "") {
+    //   flag = false;
+    //   ErrorReason.push("תאריך לא צויין");
+    //   // toast.error(ErrorReason);
+    // }
+    // if (data.inspectionByType === "") {
+    //   flag = false;
+    //   ErrorReason.push("מבצע הביקורת לא צויין");
+    //   // toast.error(ErrorReason);
+    // }
+    if (data.inspectedName === "") {
       flag = false;
-      ErrorReason.push("ענף לא צויין ");
+      ErrorReason.push("שם מסגרת המבקר לא צויין");
       // toast.error(ErrorReason);
     }
-    if (data.mador === "") {
+    // if (data.visited === "") {
+    //   flag = false;
+    //   ErrorReason.push("המבוקר לא צויין");
+    //   // toast.error(ErrorReason);
+    // }
+    if (data.visitedName === "") {
       flag = false;
-      ErrorReason.push("מדור לא צויין ");
-      // toast.error(ErrorReason);
-    }
-    if (data.phoneNumber === "") {
-      flag = false;
-      ErrorReason.push("נייד לא צויין ");
-      // toast.error(ErrorReason);
-    }
-    if (data.fullName === "") {
-      flag = false;
-      ErrorReason.push("שם מלא לא צויין ");
-      // toast.error(ErrorReason);
-    }
-    if (data.mail === "") {
-      flag = false;
-      ErrorReason.push("מייל לא צויין ");
-      // toast.error(ErrorReason);
-    }
-
-    if (data.dateOfmetteng === "") {
-      flag = false;
-      ErrorReason.push("תאריך הפגישה לא צויין ");
+      ErrorReason.push("שם מסגרת המבוקר לא צויין");
       // toast.error(ErrorReason);
     }
     if (flag !== true) {
@@ -258,9 +254,18 @@ export default function CalenderTasksForm() {
 
   const SendFormData = (event) => {
     event.preventDefault();
+    const dataForm = {
+      inspectionByType: data.inspectionByType,
+      inspectedName: data.inspectedName,
+      visitedName: data.visitedName,
+      visited: data.visited,
+      personalnumber: data.personalnumber,
+      dateOfInspection: data.dateOfInspection,
+    };
+    console.log(dataForm);
     setData({ ...data, loading: true, successmsg: false, error: false, NavigateToReferrer: false });
     axios
-      .post(`http://localhost:5000/hozlaRequests/add`, data)
+      .post(`http://localhost:5000/InspectionRequest/add`, dataForm)
       .then((response) => {
         setData({
           ...data,
@@ -333,7 +338,7 @@ export default function CalenderTasksForm() {
             מספר אסמכתא: {data.metting_id}
           </MDTypography>
           <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
-            שימו לב שעליכם לבדוק שהפגשיה אחר אושרה על ידי צוות תפ"י, אישור יכול לקחת עד שלושה ימי
+            שימו לב שעליכם לבדוק שהפגישה אכן אושרה על ידי צוות תפ"י, אישור יכול לקחת עד שלושה ימי
             עבודה.
           </MDTypography>
         </DialogContent>
@@ -435,208 +440,121 @@ export default function CalenderTasksForm() {
                 textAlign="center"
               >
                 <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                  טופס קביעת פגישה
+                  טופס קביעת ביקורת
                 </MDTypography>
               </MDBox>
               <Form style={{ textAlign: "right" }} role="form" onSubmit={onSubmit}>
                 <FormGroup row className="">
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <Label for="personalNumber">{textPlaceHolderInputs[0]}</Label>
-                        <Input
-                          // placeholder={textPlaceHolderInputs[4]}
-                          name="personalNumber"
-                          type="text"
-                          value={data.personalnumber}
-                          onChange={handleChange}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col>
-                      <FormGroup>
-                        <Label for="fullName">{textPlaceHolderInputs[1]}</Label>
-                        <Input
-                          // placeholder={textPlaceHolderInputs[4]}
-                          name="fullName"
-                          type="text"
-                          value={data.fullName}
-                          onChange={handleChange}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <Label for="mail">{textPlaceHolderInputs[2]}</Label>
-                        <Input
-                          // placeholder={textPlaceHolderInputs[4]}
-                          name="mail"
-                          type="email"
-                          value={data.mail}
-                          onChange={handleChange}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col>
-                      <FormGroup>
-                        <Label for="phoneNumber">{textPlaceHolderInputs[3]}</Label>
-                        <Input
-                          // placeholder={textPlaceHolderInputs[3]}
-                          name="phoneNumber"
-                          type="text"
-                          value={data.phoneNumber}
-                          onChange={handleChange}
-                          maxLength={10}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <Label for="unit">{textPlaceHolderInputs[4]}</Label>
-                        <Input
-                          // placeholder={textPlaceHolderInputs[0]}
-                          id="unit"
-                          name="unit"
-                          type="text"
-                          value={data.unit}
-                          onChange={handleChange}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col>
-                      <FormGroup>
-                        <Label for="anaf">{textPlaceHolderInputs[5]}</Label>
-                        <Input
-                          // placeholder={textPlaceHolderInputs[1]}
-                          name="anaf"
-                          type="text"
-                          value={data.anaf}
-                          onChange={handleChange}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col>
-                      <FormGroup>
-                        <Label for="mador">{textPlaceHolderInputs[6]}</Label>
-                        <Input
-                          // placeholder={textPlaceHolderInputs[2]}
-                          name="mador"
-                          type="text"
-                          value={data.mador}
-                          onChange={handleChange}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <Label for="eventName">{textPlaceHolderInputs[10]}</Label>
-                        <Input
-                          // placeholder={textPlaceHolderInputs[0]}
-                          id="eventName"
-                          name="eventName"
-                          type="text"
-                          value={data.eventName}
-                          onChange={handleChange}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col>
-                      <FormGroup>
-                        <Label for="eventType">{textPlaceHolderInputs[11]}</Label>
-                        <Input
-                          // placeholder={textPlaceHolderInputs[0]}
-                          id="eventType"
-                          name="eventType"
-                          type="select"
-                          value={data.eventType}
-                          onChange={handleChange}
-                          required
-                        >
-                          <option value="1">אירוע 1</option>
-                          <option value="yellow">אירוע 2</option>
-                          <option value="red">אירוע 3</option>
-                          <option value="green">אירוע 4</option>
-                          <option value="pink">אירוע 5</option>
-                          <option value="purple">אירוע 6</option>
-                        </Input>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-
-                  {/* <Row> */}
-                  {/* <Col> */}
                   <FormGroup>
-                    <Label for="dateOfmetteng">{textPlaceHolderInputs[7]}</Label>
+                    <Label for="personalnumber">{textPlaceHolderInputs[0]}</Label>
+                    <Input
+                      // placeholder={textPlaceHolderInputs[1]}
+                      name="personalnumber"
+                      type="text"
+                      value={data.personalnumber}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="dateOfInspection">{textPlaceHolderInputs[1]}</Label>
                     <Input
                       // placeholder={textPlaceHolderInputs[10]}
-                      name="dateOfmetteng"
-                      type="datetime-local"
-                      step="2"
-                      value={data.dateOfmetteng}
+                      name="dateOfInspection"
+                      type="date"
+                      // step="2"
+                      value={data.dateOfInspection}
                       onChange={handleChange}
                       required
                     />
                   </FormGroup>
                   {/* </Col>
                   <Col> */}
-                  <FormGroup>
-                    <Label for="dateEndOfmetteng">{textPlaceHolderInputs[8]}</Label>
+                  {/* <FormGroup>
+                    <Label for="dateEndOfmetteng">{textPlaceHolderInputs[2]}</Label>
                     <Input
                       // placeholder={textPlaceHolderInputs[10]}
                       name="dateEndOfmetteng"
                       type="datetime-local"
                       step="2"
                       value={
-                        data.dateEndOfmetteng < data.dateOfmetteng
-                          ? data.dateOfmetteng
+                        data.dateEndOfmetteng < data.dateOfInspection
+                          ? data.dateOfInspection
                           : data.dateEndOfmetteng
                       }
                       onChange={handleChange}
                       // required
                     />
-                  </FormGroup>
-                  {/* </Col> */}
-                  {/* </Row> */}
-
+                  </FormGroup> */}
                   <FormGroup>
-                    <Label for="addionalInfo">{textPlaceHolderInputs[9]}</Label>
+                    <Label for="inspectionByType">{textPlaceHolderInputs[3]}</Label>
                     <Input
-                      // placeholder={textPlaceHolderInputs[10]}
-                      name="addionalInfo"
-                      type="textarea"
-                      value={data.addionalInfo}
+                      // placeholder={textPlaceHolderInputs[0]}
+                      id="inspectionByType"
+                      name="inspectionByType"
+                      type="select"
+                      value={data.inspectionByType}
                       onChange={handleChange}
+                      required
+                    >
+                      {listOfVisit.map((visitType) => (
+                        <option value={visitType.value}>{visitType.visitName}</option>
+                      ))}
+                    </Input>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="inspectedName">{textPlaceHolderInputs[4]}</Label>
+                    <Input
+                      // placeholder={textPlaceHolderInputs[1]}
+                      name="inspectedName"
+                      type="text"
+                      value={data.inspectedName}
+                      onChange={handleChange}
+                      required
                     />
                   </FormGroup>
-                </FormGroup>
+                  <FormGroup>
+                    <Label for="visited">{textPlaceHolderInputs[5]}</Label>
+                    <Input
+                      // placeholder={textPlaceHolderInputs[0]}
+                      id="visited"
+                      name="visited"
+                      type="select"
+                      value={data.visited}
+                      onChange={handleChange}
+                      required
+                    >
+                      {listOfVisit.map((visitType) => (
+                        <option value={visitType.value}>{visitType.visitName}</option>
+                      ))}
+                    </Input>
+                  </FormGroup>
 
-                <div className="text-center">
-                  <MDButton
-                    color="mekatnar"
-                    size="large"
-                    // onClick={clickSubmit}
-                    className="btn-new-blue"
-                    type="submit"
-                  >
-                    שלח בקשה
-                    <Icon fontSize="small">upload</Icon>&nbsp;
-                  </MDButton>
-                </div>
+                  <FormGroup>
+                    <Label for="visitedName">{textPlaceHolderInputs[6]}</Label>
+                    <Input
+                      // placeholder={textPlaceHolderInputs[1]}
+                      name="visitedName"
+                      type="text"
+                      value={data.visitedName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormGroup>
+
+                  <div className="text-center">
+                    <MDButton
+                      color="mekatnar"
+                      size="large"
+                      // onClick={clickSubmit}
+                      className="btn-new-blue"
+                      type="submit"
+                    >
+                      שמור
+                      <Icon fontSize="small">upload</Icon>&nbsp;
+                    </MDButton>
+                  </div>
+                </FormGroup>
               </Form>
             </CardBody>
           </Card>

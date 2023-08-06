@@ -51,8 +51,8 @@ const TemplateExampleRouter = require("./routes/TemplateExample");
 app.use("/TemplateExample", TemplateExampleRouter);
 
 //Posting Journal Form Requests routes for Client
-const PostingJournalForm = require("./routes/PostingJournalForm");
-app.use("/PostingJournalForm", PostingJournalForm);
+const InspectionRequest = require("./routes/InspectionRequest");
+app.use("/InspectionRequest", InspectionRequest);
 
 //* file uploader Routes
 // upload files
