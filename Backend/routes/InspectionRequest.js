@@ -2,18 +2,18 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable camelcase */
 const router = require("express").Router();
-const PostingJournalForm = require("../models/PostingJournalForm.model");
+const InspectionRequest = require("../models/InspectionRequest.model");
 // const referenceId = 1;
 
 router.route("/").get((req, res) => {
-  PostingJournalForm.find()
+  InspectionRequest.find()
     .sort({ status: 1, createdAt: -1 })
     .then((request) => res.json(request))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.route("/activeRequests").get((req, res) => {
-  PostingJournalForm.find({ status: { $lte: 100 } })
+  InspectionRequest.find({ status: { $lte: 100 } })
     .sort({ createdAt: -1 })
     .exec()
     .then((request) => res.json(request))
@@ -21,7 +21,7 @@ router.route("/activeRequests").get((req, res) => {
 });
 
 router.route("/archivedRequests").get((req, res) => {
-  PostingJournalForm.find({ status: { $gte: 125 } })
+  InspectionRequest.find({ status: { $gte: 125 } })
     .sort({ createdAt: -1 })
     .exec()
     .then((request) => res.json(request))
@@ -34,7 +34,7 @@ router.route("/getCountStatus").get((req, res) => {
   let inprint = 0;
   let readyForTakeIn = 0;
   // let archive = 0;
-  PostingJournalForm.find()
+  InspectionRequest.find()
     .then((request) =>
       //  res.json(request)
       {
@@ -65,20 +65,27 @@ router.route("/getCountStatus").get((req, res) => {
 
 router.route("/add").post((req, res) => {
   const personalnumber = req.body.personalnumber;
-  const email = req.body.email;
-  const fullName = req.body.fullName;
-  const workName = req.body.workName;
+
+  const inspectionByType = req.body.inspectionByType;
+  const inspectedName = req.body.inspectedName;
+
+  const visited = req.body.visited;
+  const visitedName = req.body.visitedName;
+
+  const dateOfInspection = req.body.dateOfInspection;
   const status = req.body.status;
 
-  const newPostingJournalForm = new PostingJournalForm({
+  const newInspectionRequest = new InspectionRequest({
     personalnumber,
-    email,
-    fullName,
-    workName,
+    inspectionByType,
+    inspectedName,
+    visited,
+    visitedName,
+    dateOfInspection,
     status,
   });
 
-  const formId = newPostingJournalForm.save((err, form) => {
+  const formId = newInspectionRequest.save((err, form) => {
     if (err) {
       return res.status(400).json("Error: " + err);
     } else {
@@ -92,25 +99,25 @@ router.route("/requestByPersonalnumber/:personalnumber").get((req, res) => {
   // console.log(req.params);
   const personalnumber = req.params.personalnumber;
   // const personalnumber = "7654321";
-  PostingJournalForm.find({ personalnumber: personalnumber })
+  InspectionRequest.find({ personalnumber: personalnumber })
     .then((request) => res.json(request))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.route("/:id").get((req, res) => {
-  PostingJournalForm.findById(req.params.id)
+  InspectionRequest.findById(req.params.id)
     .then((request) => res.json(request))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.route("/:id").delete((req, res) => {
-  PostingJournalForm.findByIdAndDelete(req.params.id)
-    .then(() => res.json("PostingJournalForm deleted."))
+  InspectionRequest.findByIdAndDelete(req.params.id)
+    .then(() => res.json("InspectionRequest deleted."))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.route("/update/:id").post((req, res) => {
-  PostingJournalForm.findById(req.params.id)
+  InspectionRequest.findById(req.params.id)
     .then((request) => {
       request.typeRequest = req.body.typeRequest;
       request.user_card_number = req.body.user_card_number;
@@ -140,29 +147,45 @@ router.route("/update/:id").post((req, res) => {
 
       request
         .save()
-        .then(() => res.json("PostingJournalForm updated!"))
+        .then(() => res.json("InspectionRequest updated!"))
         .catch((err) => res.status(400).json("Error: " + err));
     })
     .catch((err) => res.status(400).json("Error: " + err));
 });
 router.route("/updateNameReciver/:id").post((req, res) => {
-  PostingJournalForm.findById(req.params.id)
+  InspectionRequest.findById(req.params.id)
     .then((request) => {
       request.fullNameReciver = req.body.fullNameReciver;
       request
         .save()
-        .then(() => res.json("PostingJournalForm updated!"))
+        .then(() => res.json("InspectionRequest updated!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+router.route("/updateSammary/:id").post((req, res) => {
+  InspectionRequest.findById(req.params.id)
+    .then((request) => {
+      request.results = req.body.results;
+      request.improvments = req.body.improvments;
+      request.keeping = req.body.keeping;
+      request.grade = req.body.grade;
+      request.inspectorsPersonalnumber = req.body.inspectorsPersonalnumber;
+
+      request
+        .save()
+        .then(() => res.json("InspectionRequest updated!"))
         .catch((err) => res.status(400).json("Error: " + err));
     })
     .catch((err) => res.status(400).json("Error: " + err));
 });
 router.route("/updateNumVolume/:id").post((req, res) => {
-  PostingJournalForm.findById(req.params.id)
+  InspectionRequest.findById(req.params.id)
     .then((request) => {
       request.toraHeilitVolumes = req.body.toraHeilitVolumes;
       request
         .save()
-        .then(() => res.json("PostingJournalForm updated!"))
+        .then(() => res.json("InspectionRequest updated!"))
         .catch((err) => res.status(400).json("Error: " + err));
     })
     .catch((err) => res.status(400).json("Error: " + err));
@@ -186,7 +209,7 @@ router.route("/sameRequest/:id").get((req, res) => {
   };
   // let message = "";
   // var unit = "";
-  PostingJournalForm.findById(req.params.id)
+  InspectionRequest.findById(req.params.id)
     .then((request) => {
       const unitName = request.unit;
       const dataToraHeilit = request.toraHeilitVolumes;
@@ -198,7 +221,7 @@ router.route("/sameRequest/:id").get((req, res) => {
       let message = false;
       // console.log(unitName);
       // console.log(dataToraHeilit);
-      PostingJournalForm.find({
+      InspectionRequest.find({
         unit: unitName,
         toraHeilitVolumes: dataToraHeilit,
       })
@@ -245,7 +268,7 @@ router.route("/statusUpdate/:id").post((req, res) => {
   // console.groupCollapsed(`handleStatusChange -------- Axios.then`);
   // console.log(req.params.id);
 
-  PostingJournalForm.findById(req.params.id)
+  InspectionRequest.findById(req.params.id)
     .then((request) => {
       // console.log(request.status);
       request.status = Number(req.body.status);
@@ -256,7 +279,7 @@ router.route("/statusUpdate/:id").post((req, res) => {
       // }
       request
         .save()
-        .then(() => res.json("PostingJournalForm status updated!"))
+        .then(() => res.json("InspectionRequest status updated!"))
         .catch((err) => {
           // console.log(err);
 

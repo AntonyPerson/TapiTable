@@ -79,6 +79,7 @@ import { authenticate, isAuthenticated, signin, updateRefreshCount } from "auth/
 
 import sidenav from "assets/theme/components/sidenav";
 import RequiredProjects from "layouts/requiedProjects";
+import CalenderTasksFormDB from "layouts/Forms/CalenderTasks/CalenderTasksFormDB";
 import Tables from "layouts/tables/regulsrUserRequestsTable";
 import AboutPage from "views/aboutpage/AboutPage";
 
@@ -334,8 +335,14 @@ export default function App() {
                 <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="*" element={<Navigate to="/Error404" />} />
 
-                {/* <Route path="/Table" element={<Tables />} /> */}
-                {/* <Route path="/requiredProjects" element={<RequiredProjects />} /> */}
+
+                <Route path="/Table" element={<Tables />} />
+                <Route path="/requiredProjects" element={<RequiredProjects />} />
+
+                <Route path="/adminSummary">
+                  <Route path=":formID" element={<CalenderTasksFormDB />} />
+                </Route>
+
                 {/* <Route path="/" element={<Navigate to="/about-us" />} /> */}
                 {/* <Route path="*" element={<Navigate to="/Error404" />} /> */}
               </Routes>

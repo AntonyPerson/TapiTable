@@ -50,9 +50,10 @@ app.use("/TapiTableApi", userRoutes);
 const TemplateExampleRouter = require("./routes/TemplateExample");
 app.use("/TemplateExample", TemplateExampleRouter);
 
-//Posting Journal Form Requests routes for Client
-const PostingJournalForm = require("./routes/PostingJournalForm");
-app.use("/TapiTableApi/PostingJournalForm", PostingJournalForm);
+//Inspection Request - Form Requests routes for Client
+const InspectionRequest = require("./routes/InspectionRequest");
+app.use("/TapiTableApi/InspectionRequest", InspectionRequest);
+
 
 //* file uploader Routes
 // upload files
