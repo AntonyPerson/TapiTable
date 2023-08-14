@@ -1,8 +1,11 @@
+/* eslint-disable no-console */
 /* eslint-disable consistent-return */
 /* eslint-disable no-else-return */
 /* eslint-disable arrow-body-style */
+import CryptoJS from "crypto-js";
+
 export const signup = (user) => {
-  return fetch(`http://localhost:5000/api/signup`, {
+  return fetch(`http://localhost:5000/TapiTableApi/signup`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -19,7 +22,7 @@ export const signup = (user) => {
 };
 // not in use
 export const signin = (user) => {
-  return fetch(`http://localhost:5000/api/signin`, {
+  return fetch(`http://localhost:5000/TapiTableApi/signin`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -51,7 +54,11 @@ export const signout = () => {
 
 export const authenticate = (data) => {
   if (typeof window !== "undefined") {
-    localStorage.setItem("jwt", JSON.stringify(data));
+    const encrypted = CryptoJS.AES.encrypt(
+      JSON.stringify(data),
+      "8154cb24758ff7a388e3ed8398245f7a1662dbdefccdbe90b4a68e19c0d0d3fa1537713ea0021f55dc3b0685d69e1cdfb1e61dd4cf706d9f99b4897a8bacbbe3"
+    );
+    localStorage.setItem("jwt", encrypted);
     if (localStorage.getItem("RefreshCount") === null) {
       localStorage.setItem("RefreshCount", "0");
     }
@@ -63,7 +70,13 @@ export const isAuthenticated = () => {
     return false;
   }
   if (localStorage.getItem("jwt")) {
-    return JSON.parse(localStorage.getItem("jwt"));
+    const decrypted = CryptoJS.AES.decrypt(
+      localStorage.getItem("jwt"),
+      "8154cb24758ff7a388e3ed8398245f7a1662dbdefccdbe90b4a68e19c0d0d3fa1537713ea0021f55dc3b0685d69e1cdfb1e61dd4cf706d9f99b4897a8bacbbe3"
+    );
+    console.log("decrypted");
+    console.log(decrypted.toString(CryptoJS.enc.Utf8));
+    return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
   } else {
     return false;
   }

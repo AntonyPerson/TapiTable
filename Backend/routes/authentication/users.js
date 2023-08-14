@@ -20,6 +20,6 @@ router.put("/user/update/:id", update);
 
 router.post("/user/remove/:userId", remove);
 
-router.get("/usersbyrole/:role", usersbyrole);
+router.get("/usersbyrole/:admin", usersbyrole);
 
 module.exports = router;

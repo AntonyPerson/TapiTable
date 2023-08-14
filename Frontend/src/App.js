@@ -35,8 +35,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
-import Configurator from "examples/Configurator";
 import Alerts from "examples/Alerts";
+import Configurator from "examples/Configurator";
 import Messages from "examples/Messages";
 import Sidenav from "examples/Sidenav";
 
@@ -70,19 +70,18 @@ import {
 import WebsiteLoader from "components/WebsiteLoader/WebsiteLoader";
 // import FieldReuestFormDB from "layouts/Forms/FieldReuestFormDB";
 import Error404 from "views/Error404";
-// import SignIn from "layouts/authentication/sign-in";
-// import SignInURL from "layouts/authentication/sign-in/sign-in-URLs/urlLayout";
 
-import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
+import SignIn from "layouts/authentication/sign-in/index";
+import SignUpAdmin from "layouts/authentication/sign-up/signUpAdmin";
+import SignUpUser from "layouts/authentication/sign-up/signUpUser";
 
 import { authenticate, isAuthenticated, signin, updateRefreshCount } from "auth/index";
 
 import sidenav from "assets/theme/components/sidenav";
-import AboutPage from "views/aboutpage/AboutPage";
-import Tables from "layouts/tables/regulsrUserRequestsTable";
 import RequiredProjects from "layouts/requiedProjects";
 import CalenderTasksFormDB from "layouts/Forms/CalenderTasks/CalenderTasksFormDB";
+import Tables from "layouts/tables/regulsrUserRequestsTable";
+import AboutPage from "views/aboutpage/AboutPage";
 
 export default function App() {
   const brandName = 'תפ"י';
@@ -90,7 +89,7 @@ export default function App() {
   const params = useParams();
 
   const [user, setUser] = useState(isAuthenticated());
-  const [isAdmin, setIsAdmin] = useState(!(user.admin === "0"));
+  const [isAdmin, setIsAdmin] = useState(!(user.admin === "0" || user.admin === undefined));
   // console.log("User in App");
   // console.log(user);
 
@@ -141,7 +140,7 @@ export default function App() {
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   const handleConfiguratorOpenNotifications = () =>
     setOpenConfigurator(dispatch, !openConfigurator);
-  const handleConfiguratorOpenMessage = () => setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpenMessage = () => {};
 
   // Setting the dir attribute for the body element
   useEffect(() => {
@@ -224,29 +223,33 @@ export default function App() {
       </Icon>
     </MDBox>
   );
-  const MassagesButton = (
-    <MDBox
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      width="3.25rem"
-      height="3.25rem"
-      bgColor="white"
-      shadow="sm"
-      borderRadius="20%"
-      top="140px"
-      position="fixed"
-      right="2rem"
-      // bottom="2rem"
-      zIndex={99}
-      color="dark"
-      sx={{ cursor: "pointer" }}
-      onClick={handleConfiguratorOpenMessage}
-    >
-      <Icon fontSize="small" color="inherit">
-        message
-      </Icon>
-    </MDBox>
+  const messageSubject = 'יצירת קשר עם שולחן התפ"י שלי';
+  const messageBody = "שלום, אנא מלא את פרטייך (שם מלא ומספר אישי) ואת פנייתך ונחזור אליך בהקדם.";
+  const ContactUsButton = (
+    <a href={`mailto:tony.personn@gmail.com?subject=${messageSubject}&body=${messageBody}`}>
+      <MDBox
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        width="3.25rem"
+        height="3.25rem"
+        bgColor="white"
+        shadow="sm"
+        borderRadius="20%"
+        top="140px"
+        position="fixed"
+        right="2rem"
+        // bottom="2rem"
+        zIndex={99}
+        color="dark"
+        sx={{ cursor: "pointer" }}
+        // onClick={handleConfiguratorOpenMessage}
+      >
+        <Icon fontSize="small" color="inherit">
+          support_agent
+        </Icon>
+      </MDBox>
+    </a>
   );
   // for the user
   useEffect(() => {
@@ -304,8 +307,7 @@ export default function App() {
             {configsButton}
             <Alerts />
             {AlertsButton}
-            <Messages />
-            {MassagesButton}
+            {ContactUsButton}
 
             {/* {layout === "vr" && <Configurator />} */}
             {user.user !== undefined ? (
@@ -327,11 +329,12 @@ export default function App() {
             ) : (
               <Routes>
                 {getRoutes(UserRoutes)}
-                {/* <Route path="/authentication/sign-in" element={<SignIn />} /> */}
-                {/* <Route path="/authentication/sign-up" element={<SignUp />} /> */}
+                {/* <Route path="/authentication/admin/sign-in" element={<SignIn />} /> */}
+                {/* <Route path="/authentication/admin/sign-up" element={<SignUpAdmin />} /> */}
                 <Route path="/Error404" element={<Error404 />} />
                 <Route path="/" element={<Navigate to="/dashboard" />} />
-                <Route path="*" element={<Navigate to="/dashboard" />} />
+                <Route path="*" element={<Navigate to="/Error404" />} />
+
 
                 <Route path="/Table" element={<Tables />} />
                 <Route path="/requiredProjects" element={<RequiredProjects />} />
@@ -339,6 +342,7 @@ export default function App() {
                 <Route path="/adminSummary">
                   <Route path=":formID" element={<CalenderTasksFormDB />} />
                 </Route>
+
                 {/* <Route path="/" element={<Navigate to="/about-us" />} /> */}
                 {/* <Route path="*" element={<Navigate to="/Error404" />} /> */}
               </Routes>

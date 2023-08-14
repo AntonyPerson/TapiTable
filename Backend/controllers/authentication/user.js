@@ -51,7 +51,7 @@ exports.remove = (req, res) => {
 };
 
 exports.usersbyrole = (req, res) => {
-  User.find({ role: req.params.role })
+  User.find({ admin: req.params.admin })
     .then((orders) => res.json(orders))
     .catch((err) => res.status(400).json("Error: " + err));
 };

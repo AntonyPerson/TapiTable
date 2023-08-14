@@ -30,10 +30,13 @@ import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
+import "./style.css";
+
 function AppThumnailCard({ image, title, action }) {
   return action.type === "external" ? (
     <MuiLink href={action.route} target="_blank" rel="noreferrer">
       <Card
+        className="jello-vertical"
         sx={{
           Width: "15rem",
           height: "15rem",
@@ -73,6 +76,7 @@ function AppThumnailCard({ image, title, action }) {
   ) : (
     <Link to={action.route}>
       <Card
+        className="shadow-inset-center"
         sx={{
           Width: "15rem",
           height: "15rem",

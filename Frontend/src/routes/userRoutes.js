@@ -39,11 +39,12 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React layouts
-import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables/regulsrUserRequestsTable";
-import CalendarView from "layouts/calendar";
 import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
+import SignUp from "layouts/authentication/sign-up/signUpAdmin";
+import CalendarView from "layouts/calendar";
+import Dashboard from "layouts/dashboard";
+import RequiredProjects from "layouts/requiedProjects";
+import Tables from "layouts/tables/regulsrUserRequestsTable";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -78,10 +79,18 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "requiredProjects",
+    key: "requiredProjects",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/requiredProjects",
+    component: <RequiredProjects />,
+  },
+  {
+    type: "collapse",
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
+    route: "/authentication/admin/sign-in",
     component: <SignIn />,
   },
   {
@@ -89,7 +98,7 @@ const routes = [
     name: "Sign Up",
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
+    route: "/authentication/admin/sign-up",
     component: <SignUp />,
   },
   {

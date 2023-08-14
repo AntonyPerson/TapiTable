@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
 // !
-app.use("/uploads", express.static("uploads")); // to acsses the uploades folder in the server
+app.use("TapiTableApi/uploads", express.static("uploads")); // to acsses the uploades folder in the server
 // Configure Mongo
 // const dbUrl = "mongodb://localhost/HozlaDB";
 const dbUrl = process.env.DB_URL;
@@ -43,21 +43,22 @@ mongoose
 //user routes
 const authRoutes = require("./routes/authentication/auth");
 const userRoutes = require("./routes/authentication/users");
-app.use("/api", authRoutes);
-app.use("/api", userRoutes);
+app.use("/TapiTableApi", authRoutes);
+app.use("/TapiTableApi", userRoutes);
 
 //Template Example Requests routes for Client
 const TemplateExampleRouter = require("./routes/TemplateExample");
 app.use("/TemplateExample", TemplateExampleRouter);
 
-//Posting Journal Form Requests routes for Client
+//Inspection Request - Form Requests routes for Client
 const InspectionRequest = require("./routes/InspectionRequest");
-app.use("/InspectionRequest", InspectionRequest);
+app.use("/TapiTableApi/InspectionRequest", InspectionRequest);
+
 
 //* file uploader Routes
 // upload files
 const fileuploaderRoutes = require("./routes/fileuploader/fileuploader");
-app.use("/api", fileuploaderRoutes);
+app.use("/TapiTableApi", fileuploaderRoutes);
 
 if (process.env.NODE_ENV === "production") {
   //set static folder

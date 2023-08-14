@@ -104,7 +104,7 @@ function Dashboard() {
   const tableApps = [
     {
       name: "ע' 14",
-      link: [pdfA14, fileexamplePDF1MB],
+      link: pdfA14,
       linkType: "external",
       image: PDFdownloadImage,
     },
