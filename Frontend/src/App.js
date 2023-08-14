@@ -335,7 +335,6 @@ export default function App() {
                 <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="*" element={<Navigate to="/Error404" />} />
 
-
                 <Route path="/Table" element={<Tables />} />
                 <Route path="/requiredProjects" element={<RequiredProjects />} />
 

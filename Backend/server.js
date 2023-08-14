@@ -54,7 +54,6 @@ app.use("/TemplateExample", TemplateExampleRouter);
 const InspectionRequest = require("./routes/InspectionRequest");
 app.use("/TapiTableApi/InspectionRequest", InspectionRequest);
 
-
 //* file uploader Routes
 // upload files
 const fileuploaderRoutes = require("./routes/fileuploader/fileuploader");

@@ -104,7 +104,7 @@ const FieldReuestFormDB = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/InspectionRequest/${params.formID}`)
+      .get(`http://localhost:5000/TapiTableApi/InspectionRequest/${params.formID}`)
       .then((response) => {
         // console.log(`the object data`);
         console.log(response.data);
@@ -310,7 +310,10 @@ const FieldReuestFormDB = () => {
       inspectorsPersonalnumber: data.inspectorsPersonalnumber,
     };
     axios
-      .post(`http://localhost:5000/InspectionRequest/updateSammary/${params.formID}`, updateData)
+      .post(
+        `http://localhost:5000/TapiTableApi/InspectionRequest/updateSammary/${params.formID}`,
+        updateData
+      )
       .then((response) => {
         // console.groupCollapsed(`handleStatusChange -------- Axios.then`);
         console.log(response.data);

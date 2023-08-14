@@ -89,7 +89,7 @@ export default function data() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/InspectionRequest/`)
+      .get(`http://localhost:5000/TapiTableApi/InspectionRequest/`)
       .then((response) => {
         console.log(response.data);
         setRequestDB(response.data);

@@ -265,7 +265,7 @@ export default function CalenderTasksForm() {
     console.log(dataForm);
     setData({ ...data, loading: true, successmsg: false, error: false, NavigateToReferrer: false });
     axios
-      .post(`http://localhost:5000/InspectionRequest/add`, dataForm)
+      .post(`http://localhost:5000/TapiTableApi/InspectionRequest/add`, dataForm)
       .then((response) => {
         setData({
           ...data,
