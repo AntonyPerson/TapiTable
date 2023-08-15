@@ -497,6 +497,7 @@ export default function CalenderTasksForm() {
                       onChange={handleChange}
                       required
                     >
+                      <option value="">בחר</option>
                       {listOfVisit.map((visitType) => (
                         <option value={visitType.value}>{visitType.visitName}</option>
                       ))}
@@ -524,6 +525,7 @@ export default function CalenderTasksForm() {
                       onChange={handleChange}
                       required
                     >
+                      <option value="">בחר</option>
                       {listOfVisit.map((visitType) => (
                         <option value={visitType.value}>{visitType.visitName}</option>
                       ))}

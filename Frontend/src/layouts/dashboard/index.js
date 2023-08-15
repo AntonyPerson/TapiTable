@@ -84,6 +84,7 @@ import PDFdownloadImage from "assets/images/PDFdownloadImage.png";
 import NGProjectTemplateLogoPNG from "assets/images/projectLogoImages/NGProjectTemplateLogoPNG.png";
 import fileexamplePDF1MB from "../../fileexamplePDF1MB.pdf";
 import pdfA14 from "../../Light.pdf";
+import logobazak from "assets/images/logobazak.png";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -127,10 +128,10 @@ function Dashboard() {
       image: NGProjectTemplateLogoPNG,
     },
     {
-      name: "בזק",
+      name: "בזכ",
       link: "https://www.google.com/",
       linkType: "external",
-      image: NGProjectTemplateLogoPNG,
+      image: logobazak,
     },
     {
       name: "מערכת Y",

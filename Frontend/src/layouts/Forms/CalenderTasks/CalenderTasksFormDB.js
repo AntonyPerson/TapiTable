@@ -46,6 +46,11 @@ import listOfVisit from "constValue/listOfVisit";
 
 import { signin, authenticate, isAuthenticated } from "auth/index";
 
+import HighEval from "assets/images/HighEval.svg";
+import GoodEval from "assets/images/GoodEval.svg";
+import MidEval from "assets/images/MidEval.svg";
+import LowEval from "assets/images/LowEval.svg";
+
 const { user } = isAuthenticated();
 const FieldReuestFormDB = () => {
   const params = useParams();
@@ -53,6 +58,7 @@ const FieldReuestFormDB = () => {
   const [formData, setFormData] = useState({});
   const [errorDB, setErrorDB] = useState(false);
   const [error404, setError404] = useState(false);
+  const [dates, setdates] = useState({});
   const [data, setData] = useState({
     metting_id: "",
 
@@ -111,10 +117,9 @@ const FieldReuestFormDB = () => {
         console.log(params.formID);
 
         setFormData(response.data);
-        // setdates({
-        //   workGivenDate: response.data.workGivenDate.split("T")[0],
-        //   workRecivedDate: response.data.workRecivedDate.split("T")[0],
-        // });
+        setdates({
+          dateOfInspection: response.data.dateOfInspection.split("T")[0],
+        });
         // setClientNote(response.data.clientNote.split("\n"));
         // setPropPrint(JSON.parse(response.data.propPrints));
         // console.log(propPrint);
@@ -199,7 +204,7 @@ const FieldReuestFormDB = () => {
   };
   function handleChange(evt) {
     const { value } = evt.target;
-    setData({ ...data, [evt.target.name]: value });
+    setFormData({ ...formData, [evt.target.name]: value });
   }
   const handleCloseSuccsecModal = () => {
     setData({ ...data, loading: false, error: false, successmsg: false, NavigateToReferrer: true });
@@ -260,9 +265,26 @@ const FieldReuestFormDB = () => {
 
     return [stutus, color];
   };
+
+  const inspectorsEval = () => {
+    if (formData.grade >= 0 && formData.grade <= 64) {
+      return LowEval;
+    }
+    if (formData.grade >= 65 && formData.grade <= 79) {
+      return MidEval;
+    }
+    if (formData.grade >= 80 && formData.grade <= 89) {
+      return GoodEval;
+    }
+    if (formData.grade >= 90 && formData.grade <= 100) {
+      return HighEval;
+    }
+    return null;
+  };
+
   const showSuccess = () => (
     <Dialog
-      open={data.successmsg}
+      open={formData.successmsg}
       onClose={handleCloseSuccsecModal}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
@@ -303,11 +325,11 @@ const FieldReuestFormDB = () => {
 
   const updateSummaryData = (event) => {
     const updateData = {
-      results: data.results,
-      improvments: data.improvments,
-      keeping: data.keeping,
-      grade: data.grade,
-      inspectorsPersonalnumber: data.inspectorsPersonalnumber,
+      results: formData.results,
+      improvments: formData.improvments,
+      keeping: formData.keeping,
+      grade: formData.grade,
+      inspectorsPersonalnumber: formData.inspectorsPersonalnumber,
     };
     axios
       .post(
@@ -317,8 +339,8 @@ const FieldReuestFormDB = () => {
       .then((response) => {
         // console.groupCollapsed(`handleStatusChange -------- Axios.then`);
         console.log(response.data);
-        setData({
-          ...data,
+        setFormData({
+          ...formData,
           loading: false,
           error: false,
           successmsg: true,
@@ -471,7 +493,7 @@ const FieldReuestFormDB = () => {
                       name="dateOfInspection"
                       type="date"
                       // step="2"
-                      value={formData.dateOfInspection}
+                      value={dates.dateOfInspection}
                       // onChange={handleChange}
                       disabled
                     />
@@ -559,7 +581,7 @@ const FieldReuestFormDB = () => {
                       // placeholder={textPlaceHolderInputs[1]}
                       name="results"
                       type="textarea"
-                      value={formData.results === "" ? data.results : formData.results}
+                      value={formData.results}
                       onChange={handleChange}
                       // disabled
                     />
@@ -570,7 +592,7 @@ const FieldReuestFormDB = () => {
                       // placeholder={textPlaceHolderInputs[1]}
                       name="improvments"
                       type="textarea"
-                      value={formData.improvments === "" ? data.improvments : formData.improvments}
+                      value={formData.improvments}
                       onChange={handleChange}
                       // disabled
                     />
@@ -581,7 +603,7 @@ const FieldReuestFormDB = () => {
                       // placeholder={textPlaceHolderInputs[1]}
                       name="keeping"
                       type="textarea"
-                      value={formData.keeping === "" ? data.keeping : formData.keeping}
+                      value={formData.keeping}
                       onChange={handleChange}
                       // disabled
                     />
@@ -594,33 +616,20 @@ const FieldReuestFormDB = () => {
                           // placeholder={textPlaceHolderInputs[1]}
                           name="grade"
                           type="number"
-                          value={formData.grade === "" ? data.grade : formData.grade}
+                          value={formData.grade}
+                          min={0}
+                          max={100}
                           onChange={handleChange}
                           // disabled
                         />
                       </FormGroup>
                     </Col>
                     <Col>
-                      <FormGroup>
-                        <Label for="inspectorsPersonalnumber">{textPlaceHolderInputs[11]}</Label>
-                        <Input
-                          // placeholder={textPlaceHolderInputs[1]}
-                          name="inspectorsPersonalnumber"
-                          type="select"
-                          value={
-                            formData.inspectorsPersonalnumber === ""
-                              ? data.inspectorsPersonalnumber
-                              : formData.inspectorsPersonalnumber
-                          }
-                          onChange={handleChange}
-                          // disabled
-                        >
-                          <option value="100-90">הערכה גבוהה 100-90</option>
-                          <option value="89-80">הערכה טובה 89-80</option>
-                          <option value="79-65">הערכה בינונית 79-65</option>
-                          <option value="64-0">הערכה נמוכה 64-0</option>
-                        </Input>
-                      </FormGroup>
+                      <img
+                        src={inspectorsEval()}
+                        alt="GradeImage"
+                        style={{ width: 300, height: 150 }}
+                      />
                     </Col>
                   </Row>
 
@@ -633,7 +642,7 @@ const FieldReuestFormDB = () => {
                       type="submit"
                     >
                       שמור
-                      <Icon fontSize="small">upload</Icon>&nbsp;
+                      <Icon fontSize="small">save</Icon>&nbsp;
                     </MDButton>
                   </div>
                 </FormGroup>
