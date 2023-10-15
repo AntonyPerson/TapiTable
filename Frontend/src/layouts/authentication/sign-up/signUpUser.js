@@ -63,7 +63,6 @@ function SignUpUser() {
     firstName: "",
     lastName: "",
     personalnumber: "",
-    userType: "",
 
     errortype: "",
     error: false,
@@ -105,7 +104,7 @@ function SignUpUser() {
   // eslint-disable-next-line react/no-unstable-nested-components
   function NavigateUser() {
     if (signUpData.NavigateToReferrer) {
-      return <Navigate to="/userRequestsTable" />;
+      return <Navigate to="/" />;
     }
   }
 
@@ -230,11 +229,6 @@ function SignUpUser() {
       ErrorReason.push("אנא הכנס שם משפחה");
       // toast.error(ErrorReason);
     }
-    if (signUpData.userType === "") {
-      flag = false;
-      ErrorReason.push("אנא בחר מערכת להרשמה");
-      // toast.error(ErrorReason);
-    }
     if (flag !== true) {
       ErrorReason.forEach((reason) => {
         toast.error(reason);
@@ -254,8 +248,8 @@ function SignUpUser() {
       firstName: signUpData.firstName,
       lastLame: signUpData.lastName,
       personalnumber: signUpData.personalnumber,
-      admin: signUpData.userType,
-      approved: true,
+      admin: "0",
+      adminType: "0",
     };
     await axios
       .post(`http://localhost:5000/TapiTableApi/signup`, newUser)
@@ -297,7 +291,7 @@ function SignUpUser() {
         textAlign="center"
       >
         <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-          {`מערכת הוצל"א / תורה חילית`}
+          {`הרשמה למערכת שולחן התפ"י שלי`}
         </MDTypography>
         <MDTypography display="block" variant="button" color="white" my={1}>
           הגיע הזמן להירשם אלינו 😉
@@ -341,25 +335,7 @@ function SignUpUser() {
               fullWidth
             />
           </MDBox>
-          <MDBox mb={2}>
-            <FormControl required>
-              <InputLabel id="demo-simple-select-autowidth-label">בחר מערכת</InputLabel>
-              <Select
-                required
-                labelId="demo-simple-select-autowidth-label"
-                name="userType"
-                id="demo-simple-select-autowidth"
-                value={signUpData.userType}
-                onChange={handleChange}
-                autoWidth
-                label="בחר מערכת"
-                sx={{ height: 50, minWidth: 150 }}
-              >
-                <MenuItem value="0">{`הוצל"א`}</MenuItem>
-                <MenuItem value="3">תורה חילית</MenuItem>
-              </Select>
-            </FormControl>
-          </MDBox>
+
           {/* <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />
               <MDTypography
@@ -381,15 +357,6 @@ function SignUpUser() {
                 Terms and Conditions
               </MDTypography>
             </MDBox> */}
-          {signUpData.userType === "0" ? (
-            <MDTypography textGradient variant="caption" fontWeight="medium" color="error">
-              {` *שים לב, שרק חיילי מפקדת מקטנא"ר יכולים להירשם למערכת הוצל"א`}
-            </MDTypography>
-          ) : signUpData.userType === "3" ? (
-            <MDTypography textGradient variant="caption" fontWeight="medium" color="error">
-              {` *שים לב, שרק חיילים שלא שייכים למפקדת מקטנא"ר יכולים להירשם למערכת תורה חילית`}
-            </MDTypography>
-          ) : null}
           <MDBox mt={4} mb={1}>
             <MDButton variant="gradient" color="mekatnar" type="submit" fullWidth>
               הירשם

@@ -61,6 +61,7 @@ function SignUpAdmin() {
     firstName: "",
     lastName: "",
     personalnumber: "",
+    userType: "",
 
     errortype: "",
     error: false,
@@ -227,6 +228,11 @@ function SignUpAdmin() {
       ErrorReason.push("אנא הכנס שם משפחה");
       // toast.error(ErrorReason);
     }
+    if (signUpData.userType === "") {
+      flag = false;
+      ErrorReason.push("אנא בחר  סוג משתמש");
+      // toast.error(ErrorReason);
+    }
     if (flag !== true) {
       ErrorReason.forEach((reason) => {
         toast.error(reason);
@@ -247,7 +253,7 @@ function SignUpAdmin() {
       lastLame: signUpData.lastName,
       personalnumber: signUpData.personalnumber,
       admin: "1",
-      approved: false,
+      adminType: signUpData.userType,
     };
     await axios
       .post(`http://localhost:5000/TapiTableApi/signup`, newUser)
@@ -289,7 +295,7 @@ function SignUpAdmin() {
         textAlign="center"
       >
         <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-          {`הנהלה - מערכת הוצל"א / תורה חילית`}
+          {`הנהלה - הרשמה למערכת שולחן התפ"י שלי`}
         </MDTypography>
         <MDTypography display="block" variant="button" color="white" my={1}>
           הגיע הזמן להירשם אלינו 😉
@@ -333,27 +339,26 @@ function SignUpAdmin() {
               fullWidth
             />
           </MDBox>
-          {/* <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
+          <MDBox mb={2}>
+            <FormControl required>
+              <InputLabel id="demo-simple-select-autowidth-label">בחר סוג משתמש</InputLabel>
+              <Select
+                required
+                labelId="demo-simple-select-autowidth-label"
+                name="userType"
+                id="demo-simple-select-autowidth"
+                value={signUpData.userType}
+                onChange={handleChange}
+                autoWidth
+                label="בחר סוג משתמש"
+                sx={{ height: 50, minWidth: 150 }}
               >
-                &nbsp;&nbsp;I agree the&nbsp;
-              </MDTypography>
-              <MDTypography
-                component="a"
-                href="#"
-                variant="button"
-                fontWeight="bold"
-                color="mekatnar"
-                textGradient
-              >
-                Terms and Conditions
-              </MDTypography>
-            </MDBox> */}
+                <MenuItem value="">בחר</MenuItem>
+                <MenuItem value="1">מבקר</MenuItem>
+                <MenuItem value="2">מנהל</MenuItem>
+              </Select>
+            </FormControl>
+          </MDBox>
           <MDBox mt={4} mb={1}>
             <MDButton variant="gradient" color="mekatnar" type="submit" fullWidth>
               הירשם

@@ -195,7 +195,7 @@ function signIn() {
 
         <DialogContent>
           <MDTypography variant="h5" fontWeight="medium" color="white" mt={1}>
-            ההץחברות תיקח מספר רגעים...
+            ההתחברות תיקח מספר רגעים...
           </MDTypography>
         </DialogContent>
       </MDBox>
@@ -304,7 +304,7 @@ function signIn() {
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            {'התחברות למערכת הוצל"א'}
+            {'התחברות למערכת שולחן התפ"י שלי'}
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>

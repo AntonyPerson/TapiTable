@@ -78,8 +78,8 @@ import SignUpUser from "layouts/authentication/sign-up/signUpUser";
 import { authenticate, isAuthenticated, signin, updateRefreshCount } from "auth/index";
 
 import sidenav from "assets/theme/components/sidenav";
-import RequiredProjects from "layouts/requiedProjects";
 import CalenderTasksFormDB from "layouts/Forms/CalenderTasks/CalenderTasksFormDB";
+import RequiredProjects from "layouts/requiedProjects";
 import Tables from "layouts/tables/regulsrUserRequestsTable";
 import AboutPage from "views/aboutpage/AboutPage";
 
@@ -329,8 +329,9 @@ export default function App() {
             ) : (
               <Routes>
                 {getRoutes(UserRoutes)}
-                {/* <Route path="/authentication/admin/sign-in" element={<SignIn />} /> */}
-                {/* <Route path="/authentication/admin/sign-up" element={<SignUpAdmin />} /> */}
+                <Route path="/authentication/sign-in" element={<SignIn />} />
+                <Route path="/authentication/sign-up" element={<SignUpUser />} />
+                <Route path="/authentication/admin/sign-up" element={<SignUpAdmin />} />
                 <Route path="/Error404" element={<Error404 />} />
                 <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="*" element={<Navigate to="/Error404" />} />
