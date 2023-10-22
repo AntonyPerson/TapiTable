@@ -3,6 +3,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-console */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable react/no-unstable-nested-components */
@@ -122,6 +123,8 @@ export default function HozlaPrintRequestForm() {
     }
   }
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [requestDB, setRequestDB] = useState([]);
+  const [eventInCalender, setEventInCalender] = useState(false);
   const [fileLimit, setFileLimit] = useState(false);
   const [file, setFile] = useState([]);
   const [data, setData] = useState({
@@ -183,6 +186,49 @@ export default function HozlaPrintRequestForm() {
   const inputRef = React.useRef(null);
   const [currentEvents, setCurrentEvents] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/TapiTableApi/InspectionRequest/`)
+      .then((response) => {
+        // const calendarApi = selected.view.calendar;
+        // calendarApi.unselected();
+        console.log(response.data);
+        setRequestDB(
+          response.data.map((Tapi, index) => ({
+            id: Tapi._id,
+            title: Tapi.visitedName,
+            date: Tapi.dateOfInspection,
+            color: "yellow",
+            textColor: "black",
+          }))
+        );
+
+        // setRequestDB(
+        //   response.data.map((Tapi, index) => {
+        //     calendarApi.addEvent({
+        //       id: Tapi._id,
+        //       title: "ddsssf",
+        //       date: "2023-10-01",
+        //     });
+        //   })
+        // );
+      })
+      .catch((error) => {
+        console.log(error);
+        // setIsError(true);
+      });
+  }, []);
+
+  const dbRows = requestDB.map((Tapi, index) => [
+    {
+      id: Tapi._id,
+      title: "Tapi.inspectedName",
+      start: "2023-10-14T10:00:00",
+      end: "2023-10-14T16:00:00",
+      display: "background",
+    },
+  ]);
+
   const textPlaceHolderInputs = [
     "יחידה",
     "ענף",
@@ -202,12 +248,12 @@ export default function HozlaPrintRequestForm() {
     "שם אוסף העבודה",
   ];
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    if (CheckSignUpForm(event)) {
-      SendFormData(event);
-    }
-  };
+  // const onSubmit = (event) => {
+  //   event.preventDefault();
+  //   if (CheckSignUpForm(event)) {
+  //     SendFormData(event);
+  //   }
+  // };
 
   const CheckSignUpForm = (event) => {
     event.preventDefault();
@@ -295,82 +341,82 @@ export default function HozlaPrintRequestForm() {
     }
   };
 
-  const SendFormData = (event) => {
-    // CreateAssessmentData();
-    event.preventDefault();
-    setData({ ...data, loading: true, successmsg: false, error: false, NavigateToReferrer: false });
-    console.log(`files: ${files}`);
-    //* Sending only the files to the DB
-    //! the separating code lines from singlefile to multifiles
-    const formFilesData = new FormData();
-    Object.keys(files).forEach((key) => {
-      formFilesData.append("files", files[key]);
-    });
-    // for (const key of Object.keys(files)) {
-    //   formFilesData.append("files", files[key]);
-    // }
-    axios.post("http://localhost:5000/api/multipleFiles", formFilesData, {}).then((res) => {
-      console.log("from the file axios");
-      console.log(res.data);
-      const requestData = {
-        typeRequest: "HozlaRequest",
-        unit: data.unit,
-        anaf: data.anaf,
-        mador: data.mador,
+  // const SendFormData = (event) => {
+  //   // CreateAssessmentData();
+  //   event.preventDefault();
+  //   setData({ ...data, loading: true, successmsg: false, error: false, NavigateToReferrer: false });
+  //   console.log(`files: ${files}`);
+  //   //* Sending only the files to the DB
+  //   //! the separating code lines from singlefile to multifiles
+  //   const formFilesData = new FormData();
+  //   Object.keys(files).forEach((key) => {
+  //     formFilesData.append("files", files[key]);
+  //   });
+  //   // for (const key of Object.keys(files)) {
+  //   //   formFilesData.append("files", files[key]);
+  //   // }
+  //   axios.post("http://localhost:5000/api/multipleFiles", formFilesData, {}).then((res) => {
+  //     console.log("from the file axios");
+  //     console.log(res.data);
+  //     const requestData = {
+  //       typeRequest: "HozlaRequest",
+  //       unit: data.unit,
+  //       anaf: data.anaf,
+  //       mador: data.mador,
 
-        workName: data.workName,
-        workClearance: data.workClearance,
-        bindingType: data.bindingType,
-        bindingTypeOther: data.bindingTypeOther,
-        // copyType: data.copyType,
-        numOfCopyies: data.numOfCopyies,
+  //       workName: data.workName,
+  //       workClearance: data.workClearance,
+  //       bindingType: data.bindingType,
+  //       bindingTypeOther: data.bindingTypeOther,
+  //       // copyType: data.copyType,
+  //       numOfCopyies: data.numOfCopyies,
 
-        phoneNumber: data.phoneNumber,
-        fullNameAsker: data.fullNameAsker,
-        workGivenDate: data.workGivenDate,
+  //       phoneNumber: data.phoneNumber,
+  //       fullNameAsker: data.fullNameAsker,
+  //       workGivenDate: data.workGivenDate,
 
-        fullNameReciver: data.fullNameReciver,
-        fullNameTakein: data.fullNameTakein,
-        workRecivedDate: data.workRecivedDate,
+  //       fullNameReciver: data.fullNameReciver,
+  //       fullNameTakein: data.fullNameTakein,
+  //       workRecivedDate: data.workRecivedDate,
 
-        personalnumber: data.personalnumber,
-        // role: data.role,
+  //       personalnumber: data.personalnumber,
+  //       // role: data.role,
 
-        // files: data.files,
-        files_id: res.data,
-        propPrints: JSON.stringify(propPrint),
-        // pageType: data.pageType,
-        ordernum: data.ordernum,
-        clientNote: data.clientNote,
-      };
-      console.log(requestData);
-      axios
-        .post(`http://localhost:5000/hozlaRequests/add`, requestData)
-        .then((response) => {
-          setData({
-            ...data,
-            work_id: res.data,
-            loading: false,
-            error: false,
-            successmsg: true,
-            NavigateToReferrer: false,
-          });
-          // toast.success(`הטופס נשלח בהצלחה`);
-          // history.push(`/signin`);
-          console.log(response.data);
-        })
-        .catch((error) => {
-          // console.log(error);
-          setData({
-            ...data,
-            errortype: error.response,
-            loading: false,
-            error: true,
-            NavigateToReferrer: false,
-          });
-        });
-    });
-  };
+  //       // files: data.files,
+  //       files_id: res.data,
+  //       propPrints: JSON.stringify(propPrint),
+  //       // pageType: data.pageType,
+  //       ordernum: data.ordernum,
+  //       clientNote: data.clientNote,
+  //     };
+  //     console.log(requestData);
+  //     axios
+  //       .post(`http://localhost:5000/hozlaRequests/add`, requestData)
+  //       .then((response) => {
+  //         setData({
+  //           ...data,
+  //           work_id: res.data,
+  //           loading: false,
+  //           error: false,
+  //           successmsg: true,
+  //           NavigateToReferrer: false,
+  //         });
+  //         // toast.success(`הטופס נשלח בהצלחה`);
+  //         // history.push(`/signin`);
+  //         console.log(response.data);
+  //       })
+  //       .catch((error) => {
+  //         // console.log(error);
+  //         setData({
+  //           ...data,
+  //           errortype: error.response,
+  //           loading: false,
+  //           error: true,
+  //           NavigateToReferrer: false,
+  //         });
+  //       });
+  //   });
+  // };
 
   const handleCloseSuccsecModal = () => {
     setData({ ...data, loading: false, error: false, successmsg: false, NavigateToReferrer: true });
@@ -491,17 +537,83 @@ export default function HozlaPrintRequestForm() {
   );
 
   const handleDateClick = (selected) => {
-    const title = prompt("title");
+    // const title = prompt("title");
+    console.log("requestDB");
+    console.log(requestDB);
+    console.log([
+      { id: "12", title: "event 1", date: "2023-07-01" },
+      {
+        id: "13",
+        title: "event 2",
+        date: "2023-07-04",
+        url: "https://www.google.com/",
+      },
+      { id: "11", title: "חשוב!", date: "2023-07-05" },
+      {
+        id: "15",
+        title: "אירוע 2",
+        start: "2023-07-08",
+        end: "2023-07-11",
+        color: "yellow",
+        textColor: "black",
+      },
+      { id: "17", title: "אירוע 3", start: "2023-07-12", end: "2023-07-17" },
+      {
+        id: "19119",
+        title: "אירוע 22",
+        start: "2023-07-18",
+        end: "2023-07-20",
+      },
+      { id: "18", title: "אירוע 4", date: "2023-07-22", duration: "10:30" },
+      {
+        id: "1993",
+        title: "אירוע 43",
+        start: "2023-07-10T10:00:00",
+        end: "2023-07-10T16:00:00",
+        // display: "background",
+      },
+      {
+        id: "19934",
+        title: "אירוע 444",
+        start: "2023-07-10T08:00:00",
+        end: "2023-07-10T09:00:00",
+        // display: "background",
+      },
+      {
+        id: "19924",
+        title: "אירוע 449",
+        start: "2023-07-10T18:00:00",
+        end: "2023-07-10T19:30:00",
+        // display: "background",
+      },
+      {
+        id: "19393",
+        title: "אירוע 46",
+        start: "2023-07-10T11:00:00",
+        end: "2023-07-10T18:00:00",
+        // display: "background",
+      },
+      {
+        id: "1992",
+        title: "אירוע 244",
+        start: "2023-07-12T10:00:00",
+        end: "2023-07-14T16:00:00",
+        display: "background",
+      },
+    ]);
     const calendarApi = selected.view.calendar;
-    calendarApi.unselected();
-    if (title) {
-      calendarApi.addEvent({
-        id: `${selected.dateStr}-${title}`,
-        title,
-        start: selected.startStr,
-        end: selected.endStr,
-        allDay: selected.allDay,
-      });
+    // calendarApi.unselected();
+    setEventInCalender(true);
+    if (!eventInCalender) {
+      requestDB.map((Tapi, index) =>
+        calendarApi.addEvent({
+          id: Tapi._id,
+          title: Tapi.title,
+          date: Tapi.date,
+          color: "yellow",
+          textColor: "black",
+        })
+      );
     }
   };
 
@@ -542,67 +654,8 @@ export default function HozlaPrintRequestForm() {
                 selectable="true"
                 selectMirror="true"
                 dayMaxEvents="true"
-                initialEvents={[
-                  { id: "12", title: "event 1", date: "2023-07-01" },
-                  {
-                    id: "13",
-                    title: "event 2",
-                    date: "2023-07-04",
-                    url: "https://www.google.com/",
-                  },
-                  { id: "11", title: "חשוב!", date: "2023-07-05" },
-                  {
-                    id: "15",
-                    title: "אירוע 2",
-                    start: "2023-07-08",
-                    end: "2023-07-11",
-                    color: "yellow",
-                    textColor: "black",
-                  },
-                  { id: "17", title: "אירוע 3", start: "2023-07-12", end: "2023-07-17" },
-                  {
-                    id: "19119",
-                    title: "אירוע 22",
-                    start: "2023-07-18",
-                    end: "2023-07-20",
-                  },
-                  { id: "18", title: "אירוע 4", date: "2023-07-22", duration: "10:30" },
-                  {
-                    id: "1993",
-                    title: "אירוע 43",
-                    start: "2023-07-10T10:00:00",
-                    end: "2023-07-10T16:00:00",
-                    // display: "background",
-                  },
-                  {
-                    id: "19934",
-                    title: "אירוע 444",
-                    start: "2023-07-10T08:00:00",
-                    end: "2023-07-10T09:00:00",
-                    // display: "background",
-                  },
-                  {
-                    id: "19924",
-                    title: "אירוע 449",
-                    start: "2023-07-10T18:00:00",
-                    end: "2023-07-10T19:30:00",
-                    // display: "background",
-                  },
-                  {
-                    id: "19393",
-                    title: "אירוע 46",
-                    start: "2023-07-10T11:00:00",
-                    end: "2023-07-10T18:00:00",
-                    // display: "background",
-                  },
-                  {
-                    id: "1992",
-                    title: "אירוע 244",
-                    start: "2023-07-12T10:00:00",
-                    end: "2023-07-14T16:00:00",
-                    display: "background",
-                  },
-                ]}
+                initialEvents={requestDB}
+                // eventAdd={events => hadleSetEvents(events)}
                 select={handleDateClick}
                 eventClick={handleEventClick}
                 eventsSet={(events) => setCurrentEvents(events)}
