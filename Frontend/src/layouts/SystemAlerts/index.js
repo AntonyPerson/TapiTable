@@ -86,7 +86,7 @@ import NGProjectTemplateLogoPNG from "assets/images/projectLogoImages/NGProjectT
 import pdfA14 from "../../Light.pdf";
 import fileexamplePDF1MB from "../../fileexamplePDF1MB.pdf";
 
-function Dashboard() {
+function SystemAlerts() {
   // const [tabView, setTabView] = useState(0);
   const [massagesClient, setMassagesClient] = useState([]);
 
@@ -94,7 +94,7 @@ function Dashboard() {
     axios
       .get(`http://localhost:5000/TapiTableApi/SystemAlerts`)
       .then((response) => {
-        setMassagesClient(response.data.slice(0, 5));
+        setMassagesClient(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -122,115 +122,16 @@ function Dashboard() {
     }
     return [icon, color];
   };
-  const tableApps = [
-    {
-      name: "ע' 14",
-      link: pdfA14,
-      linkType: "external",
-      image: PDFdownloadImage,
-    },
-    {
-      name: 'תפ"י ממוחשב',
-      link: "https://www.google.com/",
-      linkType: "external",
-      image: NGProjectTemplateLogoPNG,
-    },
-    {
-      name: "יומן רישומים",
-      link: "/Table",
-      linkType: "internal",
-      image: NGProjectTemplateLogoPNG,
-    },
-    {
-      name: "פרויקטים נדרשים",
-      link: "/requiredProjects",
-      linkType: "internal",
-      image: NGProjectTemplateLogoPNG,
-    },
-    {
-      name: "בזכ",
-      link: "https://www.google.com/",
-      linkType: "external",
-      image: logobazak,
-    },
-    {
-      name: "מערכת Y",
-      link: "https://www.google.com/",
-      linkType: "external",
-      image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-    },
-  ];
-
-  // const massagesClient = [
-  // {
-  //   title: "$2400 Design changes",
-  //   dateTime: "21/01/2022",
-  //   icon: "notifications",
-  //   color: "warning",
-  //   description:
-  //     "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-  // },
-  //   {
-  //     title: "$2400 Design changes",
-  //     dateTime: "21/02/2022",
-  //     icon: "notifications",
-  //     color: "error",
-  //     description:
-  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-  //   },
-  //   {
-  //     title: "$2400 Design changes",
-  //     dateTime: "21/03/2022",
-  //     icon: "notifications",
-  //     color: "mekatnar",
-  //     description:
-  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-  //   },
-  //   {
-  //     title: "$2400 Design changes",
-  //     dateTime: "21/04/2022",
-  //     icon: "notifications",
-  //     color: "info",
-  //     description:
-  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-  //   },
-  //   {
-  //     title: "$2400 Design changes",
-  //     dateTime: "21/04/2022",
-  //     icon: "priority_highIcon",
-  //     color: "error",
-  //     description:
-  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-  //   },
-  // ];
-
   const clientView = () => (
-    <>
-      <MDBox py={3}>
-        <Grid container spacing={3}>
-          {tableApps.map((app, index) => (
-            <Grid item xs={12} md={6} lg={3} key={index}>
-              <AppThumnailCard
-                color="mekatnar"
-                title={app.name}
-                image={app.image}
-                action={{
-                  type: app.linkType,
-                  route: app.link,
-                }}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </MDBox>
+    <MDBox py={3}>
       <MDBox
         sx={{
-          width: "50%",
+          width: "100%",
           justifyItems: "center",
         }}
         py={3}
       >
-        <TimelineList title="הודעות מערכת">
+        <TimelineList title="">
           {massagesClient.length !== 0 ? (
             massagesClient.map((message, index) =>
               index === massagesClient.length - 1 ? (
@@ -259,16 +160,9 @@ function Dashboard() {
               אין הודעות מערכת
             </MDTypography>
           )}
-          {massagesClient.length !== 0 ? (
-            <Link to="/systemAlerts">
-              <MDButton variant="outlined" color="info">
-                ראה את כל ההודעות
-              </MDButton>
-            </Link>
-          ) : null}
         </TimelineList>
       </MDBox>
-    </>
+    </MDBox>
   );
 
   return (
@@ -290,4 +184,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default SystemAlerts;

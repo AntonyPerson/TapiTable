@@ -13,6 +13,13 @@ exports.getuserbyid = (req, res) => {
   });
 };
 
+exports.getusersandsortbylevel = (req, res) => {
+  User.find()
+    .sort({ admin: -1, adminType: -1 })
+    .then((orders) => res.json(orders))
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 exports.getuserbypersonalnumber = (req, res) => {
   User.findOne(req.body.personalnumber).exec((err, user) => {
     if (err || !user) {

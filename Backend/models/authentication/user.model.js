@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema(
     lastLame: { type: String, trim: true, required: true },
     admin: { type: String, default: "0" }, // 0-regular user, 1-semi-admin(maneger) ,2-admin with edit permissons
     adminType: { type: String, default: "0" }, // 0-not admin, 1-inspector, ,2-admin
+    approved: { type: Boolean, default: false },
     // unit: String,
     // anaf: String,
     // mador: String,

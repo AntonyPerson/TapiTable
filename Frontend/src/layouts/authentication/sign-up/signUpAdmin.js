@@ -254,6 +254,7 @@ function SignUpAdmin() {
       personalnumber: signUpData.personalnumber,
       admin: "1",
       adminType: signUpData.userType,
+      approved: false,
     };
     await axios
       .post(`http://localhost:5000/TapiTableApi/signup`, newUser)

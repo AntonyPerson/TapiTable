@@ -80,6 +80,8 @@ import { authenticate, isAuthenticated, signin, updateRefreshCount } from "auth/
 import sidenav from "assets/theme/components/sidenav";
 import CalenderTasksFormDB from "layouts/Forms/CalenderTasks/CalenderTasksFormDB";
 import RequiredProjects from "layouts/requiedProjects";
+import SystemAlerts from "layouts/SystemAlerts";
+import AdminManagementTable from "layouts/tables/adminManagementTable";
 import Tables from "layouts/tables/regulsrUserRequestsTable";
 import AboutPage from "views/aboutpage/AboutPage";
 
@@ -121,20 +123,20 @@ export default function App() {
   }, []);
 
   // Open sidenav when mouse enter on mini sidenav
-  // const handleOnMouseEnter = () => {
-  //   if (miniSidenav && !onMouseEnter) {
-  //     setMiniSidenav(dispatch, false);
-  //     setOnMouseEnter(true);
-  //   }
-  // };
+  const handleOnMouseEnter = () => {
+    if (miniSidenav && !onMouseEnter) {
+      setMiniSidenav(dispatch, false);
+      setOnMouseEnter(true);
+    }
+  };
 
   // Close sidenav when mouse leave mini sidenav
-  // const handleOnMouseLeave = () => {
-  //   if (onMouseEnter) {
-  //     setMiniSidenav(dispatch, true);
-  //     setOnMouseEnter(false);
-  //   }
-  // };
+  const handleOnMouseLeave = () => {
+    if (onMouseEnter) {
+      setMiniSidenav(dispatch, true);
+      setOnMouseEnter(false);
+    }
+  };
 
   // Change the openConfigurator state
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
@@ -286,7 +288,7 @@ export default function App() {
         <CacheProvider value={rtlCache}>
           <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
             <CssBaseline />
-            {/* {layout === "dashboard" && user.user !== undefined ? (
+            {layout !== "dashboard" && user.user !== undefined ? (
               <>
                 <Sidenav
                   color={sidenavColor}
@@ -300,9 +302,8 @@ export default function App() {
                   onMouseEnter={handleOnMouseEnter}
                   onMouseLeave={handleOnMouseLeave}
                 />
-                
               </>
-            ) : null} */}
+            ) : null}
             <Configurator />
             {configsButton}
             <Alerts />
@@ -325,7 +326,29 @@ export default function App() {
                   </Route> */}
                   <Route path="*" element={<Error404 />} />
                 </Routes>
-              ) : null
+              ) : (
+                <Routes>
+                  {getRoutes(UserRoutes)}
+                  <Route path="/authentication/sign-in" element={<SignIn />} />
+                  <Route path="/authentication/sign-up" element={<SignUpUser />} />
+                  <Route path="/authentication/admin/sign-up" element={<SignUpAdmin />} />
+                  <Route path="/Error404" element={<Error404 />} />
+                  <Route path="/" element={<Navigate to="/dashboard" />} />
+                  <Route path="*" element={<Navigate to="/Error404" />} />
+
+                  <Route path="/Table" element={<Tables />} />
+                  <Route path="/AdminManagementTable" element={<AdminManagementTable />} />
+                  <Route path="/requiredProjects" element={<RequiredProjects />} />
+                  <Route path="/SystemAlerts" element={<SystemAlerts />} />
+
+                  <Route path="/adminSummary">
+                    <Route path=":formID" element={<CalenderTasksFormDB />} />
+                  </Route>
+
+                  {/* <Route path="/" element={<Navigate to="/about-us" />} /> */}
+                  {/* <Route path="*" element={<Navigate to="/Error404" />} /> */}
+                </Routes>
+              )
             ) : (
               <Routes>
                 {getRoutes(UserRoutes)}
@@ -337,7 +360,9 @@ export default function App() {
                 <Route path="*" element={<Navigate to="/Error404" />} />
 
                 <Route path="/Table" element={<Tables />} />
+                <Route path="/AdminManagementTable" element={<AdminManagementTable />} />
                 <Route path="/requiredProjects" element={<RequiredProjects />} />
+                <Route path="/systemAlerts" element={<RequiredProjects />} />
 
                 <Route path="/adminSummary">
                   <Route path=":formID" element={<CalenderTasksFormDB />} />
