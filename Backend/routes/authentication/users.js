@@ -8,6 +8,7 @@ const {
   update,
   remove,
   usersbyrole,
+  getusersandsortbylevel,
 } = require("../../controllers/authentication/user");
 
 router.post("/getuserbyid", getuserbyid);
@@ -15,6 +16,7 @@ router.post("/getuserbyid", getuserbyid);
 router.post("/getuserbypersonalnumber", getuserbypersonalnumber);
 
 router.get("/users", find);
+router.get("/usersLevel", getusersandsortbylevel);
 
 router.put("/user/update/:id", update);
 

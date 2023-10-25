@@ -84,13 +84,17 @@ import PDFdownloadImage from "assets/images/PDFdownloadImage.png";
 import logobazak from "assets/images/logobazak.png";
 import NGProjectTemplateLogoPNG from "assets/images/projectLogoImages/NGProjectTemplateLogoPNG.png";
 import { isAuthenticated } from "auth";
+import SystemAlertsFromDB from "layouts/Forms/SystemAlerts/SystemAlertsFormDB";
 import pdfA14 from "../../Light.pdf";
 import fileexamplePDF1MB from "../../fileexamplePDF1MB.pdf";
 
 const { user } = isAuthenticated();
-function Dashboard() {
+
+function SystemAlerts() {
   // const [tabView, setTabView] = useState(0);
   const [massagesClient, setMassagesClient] = useState([]);
+  const [toEditAlert, setToEditAlert] = useState(false);
+  const [toEditAlertID, setToEditAlertID] = useState("");
 
   const getFilterByAdmin = (admin, type, messageType) => {
     let array = ["00", "99"];
@@ -117,7 +121,7 @@ function Dashboard() {
         const admin = user !== undefined ? user.admin : "-1";
         const type = user !== undefined ? user.adminType : "-1";
         setMassagesClient(
-          response.data.filter((message) => getFilterByAdmin(admin, type, message.type)).slice(0, 5)
+          response.data.filter((message) => getFilterByAdmin(admin, type, message.type))
         );
       })
       .catch((error) => {
@@ -125,6 +129,24 @@ function Dashboard() {
       });
   }, []);
 
+  const editAlert = () => (
+    <Dialog
+      px={5}
+      open={toEditAlert}
+      onClose={() => {
+        setToEditAlert(false);
+        setToEditAlertID("");
+      }}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <MDBox variant="gradient" bgColor="mekatnar" coloredShadow="mekatnar" borderRadius="l">
+        <DialogContent>
+          <SystemAlertsFromDB alertID={toEditAlertID} />
+        </DialogContent>
+      </MDBox>
+    </Dialog>
+  );
   const getTypeALertIconColor = (type) => {
     let icon = "notifications";
     let color = "mekatnar";
@@ -146,78 +168,58 @@ function Dashboard() {
     }
     return [icon, color];
   };
-  const tableApps = [
-    {
-      name: "ע' 14",
-      link: pdfA14,
-      linkType: "external",
-      image: PDFdownloadImage,
-    },
-    {
-      name: 'תפ"י ממוחשב',
-      link: "https://www.google.com/",
-      linkType: "external",
-      image: NGProjectTemplateLogoPNG,
-    },
-    {
-      name: "יומן רישומים",
-      link: "/Table",
-      linkType: "internal",
-      image: NGProjectTemplateLogoPNG,
-    },
-    {
-      name: "פרויקטים נדרשים",
-      link: "/requiredProjects",
-      linkType: "internal",
-      image: NGProjectTemplateLogoPNG,
-    },
-    {
-      name: "בזכ",
-      link: "https://www.google.com/",
-      linkType: "external",
-      image: logobazak,
-    },
-    {
-      name: "מערכת Y",
-      link: "https://www.google.com/",
-      linkType: "external",
-      image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-    },
-  ];
-
   const clientView = () => (
-    <>
-      <MDBox py={3}>
-        <Grid container spacing={3}>
-          {tableApps.map((app, index) => (
-            <Grid item xs={12} md={6} lg={3} key={index}>
-              <AppThumnailCard
-                color="mekatnar"
-                title={app.name}
-                image={app.image}
-                action={{
-                  type: app.linkType,
-                  route: app.link,
-                }}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </MDBox>
+    <MDBox py={3}>
+      {user !== undefined && user.admin === "2" && user.adminType === "2" && (
+        <MDTypography variant="h6" fontWeight="medium" color="secondary" sx={{ my: -1 }}>
+          * לעריכת ההודעה, יש ללחוץ על כותרת ההודעה{" "}
+        </MDTypography>
+      )}
       <MDBox
         sx={{
-          width: "50%",
+          width: "100%",
           justifyItems: "center",
         }}
         py={3}
       >
-        <TimelineList title="הודעות מערכת">
+        <TimelineList title="">
           {massagesClient.length !== 0 ? (
             massagesClient.map((message, index) =>
               index === massagesClient.length - 1 ? (
                 <TimelineItem
                   icon={getTypeALertIconColor(message.type)[0]}
-                  title={message.title}
+                  title={
+                    user !== undefined && user.admin === "2" && user.adminType === "2" ? (
+                      <MDButton
+                        sx={{
+                          py: 0,
+                          px: 0,
+                        }}
+                        variant="text"
+                        color={getTypeALertIconColor(message.type)[1]}
+                        onClick={() => {
+                          setToEditAlert(true);
+                          setToEditAlertID(message._id);
+                        }}
+                      >
+                        <MDTypography
+                          variant="h6"
+                          fontWeight="medium"
+                          color={getTypeALertIconColor(message.type)[1]}
+                        >
+                          {message.title}
+                        </MDTypography>
+                      </MDButton>
+                    ) : (
+                      <MDTypography
+                        variant="h6"
+                        fontWeight="medium"
+                        color={getTypeALertIconColor(message.type)[1]}
+                      >
+                        {message.title}
+                      </MDTypography>
+                    )
+                  }
                   dateTime={message.updatedAt.split("T")[0].split("-").reverse().join("/")}
                   description={message.body}
                   color={getTypeALertIconColor(message.type)[1]}
@@ -227,7 +229,38 @@ function Dashboard() {
               ) : (
                 <TimelineItem
                   icon={getTypeALertIconColor(message.type)[0]}
-                  title={message.title}
+                  title={
+                    user !== undefined && user.admin === "2" && user.adminType === "2" ? (
+                      <MDButton
+                        sx={{
+                          py: 0,
+                          px: 0,
+                        }}
+                        variant="text"
+                        color={getTypeALertIconColor(message.type)[1]}
+                        onClick={() => {
+                          setToEditAlert(true);
+                          setToEditAlertID(message._id);
+                        }}
+                      >
+                        <MDTypography
+                          variant="h6"
+                          fontWeight="medium"
+                          color={getTypeALertIconColor(message.type)[1]}
+                        >
+                          {message.title}
+                        </MDTypography>
+                      </MDButton>
+                    ) : (
+                      <MDTypography
+                        variant="h6"
+                        fontWeight="medium"
+                        color={getTypeALertIconColor(message.type)[1]}
+                      >
+                        {message.title}
+                      </MDTypography>
+                    )
+                  }
                   dateTime={message.updatedAt.split("T")[0].split("-").reverse().join("/")}
                   description={message.body}
                   color={getTypeALertIconColor(message.type)[1]}
@@ -240,16 +273,9 @@ function Dashboard() {
               אין הודעות מערכת
             </MDTypography>
           )}
-          {massagesClient.length !== 0 ? (
-            <Link to="/systemAlerts">
-              <MDButton variant="outlined" color="info">
-                ראה את כל ההודעות
-              </MDButton>
-            </Link>
-          ) : null}
         </TimelineList>
       </MDBox>
-    </>
+    </MDBox>
   );
 
   return (
@@ -265,10 +291,11 @@ function Dashboard() {
           ? clientView()
           : clientView() //* ploga view
       } */}
+      {editAlert()}
       {clientView()}
       <Footer />
     </DashboardLayout>
   );
 }
 
-export default Dashboard;
+export default SystemAlerts;

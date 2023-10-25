@@ -74,8 +74,8 @@ export const isAuthenticated = () => {
       localStorage.getItem("jwt"),
       "8154cb24758ff7a388e3ed8398245f7a1662dbdefccdbe90b4a68e19c0d0d3fa1537713ea0021f55dc3b0685d69e1cdfb1e61dd4cf706d9f99b4897a8bacbbe3"
     );
-    console.log("decrypted");
-    console.log(decrypted.toString(CryptoJS.enc.Utf8));
+    // console.log("decrypted");
+    // console.log(decrypted.toString(CryptoJS.enc.Utf8));
     return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
   } else {
     return false;

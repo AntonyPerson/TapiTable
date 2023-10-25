@@ -2,11 +2,11 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable camelcase */
 const router = require("express").Router();
-const GeneralAlerts = require("../models/systemAlerts/generalAlerts");
+const SystemAlerts = require("../models/SystemAlerts.model");
 
 exports.findAll = (req, res) => {
-  GeneralAlerts.find()
-    .sort({ createdAt: -1 })
+  SystemAlerts.find()
+    .sort({ updatedAt: -1 })
     .then((request) => res.json(request))
     .catch((err) => res.status(400).json("Error: " + err));
 };
@@ -14,8 +14,8 @@ exports.findAll = (req, res) => {
 exports.findAllByType = (req, res) => {
   const type = req.params.type;
 
-  GeneralAlerts.find({ type: type })
-    .sort({ createdAt: -1 })
+  SystemAlerts.find({ type: type })
+    .sort({ updatedAt: -1 })
     .then((request) => res.json(request))
     .catch((err) => res.status(400).json("Error: " + err));
 };
@@ -23,17 +23,17 @@ exports.findAllByType = (req, res) => {
 exports.add = (req, res) => {
   const title = req.body.title;
   const body = req.body.body;
-  const date = req.body.date;
+  // const date = req.body.date;
   const type = req.body.type;
-  const experationPeriod = req.body.experationPeriod;
+  // const experationPeriod = req.body.experationPeriod;
   const personalnumber = req.body.personalnumber;
 
-  const newGeneralAlerts = new GeneralAlerts({
+  const newGeneralAlerts = new SystemAlerts({
     title,
     body,
-    date,
+    // date,
     type,
-    experationPeriod,
+    // experationPeriod,
     personalnumber,
   });
 
@@ -51,39 +51,38 @@ exports.alertsByPersonalnumber = (req, res) => {
   // console.log(req.params);
   const personalnumber = req.params.personalnumber;
   // const personalnumber = "7654321";
-  GeneralAlerts.find({ personalnumber: personalnumber })
+  SystemAlerts.find({ personalnumber: personalnumber })
     .then((request) => res.json(request))
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
 exports.findAlertByID = (req, res) => {
-  GeneralAlerts.findById(req.params.id)
+  SystemAlerts.findById(req.params.id)
+    .sort({ updatedAt: -1 })
     .then((request) => res.json(request))
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
 exports.deleteAlertByID = (req, res) => {
-  GeneralAlerts.findByIdAndDelete(req.params.id)
-    .then(() => res.json("GeneralAlerts deleted."))
+  SystemAlerts.findByIdAndDelete(req.params.id)
+    .then(() => res.json("SystemAlerts deleted."))
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
 exports.updateAlertByID = (req, res) => {
-  GeneralAlerts.findById(req.params.id)
+  SystemAlerts.findById(req.params.id)
     .then((request) => {
       request.title = req.body.title;
       request.body = req.body.body;
-      request.date = Date.parse(req.body.date);
+      // request.date = Date.parse(req.body.date);
       request.type = req.body.type;
-      request.experationPeriod = Number(req.body.experationPeriod);
+      // request.experationPeriod = Number(req.body.experationPeriod);
       request.personalnumber = req.body.personalnumber;
 
       request
         .save()
-        .then(() => res.json("GeneralAlerts updated!"))
+        .then(() => res.json("SystemAlerts updated!"))
         .catch((err) => res.status(400).json("Error: " + err));
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };
-
-module.exports = router;

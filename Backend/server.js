@@ -54,6 +54,10 @@ app.use("/TemplateExample", TemplateExampleRouter);
 const InspectionRequest = require("./routes/InspectionRequest");
 app.use("/TapiTableApi/InspectionRequest", InspectionRequest);
 
+//SystemAlerts - Form Requests routes for Client
+const SystemAlerts = require("./routes/SystemAlerts");
+app.use("/TapiTableApi/SystemAlerts", SystemAlerts);
+
 //* file uploader Routes
 // upload files
 const fileuploaderRoutes = require("./routes/fileuploader/fileuploader");
