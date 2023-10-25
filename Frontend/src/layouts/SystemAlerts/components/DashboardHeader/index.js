@@ -43,13 +43,18 @@ import breakpoints from "assets/theme/base/breakpoints";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 import burceMars from "assets/images/bruce-mars.jpg";
 
+import { Dialog, DialogContent } from "@mui/material";
 import soldierAvatar from "assets/images/soldier.png";
 import { authenticate, isAuthenticated, signout } from "auth/index";
+import MDButton from "components/MDButton";
+import SystemAlertsForm from "layouts/Forms/SystemAlerts/SystemAlertsForm";
 
 const { user } = isAuthenticated();
 
 function DashboardHeader(props, { children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
+  const [toAddAlert, setToAddAlert] = useState(false);
+
   // const [tabValue, setTabValue] = useState(props.tabViewValue);
 
   // const [loggedInUser, setLoggedInUser] = useState("אורח");
@@ -114,7 +119,21 @@ function DashboardHeader(props, { children }) {
   //   //   localStorage.setItem("dashboardView", JSON.stringify({ tabIndexName, tabIndex }));
   //   // }
   // };
-
+  const addFile = () => (
+    <Dialog
+      px={5}
+      open={toAddAlert}
+      onClose={() => setToAddAlert(false)}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <MDBox variant="gradient" bgColor="mekatnar" coloredShadow="mekatnar" borderRadius="l">
+        <DialogContent>
+          <SystemAlertsForm task="create" />
+        </DialogContent>
+      </MDBox>
+    </Dialog>
+  );
   return (
     <MDBox position="relative" mb={5}>
       <MDBox
@@ -150,18 +169,37 @@ function DashboardHeader(props, { children }) {
           sx={{
             alignContent: "center",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "space-between",
             textAlign: "center",
+            display: "flex",
           }}
         >
           {/* <AppBar position="static"> */}
-
-          <MDTypography color="mekatnar" variant="h1" fontWeight="medium" textGradient="true">
-            {welcomeString}
-          </MDTypography>
-          {/* </AppBar> */}
+          <MDBox>
+            <MDTypography color="mekatnar" variant="h1" fontWeight="medium" textGradient="true">
+              {welcomeString}
+            </MDTypography>
+            {/* </AppBar> */}
+          </MDBox>
+          <MDBox>
+            <MDButton
+              hidden={!(user !== undefined && user.admin === "2" && user.adminType === "2")}
+              variant="gradient"
+              onClick={() => setToAddAlert(true)}
+              // onClick={() => {
+              //   // setIsInfoPressed(true);
+              //   // setpressedID(hozla._id);
+              // }}
+              circular="true"
+              iconOnly="true"
+              size="large"
+              color="mekatnar"
+            >
+              <Icon>add</Icon>
+            </MDButton>
+          </MDBox>
         </MDBox>
-
+        {addFile()}
         {children}
       </Card>
     </MDBox>

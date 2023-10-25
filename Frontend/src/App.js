@@ -315,6 +315,8 @@ export default function App() {
               user.user.admin === "1" ? (
                 <Routes>
                   {getRoutes(AdminRoutes)}
+                  {getRoutes(UserRoutes)}
+
                   <Route path="/" element={<Navigate to="/Dashboard" />} />
 
                   {/* <Route path="/" element={<Navigate to="/authentication/sign-in" />} /> */}
@@ -324,6 +326,7 @@ export default function App() {
                   {/* <Route path="/RequestForm">
                     <Route path=":formID" element={<FieldReuestFormDB />} />
                   </Route> */}
+                  <Route path="/SystemAlerts" element={<SystemAlerts />} />
                   <Route path="*" element={<Error404 />} />
                 </Routes>
               ) : (
@@ -362,7 +365,7 @@ export default function App() {
                 <Route path="/Table" element={<Tables />} />
                 <Route path="/AdminManagementTable" element={<AdminManagementTable />} />
                 <Route path="/requiredProjects" element={<RequiredProjects />} />
-                <Route path="/systemAlerts" element={<RequiredProjects />} />
+                <Route path="/SystemAlerts" element={<SystemAlerts />} />
 
                 <Route path="/adminSummary">
                   <Route path=":formID" element={<CalenderTasksFormDB />} />

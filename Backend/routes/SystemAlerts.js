@@ -21,7 +21,7 @@ router.post("/alertsByPersonalnumber/:personalnumber", alertsByPersonalnumber);
 router.post("/add", add);
 
 //update
-router.post("/update/updateHativa", updateAlertByID);
+router.post("/update/updateAlertByID/:id", updateAlertByID);
 
 //delete
 router.delete("/remove/:id", deleteAlertByID);

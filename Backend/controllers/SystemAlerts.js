@@ -31,7 +31,7 @@ exports.add = (req, res) => {
   const newGeneralAlerts = new SystemAlerts({
     title,
     body,
-    date,
+    // date,
     type,
     // experationPeriod,
     personalnumber,

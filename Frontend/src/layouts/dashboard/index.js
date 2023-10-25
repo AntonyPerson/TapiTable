@@ -83,18 +83,42 @@ import DashboardHeader from "./components/DashboardHeader";
 import PDFdownloadImage from "assets/images/PDFdownloadImage.png";
 import logobazak from "assets/images/logobazak.png";
 import NGProjectTemplateLogoPNG from "assets/images/projectLogoImages/NGProjectTemplateLogoPNG.png";
+import { isAuthenticated } from "auth";
 import pdfA14 from "../../Light.pdf";
 import fileexamplePDF1MB from "../../fileexamplePDF1MB.pdf";
 
+const { user } = isAuthenticated();
 function Dashboard() {
   // const [tabView, setTabView] = useState(0);
   const [massagesClient, setMassagesClient] = useState([]);
+
+  const getFilterByAdmin = (admin, type, messageType) => {
+    let array = ["00", "99"];
+    if (admin !== "-1" && type !== "-1") {
+      if (admin === "0") {
+        array = ["00", "99"];
+      } else if (admin === "1") {
+        if (type === "1") {
+          array = ["00", "11", "99"];
+        } else if (type === "2") {
+          array = ["00", "12", "99"];
+        }
+      } else if (admin === "2") {
+        array = ["00", "11", "12", "22", "99"];
+      }
+    }
+    return array.includes(messageType);
+  };
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/TapiTableApi/SystemAlerts`)
       .then((response) => {
-        setMassagesClient(response.data.slice(0, 5));
+        const admin = user !== undefined ? user.admin : "-1";
+        const type = user !== undefined ? user.adminType : "-1";
+        setMassagesClient(
+          response.data.filter((message) => getFilterByAdmin(admin, type, message.type)).slice(0, 5)
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -160,49 +184,6 @@ function Dashboard() {
       image: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
     },
   ];
-
-  // const massagesClient = [
-  // {
-  //   title: "$2400 Design changes",
-  //   dateTime: "21/01/2022",
-  //   icon: "notifications",
-  //   color: "warning",
-  //   description:
-  //     "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-  // },
-  //   {
-  //     title: "$2400 Design changes",
-  //     dateTime: "21/02/2022",
-  //     icon: "notifications",
-  //     color: "error",
-  //     description:
-  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-  //   },
-  //   {
-  //     title: "$2400 Design changes",
-  //     dateTime: "21/03/2022",
-  //     icon: "notifications",
-  //     color: "mekatnar",
-  //     description:
-  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-  //   },
-  //   {
-  //     title: "$2400 Design changes",
-  //     dateTime: "21/04/2022",
-  //     icon: "notifications",
-  //     color: "info",
-  //     description:
-  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-  //   },
-  //   {
-  //     title: "$2400 Design changes",
-  //     dateTime: "21/04/2022",
-  //     icon: "priority_highIcon",
-  //     color: "error",
-  //     description:
-  //       "People care about how you see the world, how you think, what motivates you, what you’re struggling with or afraid of.",
-  //   },
-  // ];
 
   const clientView = () => (
     <>

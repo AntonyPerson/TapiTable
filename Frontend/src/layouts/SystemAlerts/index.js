@@ -83,24 +83,70 @@ import DashboardHeader from "./components/DashboardHeader";
 import PDFdownloadImage from "assets/images/PDFdownloadImage.png";
 import logobazak from "assets/images/logobazak.png";
 import NGProjectTemplateLogoPNG from "assets/images/projectLogoImages/NGProjectTemplateLogoPNG.png";
+import { isAuthenticated } from "auth";
+import SystemAlertsFromDB from "layouts/Forms/SystemAlerts/SystemAlertsFormDB";
 import pdfA14 from "../../Light.pdf";
 import fileexamplePDF1MB from "../../fileexamplePDF1MB.pdf";
+
+const { user } = isAuthenticated();
 
 function SystemAlerts() {
   // const [tabView, setTabView] = useState(0);
   const [massagesClient, setMassagesClient] = useState([]);
+  const [toEditAlert, setToEditAlert] = useState(false);
+  const [toEditAlertID, setToEditAlertID] = useState("");
+
+  const getFilterByAdmin = (admin, type, messageType) => {
+    let array = ["00", "99"];
+    if (admin !== "-1" && type !== "-1") {
+      if (admin === "0") {
+        array = ["00", "99"];
+      } else if (admin === "1") {
+        if (type === "1") {
+          array = ["00", "11", "99"];
+        } else if (type === "2") {
+          array = ["00", "12", "99"];
+        }
+      } else if (admin === "2") {
+        array = ["00", "11", "12", "22", "99"];
+      }
+    }
+    return array.includes(messageType);
+  };
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/TapiTableApi/SystemAlerts`)
       .then((response) => {
-        setMassagesClient(response.data);
+        const admin = user !== undefined ? user.admin : "-1";
+        const type = user !== undefined ? user.adminType : "-1";
+        setMassagesClient(
+          response.data.filter((message) => getFilterByAdmin(admin, type, message.type))
+        );
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
+  const editAlert = () => (
+    <Dialog
+      px={5}
+      open={toEditAlert}
+      onClose={() => {
+        setToEditAlert(false);
+        setToEditAlertID("");
+      }}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <MDBox variant="gradient" bgColor="mekatnar" coloredShadow="mekatnar" borderRadius="l">
+        <DialogContent>
+          <SystemAlertsFromDB alertID={toEditAlertID} />
+        </DialogContent>
+      </MDBox>
+    </Dialog>
+  );
   const getTypeALertIconColor = (type) => {
     let icon = "notifications";
     let color = "mekatnar";
@@ -124,6 +170,11 @@ function SystemAlerts() {
   };
   const clientView = () => (
     <MDBox py={3}>
+      {user !== undefined && user.admin === "2" && user.adminType === "2" && (
+        <MDTypography variant="h6" fontWeight="medium" color="secondary" sx={{ my: -1 }}>
+          * לעריכת ההודעה, יש ללחוץ על כותרת ההודעה{" "}
+        </MDTypography>
+      )}
       <MDBox
         sx={{
           width: "100%",
@@ -137,7 +188,38 @@ function SystemAlerts() {
               index === massagesClient.length - 1 ? (
                 <TimelineItem
                   icon={getTypeALertIconColor(message.type)[0]}
-                  title={message.title}
+                  title={
+                    user !== undefined && user.admin === "2" && user.adminType === "2" ? (
+                      <MDButton
+                        sx={{
+                          py: 0,
+                          px: 0,
+                        }}
+                        variant="text"
+                        color={getTypeALertIconColor(message.type)[1]}
+                        onClick={() => {
+                          setToEditAlert(true);
+                          setToEditAlertID(message._id);
+                        }}
+                      >
+                        <MDTypography
+                          variant="h6"
+                          fontWeight="medium"
+                          color={getTypeALertIconColor(message.type)[1]}
+                        >
+                          {message.title}
+                        </MDTypography>
+                      </MDButton>
+                    ) : (
+                      <MDTypography
+                        variant="h6"
+                        fontWeight="medium"
+                        color={getTypeALertIconColor(message.type)[1]}
+                      >
+                        {message.title}
+                      </MDTypography>
+                    )
+                  }
                   dateTime={message.updatedAt.split("T")[0].split("-").reverse().join("/")}
                   description={message.body}
                   color={getTypeALertIconColor(message.type)[1]}
@@ -147,7 +229,38 @@ function SystemAlerts() {
               ) : (
                 <TimelineItem
                   icon={getTypeALertIconColor(message.type)[0]}
-                  title={message.title}
+                  title={
+                    user !== undefined && user.admin === "2" && user.adminType === "2" ? (
+                      <MDButton
+                        sx={{
+                          py: 0,
+                          px: 0,
+                        }}
+                        variant="text"
+                        color={getTypeALertIconColor(message.type)[1]}
+                        onClick={() => {
+                          setToEditAlert(true);
+                          setToEditAlertID(message._id);
+                        }}
+                      >
+                        <MDTypography
+                          variant="h6"
+                          fontWeight="medium"
+                          color={getTypeALertIconColor(message.type)[1]}
+                        >
+                          {message.title}
+                        </MDTypography>
+                      </MDButton>
+                    ) : (
+                      <MDTypography
+                        variant="h6"
+                        fontWeight="medium"
+                        color={getTypeALertIconColor(message.type)[1]}
+                      >
+                        {message.title}
+                      </MDTypography>
+                    )
+                  }
                   dateTime={message.updatedAt.split("T")[0].split("-").reverse().join("/")}
                   description={message.body}
                   color={getTypeALertIconColor(message.type)[1]}
@@ -178,6 +291,7 @@ function SystemAlerts() {
           ? clientView()
           : clientView() //* ploga view
       } */}
+      {editAlert()}
       {clientView()}
       <Footer />
     </DashboardLayout>
