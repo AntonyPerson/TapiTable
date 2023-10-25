@@ -202,28 +202,30 @@ export default function App() {
     </MDBox>
   );
   const AlertsButton = (
-    <MDBox
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      width="3.25rem"
-      height="3.25rem"
-      bgColor="white"
-      shadow="sm"
-      borderRadius="20%"
-      top="80px"
-      position="fixed"
-      right="2rem"
-      // bottom="2rem"
-      zIndex={99}
-      color="dark"
-      sx={{ cursor: "pointer" }}
-      onClick={handleConfiguratorOpenNotifications}
-    >
-      <Icon fontSize="small" color="inherit">
-        notifications_none
-      </Icon>
-    </MDBox>
+    <a href={`/SystemAlerts`}>
+      <MDBox
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        width="3.25rem"
+        height="3.25rem"
+        bgColor="white"
+        shadow="sm"
+        borderRadius="20%"
+        top="80px"
+        position="fixed"
+        right="2rem"
+        // bottom="2rem"
+        zIndex={99}
+        color="dark"
+        sx={{ cursor: "pointer" }}
+        // onClick={handleConfiguratorOpenNotifications}
+      >
+        <Icon fontSize="small" color="inherit">
+          notifications_none
+        </Icon>
+      </MDBox>
+    </a>
   );
   const messageSubject = 'יצירת קשר עם שולחן התפ"י שלי';
   const messageBody = "שלום, אנא מלא את פרטייך (שם מלא ומספר אישי) ואת פנייתך ונחזור אליך בהקדם.";
