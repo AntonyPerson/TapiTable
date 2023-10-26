@@ -35,6 +35,7 @@ import Tabs from "@mui/material/Tabs";
 import MDAvatar from "components/MDAvatar";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
@@ -74,7 +75,7 @@ function DashboardHeader(props, { children }) {
   //   // }
   // }, []);
 
-  const welcomeString = `ברוכים הבאים לשולחן התפ"י שלי`;
+  const welcomeString = `פרויקטים נדרשים`;
 
   // useEffect(() => {
   //   // A function that sets the orientation state of the tabs.
@@ -134,6 +135,23 @@ function DashboardHeader(props, { children }) {
           overflow: "hidden",
         }}
       />
+      <Grid container justifyContent="flex-end">
+        {/* <Link to="/UploadEcxelFile"> */}
+        <MDButton
+          variant="gradient"
+          // onClick={() => setToAddFile(true)}
+          // onClick={() => {
+          //   // setIsInfoPressed(true);
+          //   // setpressedID(hozla._id);
+          // }}
+          circular="true"
+          iconOnly="true"
+          size="medium"
+        >
+          <Icon>add</Icon>
+        </MDButton>
+        {/* </Link> */}
+      </Grid>
       <Card
         sx={{
           position: "relative",

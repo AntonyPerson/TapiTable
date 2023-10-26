@@ -36,12 +36,14 @@ import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import Footer from "examples/Footer";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 import PieChart from "examples/Charts/PieChart";
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
+import projectsTable from "layouts/tables/projectsTable";
 
 // Dashboard components
 import { ConstructionOutlined } from "@mui/icons-material";
@@ -85,6 +87,15 @@ import NGProjectTemplateLogoPNG from "assets/images/projectLogoImages/NGProjectT
 import fileexamplePDF1MB from "../../fileexamplePDF1MB.pdf";
 import pdfA14 from "../../Light.pdf";
 import add from "../../assets/images/add.png";
+import RedDot from "../../assets/images/RedDot.png";
+import YellowDot from "../../assets/images/YellowDot.png";
+import GreenDot from "../../assets/images/GreenDot.png";
+import Tigris from "../../assets/images/Tigris.jpg";
+import Karakal from "../../assets/images/Karakal.jpg";
+import David from "../../assets/images/David.jpg";
+import Zehev from "../../assets/images/Zehev.jpg";
+import Eitan from "../../assets/images/Eitan.jpg";
+import TankMK4 from "../../assets/images/TankMK4.jpg";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -102,7 +113,110 @@ function Dashboard() {
     setSelectedVaules({ ...selectedVaules, [evt.target.name]: value });
   }
 
-  const requiredProjects = [];
+  const requiredProjects = [
+    {
+      image: TankMK4,
+      label: "טנקים",
+      title: "טנק מרכבה סימן 4",
+      description:
+        "טנק מרכבה סימן 4 הוא הדגם הרביעי מסדרת טנקי המרכבה - טנק מערכה ישראלי שפותח ומיוצר בישראל עבור חיל השריון של צה``ל. המפרט הטכני ויכולותיו של `סימן 4` עולים באופן משמעותי על אלו של קודמיו, וכוללים תותח טנק 120 מ``מ ומנוע דיזל בהספק של 1,500 כוחות סוס.",
+      action: {
+        type: "internal",
+        route: "/somewhere",
+        color: "mekatnar",
+        label: "צפה בפרויקט",
+      },
+      authors: {
+        image: RedDot,
+        name: "תפוס",
+      },
+    },
+    {
+      image: Eitan,
+      label: "טנקים",
+      title: "איתן",
+      description:
+        "איתן הוא נגמ``ש אופני שפותח במנהלת המרכבה והרק``ם (מנת``ק) במשרד הביטחון ועתיד להיקלט בצבא הגנה לישראל ולהחליף את כל הנגמ``שים, למעט הנמ``ר. האיתן, שממנו הוזמנו מאות על ידי צה``ל, יהיה לנגמ``ש האופני הראשון בשירות צה``ל מאז שנות ה-60 של המאה ה-20 שאינו נשק שלל.",
+      action: {
+        type: "internal",
+        route: "/somewhere",
+        color: "mekatnar",
+        label: "צפה בפרויקט",
+      },
+      authors: {
+        image: GreenDot,
+        name: "זמין",
+      },
+    },
+    {
+      image: Zehev,
+      label: "ג'יפים ורכבי שטח",
+      title: "זאב",
+      description:
+        "זאב הוא רכב שטח ישראלי ממוגן. הזאב יכול להחליף כלי רכב קלים לנשיאת לוחמים וציוד כדוגמת האביר ולשפר את בטיחות הנוסעים ואת מיגונם ביחס לכלי רכב אחרים. הרכב פותח על ידי חברת רַפַאֵל – רשות לפיתוח אמצעי לחימה בשיתוף עם חטיבה טכנולוגית ליבשה.",
+      action: {
+        type: "internal",
+        route: "/somewhere",
+        color: "mekatnar",
+        label: "צפה בפרויקט",
+      },
+      authors: {
+        image: GreenDot,
+        name: "זמין",
+      },
+    },
+    {
+      image: David,
+      label: "ג'יפים ורכבי שטח",
+      title: "דוד",
+      description:
+        "דויד הוא רכב שטח קרבי ממוגן שנמצא בשימוש צהל. דויד מחליף את הסופה M-240 הממוגנת כרכב קרבי עירוני לאזורי עימות. הדור השני של הדויד הוחלפו מלאנד רובר דיפנדר לטויוטה היילקס.",
+      action: {
+        type: "internal",
+        route: "/somewhere",
+        color: "mekatnar",
+        label: "צפה בפרויקט",
+      },
+      authors: {
+        image: YellowDot,
+        name: "בתפוסה",
+      },
+    },
+    {
+      image: Karakal,
+      label: "ג'יפים ורכבי שטח",
+      title: "קרקל",
+      description:
+        "הקרקל הוא רכב שטח ממוגן שתוכנן על ידי חברת פלסן סאסא הישראלית. הרכב מבוסס על שלדת רכבי הפורד מסדרה F שקוצרה לבסיס גלגלים באורך 2.84 מטר. קיצור השלדה נעשה בחברה בארצות הברית. לקרקל מיגון מרוכב והוא תוכנן במקור כאפשרות חלופה לרכבי הסופה בצהל. ",
+      action: {
+        type: "internal",
+        route: "/somewhere",
+        color: "mekatnar",
+        label: "צפה בפרויקט",
+      },
+      authors: {
+        image: GreenDot,
+        name: "זמין",
+      },
+    },
+    {
+      image: Tigris,
+      label: "ג'יפים ורכבי שטח",
+      title: "טיגריס",
+      description:
+        "הטיגריס הוא רכב שטח ממוגן ירי תוצרת ישראל שנקלט בצה``ל בתחילת 2023. ייעודו הוא לשמש ככלי בט``ש ביהודה ושומרון ולהחליף את רכב ה``זאב``, שנכנס לשירות ב-2004.",
+      action: {
+        type: "internal",
+        route: "/somewhere",
+        color: "mekatnar",
+        label: "צפה בפרויקט",
+      },
+      authors: {
+        image: RedDot,
+        name: "תפוס",
+      },
+    },
+  ];
 
   // const massagesClient = [
   //   {
@@ -143,7 +257,7 @@ function Dashboard() {
     <>
       <MDBox py={3}>
         <Grid container spacing={3}>
-          {requiredProjects.map((app, index) => (
+          {/* {requiredProjects.map((app, index) => (
             <Grid item xs={12} md={6} lg={3} key={index}>
               <AppThumnailCard
                 color="mekatnar"
@@ -155,54 +269,28 @@ function Dashboard() {
                 }}
               />
             </Grid>
+          ))} */}
+
+          {requiredProjects.map((TapiProject) => (
+            <Grid item xs={12} md={6} lg={3}>
+              <DefaultProjectCard
+                image={TapiProject.image}
+                label={TapiProject.label}
+                title={TapiProject.title}
+                description={TapiProject.description}
+                action={{
+                  type: TapiProject.action.type,
+                  route: TapiProject.action.type,
+                  color: TapiProject.action.color,
+                  label: TapiProject.action.label,
+                }}
+                authors={[{ image: TapiProject.authors.image, name: TapiProject.authors.name }]}
+              />
+            </Grid>
           ))}
-          <Grid item xs={12} md={6} lg={3}>
-            <AppThumnailCard
-              color="mekatnar"
-              title="הוסף פרויקט"
-              image={add}
-              action={
-                {
-                  // type: app.linkType,
-                  // route: app.link,
-                }
-              }
-            />
-          </Grid>
         </Grid>
       </MDBox>
-      {/* <MDBox
-        sx={{
-          width: "50%",
-          justifyItems: "center",
-        }}
-        py={3}
-      >
-        <TimelineList title="הודעות מערכת">
-          {massagesClient.map((message, index) =>
-            index === massagesClient.length - 1 ? (
-              <TimelineItem
-                icon={message.icon}
-                title={message.title}
-                dateTime={message.dateTime}
-                description={message.description}
-                color={message.color}
-                key={index}
-                lastItem
-              />
-            ) : (
-              <TimelineItem
-                icon={message.icon}
-                title={message.title}
-                dateTime={message.dateTime}
-                description={message.description}
-                color={message.color}
-                key={index}
-              />
-            )
-          )}
-        </TimelineList>
-      </MDBox> */}
+      {projectsTable()}
     </>
   );
 
