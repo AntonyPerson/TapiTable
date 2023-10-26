@@ -20,35 +20,49 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import Icon from "@mui/material/Icon";
-import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
+import Breadcrumbs from "examples/Breadcrumbs";
+import Footer from "examples/Footer";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import CalenderTasksForm from "layouts/Forms/CalenderTasks/CalenderTasksForm";
 import CalendarView from "layouts/calendar";
-import Breadcrumbs from "examples/Breadcrumbs";
 
 // Data
-import regulsrUserRequestsTableData from "layouts/tables/data/regulsrUserRequestsTableData";
 import { Dialog, DialogContent } from "@mui/material";
+import regulsrUserRequestsTableData from "layouts/tables/data/regulsrUserRequestsTableData";
 import { useState } from "react";
 
-import { CardBody, Col, Container, Form, FormGroup, FormText, Input, Label, Row } from "reactstrap";
+import { isAuthenticated } from "auth";
 import axios from "axios";
-import { Outlet, Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import { CardBody, Col, Container, Form, FormGroup, FormText, Input, Label, Row } from "reactstrap";
 
-const regulsrUserRequestsTable = () => {
-  const tableTittle = "יומן רישומים";
+const { user } = isAuthenticated();
+
+const regulsrUserRequestsTable = (props) => {
+  let tableTittle = "יומן רישומים";
+  if (
+    props.viewOption === "CalenderView" ||
+    (user.admin === "2" && user.adminType === "2") ||
+    (user.admin === "1" && user.adminType === "2")
+  ) {
+    tableTittle = "יומן רישומים";
+  } else if (props.viewOption === "PersonalView" && user.admin === "0" && user.adminType === "0") {
+    tableTittle = "הביקורות שלי";
+  } else if (props.viewOption === "PersonalView" && user.admin === "1" && user.adminType === "1") {
+    tableTittle = "הביקורות שלי";
+  }
 
   const [dbError, setDbError] = useState(false);
   const [toAddFile, setToAddFile] = useState(false);
@@ -58,7 +72,7 @@ const regulsrUserRequestsTable = () => {
     rows: pRows,
     dbError: dbe,
     setDBerror: setDbe,
-  } = regulsrUserRequestsTableData();
+  } = regulsrUserRequestsTableData(props.viewOption);
   const handleErrorClose = () => {
     setDbError(true);
     setDbe(false);

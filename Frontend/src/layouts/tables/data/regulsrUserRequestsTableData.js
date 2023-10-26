@@ -23,26 +23,26 @@ Coded by www.creative-tim.com
 import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
 import MDAvatar from "components/MDAvatar";
-import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
 // import MDAvatar from "components/MDAvatar";
-import MDProgress from "components/MDProgress";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import listOfVisit from "constValue/listOfVisit";
 import MDButton from "components/MDButton";
+import MDProgress from "components/MDProgress";
+import listOfVisit from "constValue/listOfVisit";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // user and auth import
-import { signin, authenticate, isAuthenticated } from "auth/index";
+import { authenticate, isAuthenticated, signin } from "auth/index";
 // Images
 import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 
-// const { user } = isAuthenticated();
+const { user } = isAuthenticated();
 // Images
 // import LogoAsana from "assets/images/small-logos/logo-asana.svg";
 // import logoGithub from "assets/images/small-logos/github.svg";
@@ -51,7 +51,7 @@ import team4 from "assets/images/team-4.jpg";
 // import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 // import logoInvesion from "assets/images/small-logos/logo-invision.svg";
 
-export default function data() {
+export default function data(viewOption) {
   // const Project = ({ image, name }) => (
   //   <MDBox display="flex" alignItems="center" lineHeight={1}>
   //     <MDAvatar src={image} name={name} size="sm" variant="rounded" />
@@ -63,33 +63,25 @@ export default function data() {
   const [isError, setIsError] = useState(false);
   const [requestDB, setRequestDB] = useState([]);
   const [isInfoPressed, setIsInfoPressed] = useState(false);
-  const [pressedID, setpressedID] = useState("");
-  const textPlaceHolderInputs = [
-    "יחידה",
-    "ענף",
-    "מדור",
-    "נייד",
-    "שם העבודה",
-    "סיווג העבודה",
-    "שיטת כריכה",
-    "שיטת  צילום",
-    "כמות עותקים",
-    "שם מוסר העבודה",
-    "תאריך מסירת העבודה",
-    "שם מקבל העבודה",
-    "קובץ להדפסה",
-    "סוג דף",
-    "תאריך קבלת העבודה",
-  ];
-  const clearanceOptions = ['בלמ"ס', "שמור", "סודי", "סודי ביותר"];
-  // const bindingTypes = ["הידוק", "ספירלה", "חירור", "אחר"];
-  // const copyTypes = ["שחור לבן דו צדדי", "צבעוני יחיד", "צבעוני דו צדדי", "שחור לבן יחיד"];
-  // const pageTypes = { A4: "A4", A3: "A3", A4b: "A4 בריסטול", A3b: "A3 בריסטול" };
+
   const MINUTE_MS = 100000;
 
   useEffect(() => {
+    let axiosStr = "http://localhost:5000/TapiTableApi/InspectionRequest/";
+
+    if (
+      viewOption === "CalenderView" ||
+      (user.admin === "2" && user.adminType === "2") ||
+      (user.admin === "1" && user.adminType === "2")
+    ) {
+      axiosStr = "http://localhost:5000/TapiTableApi/InspectionRequest/";
+    } else if (viewOption === "PersonalView" && user.admin === "0" && user.adminType === "0") {
+      axiosStr = `http://localhost:5000/TapiTableApi/InspectionRequest/requestByPersonalnumber/${user.personalnumber}`;
+    } else if (viewOption === "PersonalView" && user.admin === "1" && user.adminType === "1") {
+      axiosStr = `http://localhost:5000/TapiTableApi/InspectionRequest/requestByPersonalnumberInspector/${user.personalnumber}`;
+    }
     axios
-      .get(`http://localhost:5000/TapiTableApi/InspectionRequest/`)
+      .get(axiosStr)
       .then((response) => {
         console.log(response.data);
         setRequestDB(response.data);

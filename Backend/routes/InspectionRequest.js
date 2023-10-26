@@ -104,6 +104,19 @@ router.route("/requestByPersonalnumber/:personalnumber").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+router
+  .route("/requestByPersonalnumberInspector/:inspectorsPersonalnumber")
+  .get((req, res) => {
+    // console.log(req.body);
+    // console.log(req.params);
+    const inspectorsPersonalnumber = req.params.inspectorsPersonalnumber;
+    // const personalnumber = "7654321";
+    InspectionRequest.find({
+      inspectorsPersonalnumber: inspectorsPersonalnumber,
+    })
+      .then((request) => res.json(request))
+      .catch((err) => res.status(400).json("Error: " + err));
+  });
 router.route("/:id").get((req, res) => {
   InspectionRequest.findById(req.params.id)
     .then((request) => res.json(request))

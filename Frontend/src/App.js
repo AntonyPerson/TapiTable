@@ -299,7 +299,8 @@ export default function App() {
                   // hozla
                   // routes={user.user.admin !== "0" ? AdminRoutes : routes}
                   // tora heilit
-                  routes={user.user.admin === "0" ? UserRoutes : AdminRoutes}
+                  // routes={user.user.admin === "0" ? UserRoutes : AdminRoutes}
+                  routes={UserRoutes}
                   // routes={user.user.admin !== "0" ? AdminRoutes : routes}
                   onMouseEnter={handleOnMouseEnter}
                   onMouseLeave={handleOnMouseLeave}
@@ -328,6 +329,8 @@ export default function App() {
                   {/* <Route path="/RequestForm">
                     <Route path=":formID" element={<FieldReuestFormDB />} />
                   </Route> */}
+                  <Route path="/Table" element={<Tables viewOption="CalenderView" />} />
+                  <Route path="/Table2" element={<Tables viewOption="PersonalView" />} />
                   <Route path="/SystemAlerts" element={<SystemAlerts />} />
                   <Route path="*" element={<Error404 />} />
                 </Routes>
@@ -341,7 +344,8 @@ export default function App() {
                   <Route path="/" element={<Navigate to="/dashboard" />} />
                   <Route path="*" element={<Navigate to="/Error404" />} />
 
-                  <Route path="/Table" element={<Tables />} />
+                  <Route path="/Table" element={<Tables viewOption="CalenderView" />} />
+                  <Route path="/Table2" element={<Tables viewOption="PersonalView" />} />
                   <Route path="/AdminManagementTable" element={<AdminManagementTable />} />
                   <Route path="/requiredProjects" element={<RequiredProjects />} />
                   <Route path="/SystemAlerts" element={<SystemAlerts />} />
@@ -364,7 +368,8 @@ export default function App() {
                 <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="*" element={<Navigate to="/Error404" />} />
 
-                <Route path="/Table" element={<Tables />} />
+                <Route path="/Table" element={<Tables viewOption="CalenderView" />} />
+                <Route path="/Table2" element={<Tables viewOption="PersonalView" />} />
                 <Route path="/AdminManagementTable" element={<AdminManagementTable />} />
                 <Route path="/requiredProjects" element={<RequiredProjects />} />
                 <Route path="/SystemAlerts" element={<SystemAlerts />} />

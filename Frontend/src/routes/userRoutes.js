@@ -55,6 +55,26 @@ import AboutPage from "views/aboutpage/AboutPage";
 const routes = [
   {
     type: "collapse",
+    name: "qq",
+    key: "qq",
+    icon: <Icon fontSize="small">user</Icon>,
+    collapse: [
+      {
+        name: "Analytics",
+        key: "analytics",
+        route: "/dashboards2/analytics",
+        component: <CalendarView />,
+      },
+      {
+        name: "Sales",
+        key: "sales",
+        route: "/dashboards2/sales",
+        component: <Tables />,
+      },
+    ],
+  },
+  {
+    type: "collapse",
     name: "Dashboard",
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
