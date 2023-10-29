@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
@@ -147,7 +148,7 @@ export default function data(viewOption) {
       stutus = "טרם בוצעה";
       color = "warning";
     } else if (value === 75) {
-      stutus = "אושר אך לא קרתה";
+      stutus = "אושרה אך לא קרתה";
       color = "info";
     } else if (value === 100) {
       stutus = "בוצעה";
@@ -156,59 +157,198 @@ export default function data(viewOption) {
     return [stutus, color];
   };
 
+  const getTableColumns = () => {
+    let arr = [
+      { Header: "מספר אישי", accessor: "personalNumber", align: "center" },
+      { Header: "הביקורת", accessor: "d", align: "left" },
+      { Header: "ss", accessor: "c", align: "left" },
+      { Header: "function", accessor: "function", align: "left" },
+      { Header: "סטטוס", accessor: "status", align: "center" },
+      { Header: "תאריך ביקורת", accessor: "appoinmentDate", align: "center" },
+      { Header: "סיכום ביקורת", accessor: "summary", align: "center" },
+    ];
+    if (user !== undefined) {
+      if (user.admin === "2" && user.adminType === "2") {
+        arr = [
+          { Header: "מספר אישי", accessor: "personalNumber", align: "center" },
+          { Header: "הביקורת", accessor: "d", align: "left" },
+          { Header: "ss", accessor: "c", align: "left" },
+          { Header: "function", accessor: "function", align: "left" },
+          { Header: "סטטוס", accessor: "status", align: "center" },
+          { Header: "תאריך ביקורת", accessor: "appoinmentDate", align: "center" },
+          { Header: "פעולות הנהלה", accessor: "summary", align: "center" },
+        ];
+      } else if (user.admin === "1") {
+        if (user.adminType === "1") {
+          arr = [
+            { Header: "מספר אישי", accessor: "personalNumber", align: "center" },
+            { Header: "הביקורת", accessor: "d", align: "left" },
+            { Header: "ss", accessor: "c", align: "left" },
+            { Header: "function", accessor: "function", align: "left" },
+            { Header: "סטטוס", accessor: "status", align: "center" },
+            { Header: "תאריך ביקורת", accessor: "appoinmentDate", align: "center" },
+            { Header: "סיכום ביקורת", accessor: "summary", align: "center" },
+          ];
+        } else if (user.adminType === "2") {
+          arr = [
+            { Header: "מספר אישי", accessor: "personalNumber", align: "center" },
+            { Header: "הביקורת", accessor: "d", align: "left" },
+            { Header: "ss", accessor: "c", align: "left" },
+            { Header: "function", accessor: "function", align: "left" },
+            { Header: "סטטוס", accessor: "status", align: "center" },
+            { Header: "תאריך ביקורת", accessor: "appoinmentDate", align: "center" },
+            { Header: "סיכום ביקורת", accessor: "summary", align: "center" },
+          ];
+        }
+      }
+    }
+    return arr;
+  };
+
   const dbRows = requestDB.map((Tapi, index) => ({
-    // project: <Project image={LogoAsana} name="Asana" />,
     author: <Author name={Tapi.fullName} email={Tapi.email} />,
     function: <Job title="Manager" description={Tapi.workName} />,
-    // status: (
-    //   <MDBox ml={-1}>
-    //     <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
-    //   </MDBox>
-    // ),
-    employed: (
+
+    appoinmentDate: (
       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
         {`${Tapi.dateOfInspection.split("T")[0]}`}
       </MDTypography>
     ),
-    // visit: (
-    //   <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-    //     {`${listOfVisit.value[Tapi.dateOfmetteng]} - ${Tapi.dateEndOfmetteng.split("T")[0]}`}
-    //   </MDTypography>
-    // ),
-    summary: (
-      <Link to={`/adminSummary/${Tapi._id}`} key={Tapi._id}>
-        <MDButton
-          variant="gradient"
-          color="mekatnar"
-          // onClick={() => {
-          //   // setIsInfoPressed(true);
-          //   // setpressedID(hozla._id);
-          // }}
-          circular="true"
-          iconOnly="true"
-          size="medium"
-        >
-          <Icon>edit</Icon>
-        </MDButton>
-      </Link>
-    ),
+
+    summary:
+      user.admin === "2" && user.adminType === "2" ? (
+        Tapi.status === 25 ? (
+          <MDBox
+            px={5}
+            sx={{
+              display: "inline-flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignContent: "space-between",
+            }}
+          >
+            <MDBox mr={2}>
+              <MDButton
+                variant="gradient"
+                color="success"
+                onClick={() => {
+                  axios
+                    .post(
+                      `http://localhost:5000/TapiTableApi/InspectionRequest/statusUpdate/${Tapi._id}`,
+                      {
+                        status: 50,
+                      }
+                    )
+                    .then((response) => {
+                      window.location.reload(false);
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                }}
+                circular="true"
+                iconOnly="true"
+                size="medium"
+              >
+                <Icon>done</Icon>
+              </MDButton>
+            </MDBox>
+            <MDBox>
+              <MDButton
+                item
+                variant="gradient"
+                color="error"
+                onClick={() => {
+                  axios
+                    .delete(
+                      `http://localhost:5000/TapiTableApi/InspectionRequest/remove/${Tapi._id}`
+                    )
+                    .then((response) => {
+                      window.location.reload(false);
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                }}
+                circular="true"
+                iconOnly="true"
+                size="medium"
+              >
+                <Icon>clear</Icon>
+              </MDButton>
+            </MDBox>
+          </MDBox>
+        ) : (
+          <MDBox
+            px={5}
+            sx={{
+              display: "inline-flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignContent: "space-between",
+            }}
+          >
+            <MDBox mr={2}>
+              <MDButton
+                item
+                variant="gradient"
+                color="error"
+                onClick={() => {
+                  axios
+                    .delete(
+                      `http://localhost:5000/TapiTableApi/InspectionRequest/remove/${Tapi._id}`
+                    )
+                    .then((response) => {
+                      window.location.reload(false);
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                }}
+                circular="true"
+                iconOnly="true"
+                size="medium"
+              >
+                <Icon>clear</Icon>
+              </MDButton>
+            </MDBox>
+            <MDBox>
+              <Link to={`/adminSummary/${Tapi._id}`} key={Tapi._id}>
+                <MDButton
+                  variant="gradient"
+                  color="mekatnar"
+                  // onClick={() => {
+                  //   // setIsInfoPressed(true);
+                  //   // setpressedID(hozla._id);
+                  // }}
+                  circular="true"
+                  iconOnly="true"
+                  size="medium"
+                >
+                  <Icon>edit</Icon>
+                </MDButton>
+              </Link>
+            </MDBox>
+          </MDBox>
+        )
+      ) : (
+        <Link to={`/adminSummary/${Tapi._id}`} key={Tapi._id}>
+          <MDButton
+            variant="gradient"
+            color="mekatnar"
+            // onClick={() => {
+            //   // setIsInfoPressed(true);
+            //   // setpressedID(hozla._id);
+            // }}
+            circular="true"
+            iconOnly="true"
+            size="medium"
+          >
+            <Icon>edit</Icon>
+          </MDButton>
+        </Link>
+      ),
     personalNumber: <MDTypography variant="caption">{Tapi.personalnumber}</MDTypography>,
-    // fileID: parseInt(Tapi._id.slice(-4), 36),
-    // project: Tapi.workName,
-    // clearance:
-    //   // <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-    //   clearanceOptions[parseInt(Tapi.workClearance, 10)],
-    // // </MDTypography>
-    // typeRequest: (
-    //   <>
-    //     <MDBadge
-    //       badgeContent={setTypeRequest(Tapi.typeRequest)[0]}
-    //       color={setTypeRequest(Tapi.typeRequest)[1]}
-    //       size="sm"
-    //       container
-    //     />
-    //   </>
-    // ),
     status: (
       <>
         <MDTypography component="p" variant="caption" color="text" fontWeight="medium">
@@ -221,58 +361,12 @@ export default function data(viewOption) {
         />
       </>
     ),
-    // NameRequester: Tapi.fullNameAsker,
-    // diliveryDate: Tapi.workRecivedDate.split("T")[0],
-    // startDate: Tapi.workGivenDate.split("T")[0],
-    // additionalInfo: (
-    //   <Link to={`/${setTypeRequest(Tapi.typeRequest)[2]}/${Tapi._id}`} key={Tapi._id}>
-    //     <MDButton
-    //       variant="gradient"
-    //       color="mekatnar"
-    //       // onClick={() => {
-    //       //   // setIsInfoPressed(true);
-    //       //   // setpressedID(Tapi._id);
-
-    //       // }}
-    //       circular="true"
-    //       iconOnly="true"
-    //       size="medium"
-    //     >
-    //       <Icon>info</Icon>
-    //     </MDButton>
-    //   </Link>
-    // ),
-    // TapiInfo: (
-    //   <Link to={`/adminFeild/${Tapi._id}`} key={Tapi._id}>
-    //     <MDButton
-    //       variant="gradient"
-    //       color="mekatnar"
-    //       // onClick={() => {
-    //       //   // setIsInfoPressed(true);
-    //       //   // setpressedID(Tapi._id);
-    //       // }}
-    //       circular="true"
-    //       iconOnly="true"
-    //       size="medium"
-    //     >
-    //       <Icon>edit</Icon>
-    //     </MDButton>
-    //   </Link>
-    // ),
   }));
   console.log(`isError ${isError}`);
+
   return {
     //* the tables headers
-    columns: [
-      // { Header: "שם ואימייל", accessor: "author", width: "40%", align: "left" },
-      { Header: "מספר אישי", accessor: "personalNumber", align: "center" },
-      { Header: "הביקורת", accessor: "d", align: "left" },
-      { Header: "ss", accessor: "c", align: "left" },
-      { Header: "function", accessor: "function", align: "left" },
-      { Header: "status", accessor: "status", align: "center" },
-      { Header: "employed", accessor: "employed", align: "center" },
-      { Header: "סיכום ביקורת", accessor: "summary", align: "center" },
-    ],
+    columns: getTableColumns(),
 
     rows: dbRows,
     dbError: isError,

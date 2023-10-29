@@ -430,6 +430,19 @@ export default function SystemAlertsForm() {
 
   return (
     <>
+      {/* //! fot the pop up warning windoes */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       {showError()}
       {showSuccess()}
       {showLoading()}

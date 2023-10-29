@@ -19,61 +19,60 @@
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
-import Icon from "@mui/material/Icon";
-import Popup from "reactjs-popup";
-import Dropzone from "react-dropzone-uploader";
-import NativeSelect from "@mui/material/NativeSelect";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Icon from "@mui/material/Icon";
+import NativeSelect from "@mui/material/NativeSelect";
+import MDButton from "components/MDButton";
+import MDInput from "components/MDInput";
+import MDTypography from "components/MDTypography";
+import Dropzone from "react-dropzone-uploader";
+import Popup from "reactjs-popup";
 // import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 // import DialogContent from "@mui/material/DialogContent";
 // import DialogTitle from "@mui/material/DialogTitle";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import OutlinedInput from "@mui/material/OutlinedInput";
 
 // Material Dashboard 2 React example components
+import Footer from "examples/Footer";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
 
-import React, { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
-import axios from "axios";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Upload } from "antd-upload";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { Link, Navigate } from "react-router-dom";
 // import { multipleFilesUpload } from "../../data/api";
 
+import TextareaAutosize from "@mui/base/TextareaAutosize";
+import { useDropzone } from "react-dropzone";
+import { Icons, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   // Button,
   Card,
-  CardHeader,
-  Container,
   CardBody,
-  FormGroup,
-  Form,
-  FormText,
-  InputGroupAddon,
-  Input,
-  InputGroupText,
-  InputGroup,
-  Row,
+  CardHeader,
   Col,
+  Container,
+  Form,
+  FormGroup,
+  FormText,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   Label,
+  Row,
 } from "reactstrap";
-import TextareaAutosize from "@mui/base/TextareaAutosize";
-import { ToastContainer, toast, Icons } from "react-toastify";
-import { useDropzone } from "react-dropzone";
-import "react-toastify/dist/ReactToastify.css";
 
 // Material Dashboard 2 React Components
-import MDAlert from "components/MDAlert";
 import {
   Dialog,
   DialogContent,
@@ -82,14 +81,15 @@ import {
   Modal,
   Select,
 } from "@mui/material";
-import { DropzoneArea } from "react-mui-dropzone";
+import MDAlert from "components/MDAlert";
 import { DropzoneAreaBase } from "material-ui-dropzone";
+import { DropzoneArea } from "react-mui-dropzone";
 
 // for file upload from Data
 import { singleFileUpload } from "Data/api";
 import listOfVisit from "constValue/listOfVisit";
 // user and auth import
-import { signin, authenticate, isAuthenticated } from "auth/index";
+import { authenticate, isAuthenticated, signin } from "auth/index";
 const { user } = isAuthenticated();
 
 // console.log("Hozla Print Request Form");
@@ -567,6 +567,19 @@ export default function CalenderTasksForm() {
 
   return (
     <>
+      {/* //! fot the pop up warning windoes */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       {showError()}
       {showSuccess()}
       {showLoading()}

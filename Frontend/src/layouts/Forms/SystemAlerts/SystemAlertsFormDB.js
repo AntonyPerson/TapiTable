@@ -398,6 +398,19 @@ const SystemAlertsFromDB = (props) => {
           display: "flex",
         }}
       >
+        {/* //! fot the pop up warning windoes */}
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
         {showError()}
         {showSuccess()}
         {NavigateUser()}

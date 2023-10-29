@@ -62,3 +62,26 @@ exports.usersbyrole = (req, res) => {
     .then((orders) => res.json(orders))
     .catch((err) => res.status(400).json("Error: " + err));
 };
+
+exports.getinspectors = (req, res) => {
+  User.find({
+    $or: [
+      { $and: [{ admin: "1" }, { adminType: "1" }] },
+      { $and: [{ admin: "2" }, { adminType: "2" }] },
+    ],
+  })
+    .sort({ admin: -1, adminType: -1 })
+    .exec()
+    .then((u) => {
+      const users = u.map((user) => {
+        return {
+          id: user._id,
+          personalnumber: user.personalnumber,
+          info: `${user.firstName} ${user.lastLame} - ${user.personalnumber}`,
+        };
+      });
+      console.log(u);
+      return res.json(users);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};

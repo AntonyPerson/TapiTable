@@ -212,7 +212,7 @@ export default function App() {
         bgColor="white"
         shadow="sm"
         borderRadius="20%"
-        top="80px"
+        top="20px"
         position="fixed"
         right="2rem"
         // bottom="2rem"
@@ -240,7 +240,7 @@ export default function App() {
         bgColor="white"
         shadow="sm"
         borderRadius="20%"
-        top="140px"
+        top="80px"
         position="fixed"
         right="2rem"
         // bottom="2rem"
@@ -290,96 +290,72 @@ export default function App() {
         <CacheProvider value={rtlCache}>
           <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
             <CssBaseline />
-            {layout !== "dashboard" && user.user !== undefined ? (
-              <>
-                <Sidenav
-                  color={sidenavColor}
-                  brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-                  brandName={brandName}
-                  // hozla
-                  // routes={user.user.admin !== "0" ? AdminRoutes : routes}
-                  // tora heilit
-                  // routes={user.user.admin === "0" ? UserRoutes : AdminRoutes}
-                  routes={UserRoutes}
-                  // routes={user.user.admin !== "0" ? AdminRoutes : routes}
-                  onMouseEnter={handleOnMouseEnter}
-                  onMouseLeave={handleOnMouseLeave}
-                />
-              </>
-            ) : null}
-            <Configurator />
-            {configsButton}
-            <Alerts />
+            {/* <Sidenav
+              color={sidenavColor}
+              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+              brandName={brandName}
+              // hozla
+              routes={user.user !== undefined && user.user.admin !== "0" ? AdminRoutes : UserRoutes}
+              // routes={user.user.admin !== "0" ? AdminRoutes : routes}
+              onMouseEnter={handleOnMouseEnter}
+              onMouseLeave={handleOnMouseLeave}
+            /> */}
+
+            {/* <Configurator />
+            {configsButton} */}
+            {/* <Alerts /> */}
             {AlertsButton}
             {ContactUsButton}
 
             {/* {layout === "vr" && <Configurator />} */}
             {user.user !== undefined ? (
-              user.user.admin === "1" ? (
+              user.user.admin === "0" ? (
+                // ? Regular User (00)
                 <Routes>
-                  {getRoutes(AdminRoutes)}
                   {getRoutes(UserRoutes)}
+                  <Route path="/adminSummary">
+                    <Route path=":formID" element={<CalenderTasksFormDB />} />
+                  </Route>
 
-                  <Route path="/" element={<Navigate to="/Dashboard" />} />
-
-                  {/* <Route path="/" element={<Navigate to="/authentication/sign-in" />} /> */}
-                  <Route path="/Error404" element={<Error404 />} />
-                  {/* <Route path="/adminForm" element={<HozlaAdminPrintInfoForm />} /> */}
-                  {/* <Route path="/adminFieldReuestFormDB" element={<AdminFieldReuestFormDB />} /> */}
-                  {/* <Route path="/RequestForm">
-                    <Route path=":formID" element={<FieldReuestFormDB />} />
-                  </Route> */}
-                  <Route path="/Table" element={<Tables viewOption="CalenderView" />} />
-                  <Route path="/Table2" element={<Tables viewOption="PersonalView" />} />
                   <Route path="/SystemAlerts" element={<SystemAlerts />} />
-                  <Route path="*" element={<Error404 />} />
-                </Routes>
-              ) : (
-                <Routes>
-                  {getRoutes(UserRoutes)}
-                  <Route path="/authentication/sign-in" element={<SignIn />} />
-                  <Route path="/authentication/sign-up" element={<SignUpUser />} />
-                  <Route path="/authentication/admin/sign-up" element={<SignUpAdmin />} />
-                  <Route path="/Error404" element={<Error404 />} />
+
                   <Route path="/" element={<Navigate to="/dashboard" />} />
                   <Route path="*" element={<Navigate to="/Error404" />} />
+                </Routes>
+              ) : (
+                // ? Semi-Admin(Maneger) User (11)
+                // ? Inspector User (12)
+                // ? God Admin User (22)
+                <Routes>
+                  {getRoutes(AdminRoutes)}
 
-                  <Route path="/Table" element={<Tables viewOption="CalenderView" />} />
-                  <Route path="/Table2" element={<Tables viewOption="PersonalView" />} />
-                  <Route path="/AdminManagementTable" element={<AdminManagementTable />} />
-                  <Route path="/requiredProjects" element={<RequiredProjects />} />
                   <Route path="/SystemAlerts" element={<SystemAlerts />} />
 
                   <Route path="/adminSummary">
                     <Route path=":formID" element={<CalenderTasksFormDB />} />
                   </Route>
 
-                  {/* <Route path="/" element={<Navigate to="/about-us" />} /> */}
-                  {/* <Route path="*" element={<Navigate to="/Error404" />} /> */}
+                  <Route path="/" element={<Navigate to="/dashboard" />} />
+                  <Route path="*" element={<Navigate to="/Error404" />} />
                 </Routes>
               )
             ) : (
+              // ? an unauthenticated(not sign-in) user
               <Routes>
-                {getRoutes(UserRoutes)}
                 <Route path="/authentication/sign-in" element={<SignIn />} />
                 <Route path="/authentication/sign-up" element={<SignUpUser />} />
                 <Route path="/authentication/admin/sign-up" element={<SignUpAdmin />} />
                 <Route path="/Error404" element={<Error404 />} />
-                <Route path="/" element={<Navigate to="/dashboard" />} />
-                <Route path="*" element={<Navigate to="/Error404" />} />
 
-                <Route path="/Table" element={<Tables viewOption="CalenderView" />} />
-                <Route path="/Table2" element={<Tables viewOption="PersonalView" />} />
-                <Route path="/AdminManagementTable" element={<AdminManagementTable />} />
-                <Route path="/requiredProjects" element={<RequiredProjects />} />
+                <Route path="/Table" element={<Navigate to="/authentication/sign-in" />} />
+                <Route
+                  path="/requiredProjects"
+                  element={<Navigate to="/authentication/sign-in" />}
+                />
                 <Route path="/SystemAlerts" element={<SystemAlerts />} />
 
-                <Route path="/adminSummary">
-                  <Route path=":formID" element={<CalenderTasksFormDB />} />
-                </Route>
-
-                {/* <Route path="/" element={<Navigate to="/about-us" />} /> */}
-                {/* <Route path="*" element={<Navigate to="/Error404" />} /> */}
+                <Route path="/" element={<Navigate to="/dashboard" />} />
+                <Route path="*" element={<Navigate to="/Error404" />} />
               </Routes>
             )}
           </ThemeProvider>

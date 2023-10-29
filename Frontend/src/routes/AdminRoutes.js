@@ -39,24 +39,12 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React layouts
-import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up/signUpAdmin";
-import Billing from "layouts/billing";
+
+import SystemAlerts from "layouts/SystemAlerts";
 import Dashboard from "layouts/dashboard";
-import Notifications from "layouts/notifications";
-import Profile from "layouts/profile";
-import RTL from "layouts/rtl";
-import Tables from "layouts/tables";
-import RegulsrUserRequestsTable from "layouts/tables/regulsrUserRequestsTable";
-// import ManagementHoztla from "layouts/tables/adminManagementTable";
-// import AdminArchiveTable from "layouts/tables/adminArchiveTable";
-// import HozlaPrintRequestForm from "layouts/Forms/HozlaPrintRequestForm";
-// import ToraHeilitPrintRequestForm from "layouts/Forms/ToraHeilitPrintRequestForm";
-// import ToraHeilitVolumeAdmin from "layouts/Forms/ToraHeilitVolumeAdmin";
-
-// import HozlaAdminPrintInfoForm from "layouts/Forms/HozlaAdminPrintInfoForm";
-// import AdminFieldReuestFormDB from "layouts/Forms/adminFieldReuestFormDB";
-
+import RequiredProjects from "layouts/requiedProjects";
+import AdminManagementTable from "layouts/tables/adminManagementTable";
+import Tables from "layouts/tables/regulsrUserRequestsTable";
 // @mui icons
 import Icon from "@mui/material/Icon";
 //my components
@@ -65,63 +53,46 @@ import AboutPage from "views/aboutpage/AboutPage";
 // import Error404 from "views/Error404";
 
 const AdminRoutes = [
-  // {
-  //   type: "collapse",
-  //   name: "Dashboard",
-  //   key: "dashboard",
-  //   icon: <Icon fontSize="small">dashboard</Icon>,
-  //   route: "/dashboard",
-  //   component: <Dashboard />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "ניהול הבקשות",
-  //   key: "managementHoztla",
-  //   icon: <Icon fontSize="small">table_view</Icon>,
-  //   route: "/managementHoztla",
-  //   component: <ManagementHoztla />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "נתוני הוצל''א",
-  //   key: "AdminHome",
-  //   icon: <Icon fontSize="small">dashboard</Icon>,
-  //   route: "/AdminHome",
-  //   component: <AdminHome />,
-  // },
-
-  // {
-  //   type: "collapse",
-  //   name: "טופס הוצל''א",
-  //   key: "adminForm",
-  //   icon: <Icon fontSize="small">assignment</Icon>,
-  //   route: "/adminForm",
-  //   component: <HozlaAdminPrintInfoForm />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "פרטים נוספים",
-  //   key: "adminFieldReuestFormDB",
-  //   icon: <Icon fontSize="small">assignment</Icon>,
-  //   route: "/adminFieldReuestFormDB",
-  //   component: <AdminFieldReuestFormDB />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "ארכיון",
-  //   key: "adminArchiveTable",
-  //   icon: <Icon fontSize="small">archive</Icon>,
-  //   route: "/adminArchiveTable",
-  //   component: <AdminArchiveTable />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "עדכון סטטוס תורה",
-  //   key: "toraHeilit",
-  //   icon: <Icon fontSize="small">library_books</Icon>,
-  //   route: "/toraHeilit",
-  //   component: <ToraHeilitVolumeAdmin />,
-  // },
+  {
+    type: "collapse",
+    name: "דשבורד",
+    key: "dashboard",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/dashboard",
+    component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "יומן רישומים",
+    key: "Table",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/Table",
+    component: <Tables viewOption="CalenderView" />,
+  },
+  {
+    type: "collapse",
+    name: "פרויקטים נדרשים",
+    key: "requiredProjects",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/requiredProjects",
+    component: <RequiredProjects />,
+  },
+  {
+    type: "collapse",
+    name: "ניהול משתמשים",
+    key: "AdminManagementTable",
+    icon: <Icon fontSize="small"> manage_accounts</Icon>,
+    route: "/AdminManagementTable",
+    component: <AdminManagementTable />,
+  },
+  {
+    type: "collapse",
+    name: "ניהול התראות מערכת",
+    key: "SystemAlerts",
+    icon: <Icon fontSize="small">notifications_none</Icon>,
+    route: "/SystemAlerts",
+    component: <SystemAlerts />,
+  },
   {
     type: "divider",
   },
@@ -129,122 +100,33 @@ const AdminRoutes = [
     type: "title",
     title: "האזור האישי",
   },
-
-  // {
-  //   type: "collapse",
-  //   name: "בקשת הוצל''א",
-  //   key: "requestForm",
-  //   icon: <Icon fontSize="small">description</Icon>,
-  //   route: "/requestForm",
-  //   component: <HozlaPrintRequestForm />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "בקשת תורה חילית",
-  //   key: "toraHeilitrequestForm",
-  //   icon: <Icon fontSize="small">description</Icon>,
-  //   route: "/toraHeilitrequestForm",
-  //   component: <ToraHeilitPrintRequestForm />,
-  // },
   {
     type: "collapse",
-    name: "הבקשות שלי",
-    key: "userRequestsTable",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/userRequestsTable",
-    component: <RegulsrUserRequestsTable />,
+    name: "יומן רישומים - אישי",
+    key: "Table2",
+    icon: <Icon fontSize="small">table</Icon>,
+    route: "/Table2",
+    component: <Tables viewOption="PersonalView" />,
+  },
+  {
+    type: "collapse",
+    name: "פרופיל משתמש",
+    key: "userProfile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/",
+    component: <Tables viewOption="PersonalView" />,
   },
   {
     type: "divider",
   },
-  // {
-  //   type: "collapse",
-  //   name: "אודות",
-  //   key: "about-us",
-  //   icon: <Icon fontSize="small">info</Icon>,
-  //   route: "/about-us",
-  //   component: <AboutPage />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "RequestForm",
-  //   key: "requestForm",
-  //   icon: <Icon fontSize="small">form</Icon>,
-  //   route: "/requestForm",
-  //   component: <Dashboard />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Billing",
-  //   key: "billing",
-  //   icon: <Icon fontSize="small">receipt_long</Icon>,
-  //   route: "/billing",
-  //   component: <Billing />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "RTL",
-  //   key: "rtl",
-  //   icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-  //   route: "/rtl",
-  //   component: <RTL />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Notifications",
-  //   key: "notifications",
-  //   icon: <Icon fontSize="small">notifications</Icon>,
-  //   route: "/notifications",
-  //   component: <Notifications />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Profile",
-  //   key: "profile",
-  //   icon: <Icon fontSize="small">person</Icon>,
-  //   route: "/profile",
-  //   component: <Profile />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Sign In",
-  //   key: "sign-in",
-  //   icon: <Icon fontSize="small">login</Icon>,
-  //   route: "/authentication/sign-in",
-  //   component: <SignIn />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Sign Up",
-  //   key: "sign-up",
-  //   icon: <Icon fontSize="small">assignment</Icon>,
-  //   route: "/authentication/sign-up",
-  //   component: <SignUp />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "אודות",
-  //   key: "about-us",
-  //   icon: <Icon fontSize="small">info</Icon>,
-  //   route: "/about-us",
-  //   component: <AboutPage />,
-  // },
-  // {
-  //   // type: "collapse",
-  //   // name: "Error404",
-  //   // key: "Error404",
-  //   // icon: <Icon fontSize="small">warning</Icon>,
-  //   route: "/error404",
-  //   component: <Error404 />,
-  // },
-  // {
-  //   type: "collapse",
-  //   // name: "הבקשות שלי",
-  //   key: "RequestData",
-  //   // icon: <Icon fontSize="small">table_view</Icon>,
-  //   route: "/RequestForm/:{formID}",
-  //   component: <RegulsrUserRequestsTable />,
-  // },
+  {
+    type: "collapse",
+    name: "אודות",
+    key: "about-us",
+    icon: <Icon fontSize="small">info</Icon>,
+    route: "/about-us",
+    component: <AboutPage />,
+  },
 ];
 
 export default AdminRoutes;

@@ -9,9 +9,11 @@ const {
   remove,
   usersbyrole,
   getusersandsortbylevel,
+  getinspectors,
 } = require("../../controllers/authentication/user");
 
 router.post("/getuserbyid", getuserbyid);
+router.post("/getinspectors", getinspectors);
 
 router.post("/getuserbypersonalnumber", getuserbypersonalnumber);
 

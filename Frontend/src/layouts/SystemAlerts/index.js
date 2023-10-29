@@ -60,7 +60,7 @@ import AppThumnailCardBack from "examples/Cards/AppThumnailCardBack";
 import TimelineItem from "examples/Timeline/TimelineItem";
 import TimelineList from "examples/Timeline/TimelineList";
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -280,17 +280,8 @@ function SystemAlerts() {
 
   return (
     <DashboardLayout>
-      {/* <DashboardNavbar /> */}
+      <DashboardNavbar />
       <DashboardHeader />
-      {/* <DashboardHeader tabViewValue={tabView} setTabViewValue={setTabView} /> */}
-      {/* <MDTypography color="mekatnar" variant="h4" fontWeight="medium">
-        {tabView}
-      </MDTypography> */}
-      {/* {
-        tabView === 0 //* mahlaka view
-          ? clientView()
-          : clientView() //* ploga view
-      } */}
       {editAlert()}
       {clientView()}
       <Footer />
