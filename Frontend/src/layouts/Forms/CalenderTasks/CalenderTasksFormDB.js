@@ -305,14 +305,10 @@ const FieldReuestFormDB = () => {
   );
 
   const updateSummaryData = (event) => {
-    const sTemp = 75;
-    // if (user.admin === "2" && user.adminType === "2") {
-    //   if (formData.status === 50) {
-    //     sTemp = 75;
-    //   } else if (formData.status >= 75) {
-    //     sTemp = 100;
-    //   }
-    // }
+    let sTemp = 75;
+    if (user.admin === "2" && user.adminType === "2") {
+      sTemp = formData.status;
+    }
     const updateData = {
       results: formData.results,
       improvments: formData.improvments,
@@ -672,7 +668,7 @@ const FieldReuestFormDB = () => {
                             className="btn-new-blue"
                             type="submit"
                           >
-                            שמור
+                            {user.admin === "2" && user.adminType === "2" ? "שמור" : "שלח"}
                             <Icon fontSize="small">save</Icon>&nbsp;
                           </MDButton>
                         ) : null}

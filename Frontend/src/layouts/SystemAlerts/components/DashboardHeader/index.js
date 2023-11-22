@@ -81,44 +81,26 @@ function DashboardHeader(props, { children }) {
 
   const welcomeString = `הודעות מערכת`;
 
-  // useEffect(() => {
-  //   // A function that sets the orientation state of the tabs.
-  //   function handleTabsOrientation() {
-  //     return window.innerWidth < breakpoints.values.sm
-  //       ? setTabsOrientation("vertical")
-  //       : setTabsOrientation("horizontal");
-  //   }
+  useEffect(() => {
+    // A function that sets the orientation state of the tabs.
+    function handleTabsOrientation() {
+      return window.innerWidth < breakpoints.values.sm
+        ? setTabsOrientation("vertical")
+        : setTabsOrientation("horizontal");
+    }
 
-  //   /**
-  //    The event listener that's calling the handleTabsOrientation function when resizing the window.
-  //   */
-  //   window.addEventListener("resize", handleTabsOrientation);
+    /**
+     The event listener that's calling the handleTabsOrientation function when resizing the window.
+    */
+    window.addEventListener("resize", handleTabsOrientation);
 
-  //   // Call the handleTabsOrientation function to set the state with the initial value.
-  //   handleTabsOrientation();
+    // Call the handleTabsOrientation function to set the state with the initial value.
+    handleTabsOrientation();
 
-  //   // Remove event listener on cleanup
-  //   return () => window.removeEventListener("resize", handleTabsOrientation);
-  // }, [tabsOrientation]);
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleTabsOrientation);
+  }, [tabsOrientation]);
 
-  // const handleSetTabValue = (event, tabIndex) => {
-  //   let tabIndexName = "";
-
-  //   if (tabIndex === 0) {
-  //     tabIndexName = "מחלקה";
-  //   } else if (tabIndex === 1) {
-  //     tabIndexName = "פלוגה";
-  //   } else if (tabIndex === 2) {
-  //     tabIndexName = "גדוד";
-  //   } else if (tabIndex === 3) {
-  //     tabIndexName = "חטיבה";
-  //   }
-  //   setTabValue(tabIndex);
-  //   props.setTabViewValue(tabIndex);
-  //   // if (typeof window !== "undefined") {
-  //   //   localStorage.setItem("dashboardView", JSON.stringify({ tabIndexName, tabIndex }));
-  //   // }
-  // };
   const addFile = () => (
     <Dialog
       px={5}

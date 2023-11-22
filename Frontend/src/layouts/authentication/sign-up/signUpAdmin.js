@@ -48,7 +48,7 @@ import { Dialog, DialogContent, DialogContentText, DialogTitle, Modal } from "@m
 import { authenticate, isAuthenticated, signin, signout, updateRefreshCount } from "auth/index";
 
 // Images
-import bgImage from "assets/images/book-bg-image.jpg";
+import bgImage from "assets/images/pinkPurpulePianBGcolor.jpg";
 import axios from "axios";
 import { Form } from "reactstrap";
 

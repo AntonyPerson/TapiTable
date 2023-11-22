@@ -160,9 +160,10 @@ export default function data(viewOption) {
   const getTableColumns = () => {
     let arr = [
       { Header: "מספר אישי", accessor: "personalNumber", align: "center" },
-      { Header: "הביקורת", accessor: "d", align: "left" },
-      { Header: "ss", accessor: "c", align: "left" },
-      { Header: "function", accessor: "function", align: "left" },
+      { Header: "מבצע הביקורת", accessor: "inspector", align: "left" },
+      { Header: "שם מסגרת המבקר", accessor: "inspectorGroup", align: "left" },
+      { Header: "המבוקר", accessor: "inspected", align: "left" },
+      { Header: "שם מסגרת המבוקר", accessor: "inspectedGroup", align: "left" },
       { Header: "סטטוס", accessor: "status", align: "center" },
       { Header: "תאריך ביקורת", accessor: "appoinmentDate", align: "center" },
       { Header: "סיכום ביקורת", accessor: "summary", align: "center" },
@@ -171,9 +172,10 @@ export default function data(viewOption) {
       if (user.admin === "2" && user.adminType === "2") {
         arr = [
           { Header: "מספר אישי", accessor: "personalNumber", align: "center" },
-          { Header: "הביקורת", accessor: "d", align: "left" },
-          { Header: "ss", accessor: "c", align: "left" },
-          { Header: "function", accessor: "function", align: "left" },
+          { Header: "מבצע הביקורת", accessor: "inspector", align: "left" },
+          { Header: "שם מסגרת המבקר", accessor: "inspectorGroup", align: "left" },
+          { Header: "המבוקר", accessor: "inspected", align: "left" },
+          { Header: "שם מסגרת המבוקר", accessor: "inspectedGroup", align: "left" },
           { Header: "סטטוס", accessor: "status", align: "center" },
           { Header: "תאריך ביקורת", accessor: "appoinmentDate", align: "center" },
           { Header: "פעולות הנהלה", accessor: "summary", align: "center" },
@@ -182,9 +184,10 @@ export default function data(viewOption) {
         if (user.adminType === "1") {
           arr = [
             { Header: "מספר אישי", accessor: "personalNumber", align: "center" },
-            { Header: "הביקורת", accessor: "d", align: "left" },
-            { Header: "ss", accessor: "c", align: "left" },
-            { Header: "function", accessor: "function", align: "left" },
+            { Header: "מבצע הביקורת", accessor: "inspector", align: "left" },
+            { Header: "שם מסגרת המבקר", accessor: "inspectorGroup", align: "left" },
+            { Header: "המבוקר", accessor: "inspected", align: "left" },
+            { Header: "שם מסגרת המבוקר", accessor: "inspectedGroup", align: "left" },
             { Header: "סטטוס", accessor: "status", align: "center" },
             { Header: "תאריך ביקורת", accessor: "appoinmentDate", align: "center" },
             { Header: "סיכום ביקורת", accessor: "summary", align: "center" },
@@ -192,9 +195,10 @@ export default function data(viewOption) {
         } else if (user.adminType === "2") {
           arr = [
             { Header: "מספר אישי", accessor: "personalNumber", align: "center" },
-            { Header: "הביקורת", accessor: "d", align: "left" },
-            { Header: "ss", accessor: "c", align: "left" },
-            { Header: "function", accessor: "function", align: "left" },
+            { Header: "מבצע הביקורת", accessor: "inspector", align: "left" },
+            { Header: "שם מסגרת המבקר", accessor: "inspectorGroup", align: "left" },
+            { Header: "המבוקר", accessor: "inspected", align: "left" },
+            { Header: "שם מסגרת המבוקר", accessor: "inspectedGroup", align: "left" },
             { Header: "סטטוס", accessor: "status", align: "center" },
             { Header: "תאריך ביקורת", accessor: "appoinmentDate", align: "center" },
             { Header: "סיכום ביקורת", accessor: "summary", align: "center" },
@@ -206,14 +210,15 @@ export default function data(viewOption) {
   };
 
   const dbRows = requestDB.map((Tapi, index) => ({
-    author: <Author name={Tapi.fullName} email={Tapi.email} />,
-    function: <Job title="Manager" description={Tapi.workName} />,
+    personalNumber: Tapi.personalnumber,
 
-    appoinmentDate: (
-      <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-        {`${Tapi.dateOfInspection.split("T")[0]}`}
-      </MDTypography>
-    ),
+    inspector: Tapi.inspectionByType,
+    inspectorGroup: Tapi.inspectedName,
+
+    inspected: Tapi.visited,
+    inspectedGroup: Tapi.visitedName,
+
+    appoinmentDate: Tapi.dateOfInspection.split("T")[0],
 
     summary:
       user.admin === "2" && user.adminType === "2" ? (
@@ -348,7 +353,6 @@ export default function data(viewOption) {
           </MDButton>
         </Link>
       ),
-    personalNumber: <MDTypography variant="caption">{Tapi.personalnumber}</MDTypography>,
     status: (
       <>
         <MDTypography component="p" variant="caption" color="text" fontWeight="medium">
