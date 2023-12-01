@@ -120,12 +120,35 @@ const AdminRoutes = [
     type: "divider",
   },
   {
-    type: "collapse",
-    name: "אודות",
-    key: "about-us",
+    type: "collapseMulti",
+    name: "t",
+    key: "t",
     icon: <Icon fontSize="small">info</Icon>,
-    route: "/about-us",
-    component: <AboutPage />,
+    items: [
+      {
+        type: "title",
+        title: "האזור האישי",
+      },
+      {
+        type: "collapse",
+        name: "יומן רישומים - אישי",
+        key: "Table2",
+        icon: <Icon fontSize="small">table</Icon>,
+        route: "/Table2",
+        component: <Tables viewOption="PersonalView" />,
+      },
+      {
+        type: "collapse",
+        name: "פרופיל משתמש",
+        key: "userProfile",
+        icon: <Icon fontSize="small">person</Icon>,
+        route: "/",
+        component: <Tables viewOption="PersonalView" />,
+      },
+      {
+        type: "divider",
+      },
+    ],
   },
 ];
 

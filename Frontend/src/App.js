@@ -290,7 +290,7 @@ export default function App() {
         <CacheProvider value={rtlCache}>
           <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
             <CssBaseline />
-            {/* <Sidenav
+            <Sidenav
               color={sidenavColor}
               brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
               brandName={brandName}
@@ -299,7 +299,7 @@ export default function App() {
               // routes={user.user.admin !== "0" ? AdminRoutes : routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
-            /> */}
+            />
 
             {/* <Configurator />
             {configsButton} */}
